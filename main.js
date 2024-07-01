@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const height = 400 - margin.top - margin.bottom;
 
     // Create SVG
-    const svg = d3.select("#chart")
+    const svg = d3.select(".chart")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)

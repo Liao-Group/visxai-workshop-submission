@@ -1,14 +1,96 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Merriweather', serif;
     line-height: 1.6;
     color: #333;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
-h1, h2 {
-    color: #2c3e50;
+
+h1 {
+    font-family: 'Merriweather', serif;
+    font-weight: 900;
+    color: #1f2937;
+    font-size: 2.5em;
+    line-height: 1.2;
 }
+
+h2 {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+h3 {
+    font-family: 'Merriweather', serif;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.subtitle {
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
+    font-size: 1.1em;
+    color: #4b5563;
+}
+
 .chart {
     margin-top: 30px;
+}
+
+.button {
+    font-family: 'Merriweather', serif;
+    font-weight: 400; /* Optional: you can change this based on your design */
+    font-size: 1em; /* Optional: adjust size as needed */
+    color: #4b5563;
+    background-color: #f1f1f1; /* Optional: adjust background color as needed */
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ddd; /* Optional: adjust hover background color as needed */
+}
+
+.collapsible {
+    background-color: #f1f1f1;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: white;
 }

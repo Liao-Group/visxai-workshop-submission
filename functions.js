@@ -28,7 +28,7 @@ function PSIview(data) {
   // detal_force and predicted_psi values are coming from the actual json file. 
   const deltaForce = data.delta_force;
   const predictedPSI = data.predicted_psi;
-  const plotPSI = true; // CHOICE: whether to plot deltaForce or predictedPSI
+  const plotPSI = true; 
   exon_length = data.exon.length;
   flanking_length = data.sequence.search(data.exon);
   console.log(exon_length, flanking_length);
@@ -208,8 +208,8 @@ function PSIview(data) {
 function hierarchicalBarChart(parent, data) {
   
   const svgContainer = d3.select(".feature-view-1");
-  const width = svgContainer.node().clientWidth;
-  const height = svgContainer.node().clientHeight;
+  const width = 300
+  const height = 400
   const heightRatio = height / 370;
 
   const margin = { top: 40, right: 20, bottom: 30, left: 50 };
