@@ -171,14 +171,14 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   });
 
-  // Add title
-  svg.append('text')
-      .attr('x', width / 2)
-      .attr('y', 30)
-      .text('Interactive Neural Network Visualization')
-      .attr('text-anchor', 'middle')
-      .attr('font-size', '24px')
-      .attr('font-weight', 'bold');
+//   // Add title
+//   svg.append('text')
+//       .attr('x', width / 2)
+//       .attr('y', 30)
+//       .text('Interactive Neural Network Visualization')
+//       .attr('text-anchor', 'middle')
+//       .attr('font-size', '24px')
+//       .attr('font-weight', 'bold');
 
   // Add interactivity
   neurons.on('mouseover', function(event, d) {
