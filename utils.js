@@ -326,7 +326,6 @@ function featureSelection(featureName = null, className = null) {
           const childrenData = d.feature.split("_")[0] === 'incl' ? Data.feature_activations.children[0] : Data.feature_activations.children[1]
 
           if (Data) {
-            hierarchicalBarChart2(Data, childrenData)
             nucleotideFeatureView(Data, Data.feature_activations, d.feature);
           }
           if (selectedClass === 'skip') {
@@ -470,7 +469,7 @@ document.addEventListener("DOMContentLoaded", function () {
           window.Data = data;
           // Render data
           PSIview(data);
-          // nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
+          nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
           hierarchicalBarChart(data, data.feature_activations);
           // d3.select("svg.feature-view-2").selectAll("*").remove();
           // d3.select("svg.feature-view-3").selectAll("*").remove();

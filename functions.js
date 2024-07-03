@@ -28,10 +28,9 @@ function PSIview(data) {
   // detal_force and predicted_psi values are coming from the actual json file. 
   const deltaForce = data.delta_force;
   const predictedPSI = data.predicted_psi;
-  const plotPSI = true; 
+  const plotPSI = true;
   exon_length = data.exon.length;
   flanking_length = data.sequence.search(data.exon);
-  console.log(exon_length, flanking_length);
 
   d3.select("svg.psi-view").selectAll("*").remove();;
   const svgContainer = d3.select(".psi-view"); // Ensure you have a container with this class
@@ -158,55 +157,55 @@ function PSIview(data) {
     });
 
 
-    const barColor = deltaForce < 0 ? skipping_color : inclusion_color;
-  
-    // Plot by deltaForce
-    var barPosition, barHeight;
-    if (deltaForce >= 0) {
-      barPosition = yScale(deltaForce);
-      barHeight = Math.abs(yScale(deltaForce) - yScale(0));
+  const barColor = deltaForce < 0 ? skipping_color : inclusion_color;
+
+  // Plot by deltaForce
+  var barPosition, barHeight;
+  if (deltaForce >= 0) {
+    barPosition = yScale(deltaForce);
+    barHeight = Math.abs(yScale(deltaForce) - yScale(0));
+  } else {
+    barPosition = yScale(0);
+    barHeight = Math.abs(yScale(deltaForce) - yScale(0));
+  }
+
+  if (plotPSI) {
+    // Plot by predicted PSI
+    if (predictedPSI >= 0.5) {
+      barPosition = yScale2(predictedPSI);
+      barHeight = Math.abs(yScale2(predictedPSI) - yScale2(0.5));
     } else {
-      barPosition = yScale(0);
-      barHeight = Math.abs(yScale(deltaForce) - yScale(0));
+      barPosition = yScale2(0.5);
+      barHeight = Math.abs(yScale2(predictedPSI) - yScale2(0.5));
     }
-  
-    if (plotPSI) {
-      // Plot by predicted PSI
-      if (predictedPSI >= 0.5) {
-        barPosition = yScale2(predictedPSI);
-        barHeight = Math.abs(yScale2(predictedPSI) - yScale2(0.5));
-      } else {
-        barPosition = yScale2(0.5);
-        barHeight = Math.abs(yScale2(predictedPSI) - yScale2(0.5));
-      }
-    }
-  
-    // graph rectangle fixed and make the margins dynamic.
-    const barWidth = 25 * widthRatio;
-    const bar = chartGroup.append('rect')
-      .attr('x', (chartWidth / 2) - (barWidth / 2))
-      .attr('width', barWidth)
-      .attr('y', barPosition)
-      .attr('height', barHeight)
-      .attr('fill', barColor)
-      .attr("stroke", "#000")
-      .attr("stroke-width", 1)
-      .on("click", function (event, d) {
-        nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
-        hierarchicalBarChart(data, data.feature_activations);
-        d3.select("svg.feature-view-2").selectAll("*").remove();
-        d3.select("svg.feature-view-3").selectAll("*").remove();
-        selectedBar = null;
-        selectedFeatureBar = null;
-        resetHighlight();
-      });
+  }
+
+  // graph rectangle fixed and make the margins dynamic.
+  const barWidth = 25 * widthRatio;
+  const bar = chartGroup.append('rect')
+    .attr('x', (chartWidth / 2) - (barWidth / 2))
+    .attr('width', barWidth)
+    .attr('y', barPosition)
+    .attr('height', barHeight)
+    .attr('fill', barColor)
+    .attr("stroke", "#000")
+    .attr("stroke-width", 1)
+    .on("click", function (event, d) {
+      nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
+      hierarchicalBarChart(data, data.feature_activations);
+      d3.select("svg.feature-view-2").selectAll("*").remove();
+      d3.select("svg.feature-view-3").selectAll("*").remove();
+      selectedBar = null;
+      selectedFeatureBar = null;
+      resetHighlight();
+    });
 };
 /**
  * Feature view 1 
  * OBS: The legend in this one doesnt adjust well on other screens
  */
 function hierarchicalBarChart(parent, data) {
-  
+
   const svgContainer = d3.select(".feature-view-1");
   const width = 300
   const height = 400
@@ -233,29 +232,29 @@ function hierarchicalBarChart(parent, data) {
     .paddingInner(0.4)
     .paddingOuter(0.5);
 
-    const yScale = d3.scaleLinear()
+  const yScale = d3.scaleLinear()
     .domain([0, 170]) // Initial domain; this will be updated
     .range([chartHeight, 0]);
 
-    // Add slider interaction
-    d3.select("#yAxisSlider1").on("input", function() {
-      updateChart(+this.value);
-    });
-  
-    function updateChart(yMax) {
-      yScale.domain([0, yMax]); // Update the y-axis domain
-  
-      // Update the Y-axis on the chart
-      svg.select(".y-axis")
-          .transition() // Add a smooth transition
-          .duration(500)
-          .call(d3.axisLeft(yScale));
-  
-      // Update bars
-      bars.transition() // Smooth transition for resizing bars
-          .duration(500)
-          .attr("y", d => yScale(d.value))
-          .attr("height", d => chartHeight - yScale(d.value));
+  // Add slider interaction
+  d3.select("#yAxisSlider1").on("input", function () {
+    updateChart(+this.value);
+  });
+
+  function updateChart(yMax) {
+    yScale.domain([0, yMax]); // Update the y-axis domain
+
+    // Update the Y-axis on the chart
+    svg.select(".y-axis")
+      .transition() // Add a smooth transition
+      .duration(500)
+      .call(d3.axisLeft(yScale));
+
+    // Update bars
+    bars.transition() // Smooth transition for resizing bars
+      .duration(500)
+      .attr("y", d => yScale(d.value))
+      .attr("height", d => chartHeight - yScale(d.value));
   }
 
   const xAxis = d3.axisBottom(xScale).tickFormat("").tickSize(0);
@@ -294,7 +293,7 @@ function hierarchicalBarChart(parent, data) {
     .attr("class", "y-axis")
     .call(yAxis);
 
-  const barWidth = 25*widthRatio;
+  const barWidth = 25 * widthRatio;
 
   const bars = chart.selectAll(".bar")
     .data(root.children ? root.children : [])
@@ -364,10 +363,10 @@ function hierarchicalBarChart2(parent, data) {
   const root = d3.hierarchy(data).sum(d => d.strength);
 
   const fillerData = [
-    {'data': { 'name': '1', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '2', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '3', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '4', 'strength': 0, 'length': 0 }, 'value': 0}, 
+    { 'data': { 'name': '1', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '2', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '3', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '4', 'strength': 0, 'length': 0 }, 'value': 0 },
   ];
   const topChildren = root.children.sort((a, b) => b.value - a.value).concat(fillerData).slice(0, 12);
 
@@ -430,7 +429,7 @@ function hierarchicalBarChart2(parent, data) {
     .attr("text-anchor", "middle")
     .attr("dominant-baseline", "middle");
 
-  const barWidth = 25*widthRatio;
+  const barWidth = 25 * widthRatio;
   // const barSpacing = 4*widthRatio;
 
   topChildren.forEach(ele => {
@@ -519,11 +518,11 @@ function hierarchicalBarChart2(parent, data) {
       textbox.style("opacity", 1)
         .attr("x", rect_x)
         .attr("y", rect_y)
-        .style("width", text.node().getComputedTextLength()+ 5);
+        .style("width", text.node().getComputedTextLength() + 5);
     }
   });
 
-  bars.on("mouseout", function (event, d) { 
+  bars.on("mouseout", function (event, d) {
     resetHighlight();
     if (nolegend_features.includes(event.data.name)) {
       textbox.style("opacity", 0);
@@ -531,32 +530,32 @@ function hierarchicalBarChart2(parent, data) {
     }
   });
 
-onGraphRendered('.feature-view-2'); // Notify that the graph has been rendered
+  onGraphRendered('.feature-view-2'); // Notify that the graph has been rendered
 
-// Select the slider element
-const yAxisSlider = d3.select("#yAxisSlider2");
+  // Select the slider element
+  const yAxisSlider = d3.select("#yAxisSlider2");
 
-// Update chart function that adjusts the y-axis based on the slider value
-function updateChart(yMax) {
+  // Update chart function that adjusts the y-axis based on the slider value
+  function updateChart(yMax) {
     yScale.domain([0, yMax]); // Update the y-axis domain
 
     // Update the Y-axis on the chart
     svg.select(".y-axis")
-        .transition() // Add a smooth transition
-        .duration(500)
-        .call(d3.axisLeft(yScale));
+      .transition() // Add a smooth transition
+      .duration(500)
+      .call(d3.axisLeft(yScale));
 
     // Update bars
     bars.transition() // Smooth transition for resizing bars
-        .duration(500)
-        .attr("y", d => yScale(d.value))
-        .attr("height", d => chartHeight - yScale(d.value));
-}
+      .duration(500)
+      .attr("y", d => yScale(d.value))
+      .attr("height", d => chartHeight - yScale(d.value));
+  }
 
-// Event listener for the slider change
-yAxisSlider.on("input", function() {
+  // Event listener for the slider change
+  yAxisSlider.on("input", function () {
     updateChart(+this.value);
-});
+  });
 
 
 }
@@ -589,14 +588,14 @@ function hierarchicalBarChart3(parentName, data) {
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
   const fillerData = [
-    {'data': { 'name': '1', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '2', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '3', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '4', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '5', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '6', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '7', 'strength': 0, 'length': 0 }, 'value': 0}, 
-    {'data': { 'name': '8', 'strength': 0, 'length': 0 }, 'value': 0}, 
+    { 'data': { 'name': '1', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '2', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '3', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '4', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '5', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '6', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '7', 'strength': 0, 'length': 0 }, 'value': 0 },
+    { 'data': { 'name': '8', 'strength': 0, 'length': 0 }, 'value': 0 },
   ];
   const children = (data.children || []);
   const topChildren = children
@@ -655,7 +654,7 @@ function hierarchicalBarChart3(parentName, data) {
     .attr("class", "y-axis")
     .call(yAxis);
 
-  const barWidth = 25* widthRatio;
+  const barWidth = 25 * widthRatio;
   // const barSpacing = 2.5* widthRatio;
 
   const bars = chart.selectAll(".bar")
@@ -687,49 +686,50 @@ function hierarchicalBarChart3(parentName, data) {
   });
 
   onGraphRendered('.feature-view-3'); // Notify that the graph has been rendered
-// Select the slider element
-const yAxisSlider3 = d3.select("#yAxisSlider3");
+  // Select the slider element
+  const yAxisSlider3 = d3.select("#yAxisSlider3");
 
-// Function to update the chart based on the slider value
-function updateChart3(yMax) {
+  // Function to update the chart based on the slider value
+  function updateChart3(yMax) {
     // Update the yScale domain
     yScale.domain([0, yMax]);
 
     // Transition the Y-axis to new scale
     svg.select(".y-axis")
-        .transition()
-        .duration(500)
-        .call(d3.axisLeft(yScale));
+      .transition()
+      .duration(500)
+      .call(d3.axisLeft(yScale));
 
     // Transition the bars to new heights based on new scale
     bars.transition()
-        .duration(500)
-        .attr("y", d => yScale(d.value))
-        .attr("height", d => chartHeight - yScale(d.value));
-}
+      .duration(500)
+      .attr("y", d => yScale(d.value))
+      .attr("height", d => chartHeight - yScale(d.value));
+  }
 
-// Event listener for changes to the slider
-yAxisSlider3.on("input", function() {
+  // Event listener for changes to the slider
+  yAxisSlider3.on("input", function () {
     updateChart3(+this.value);
-});
+  });
 
 }
 /**
  * nucleotideView 
  */
 function nucleotideView(sequence, structs, data, classSelected = null) {
+  console.log("nuc view")
   svg = d3.select("svg.nucleotide-view")
   svg.selectAll("*").remove();
-  d3.select("svg.nucleotide-sort").selectAll("*").remove();
-  d3.select("svg.nucleotide-zoom").selectAll("*").remove();
+
   const svgContainer = d3.select(".nucleotide-view"); // Ensure you have a container with this class
-  const width = svgContainer.node().clientWidth;
-  const height = svgContainer.node().clientHeight;
-  const heightRatio = height / 622;
+  const width = 1000
+  const height = 500
+  const heightRatio = height / 600;
   const widthRatio = width / 1290;
 
   var margin = { top: 30, right: 10, bottom: 20, left: 50, middle: 22 };
-  var svg_nucl = d3.select("svg.nucleotide-view");
+  var svg_nucl = d3.select("svg.nucleotide-view").attr("width", width)
+    .attr("height", height);
 
   // Title
   svg_nucl.append("text")
@@ -793,25 +793,25 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   var max_skip = d3.max(d3.map(data.children[1].children, recursive_total_strength).keys());
   /* Change y range to a fix range */
   // var max_strength = d3.max([max_incl, max_skip]);
-  var max_strength = 9;
+  var max_strength = max_incl
   var yIncl = d3.scaleLinear()
-    .domain([0, max_strength])
+    .domain([0, max_incl])
     .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
   var ySkip = d3.scaleLinear()
-    .domain([0, max_strength])
+    .domain([0, max_skip])
     .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
 
 
-  //I think we can revome this declarations and bring to inside the functions.
-  // Set up for nucleotide sort
-  var sort_width = parseFloat(d3.select("svg.nucleotide-sort").style("width"));
-  var sort_height = parseFloat(d3.select("svg.nucleotide-sort").style("height"));
-  var svg_sort = d3.select("svg.nucleotide-sort");
+  // //I think we can revome this declarations and bring to inside the functions.
+  // // Set up for nucleotide sort
+  // var sort_width = parseFloat(d3.select("svg.nucleotide-sort").style("width"));
+  // var sort_height = parseFloat(d3.select("svg.nucleotide-sort").style("height"));
+  // var svg_sort = d3.select("svg.nucleotide-sort");
 
-  // Set up for nucleotide zoom
-  var zoom_width = parseFloat(d3.select("svg.nucleotide-zoom").style("width"));
-  var zoom_height = parseFloat(d3.select("svg.nucleotide-zoom").style("height"));
-  var svg_zoom = d3.select("svg.nucleotide-zoom");
+  // // Set up for nucleotide zoom
+  // var zoom_width = parseFloat(d3.select("svg.nucleotide-zoom").style("width"));
+  // var zoom_height = parseFloat(d3.select("svg.nucleotide-zoom").style("height"));
+  // var svg_zoom = d3.select("svg.nucleotide-zoom");
 
   const InclusionAxis = (color = false) => {
     const barColor = color ? lightOther : inclusion_color;
@@ -877,7 +877,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("x", function (d) { return x(parseInt(d.name.slice(4))); })
       .attr("y", (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle))
       .attr("width", x.bandwidth())
-      .attr("height",  function (d) { return ySkip(recursive_total_strength(d)) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
+      .attr("height", function (d) { return ySkip(recursive_total_strength(d)) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
       .attr("fill", barColor)
       .attr("stroke", line_color)
       .lower();
@@ -970,12 +970,13 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         d3.select(".obj.nt." + pos)
           .style("font-weight", "bold")
           .classed("free", false);
-        nucleotideSort(pos, margin, sort_width, sort_height, svg_sort, svg_zoom, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
-        nucleotideZoom(sequence, structs, pos, margin, zoom_width, zoom_height, svg_zoom, max_strength, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
+
       });
   }
   return svg_nucl
 }
+
+
 /**
  * nucleotideFeatureView
  */
@@ -991,7 +992,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
   d3.select("svg.nucleotide-zoom").selectAll("*").remove();
 
   var class_name = feature_name.split("_")[0];
-  var flat_data =[]
+  var flat_data = []
   if (class_name == "incl") {
     flat_data = flatten_nested_json(data.children[0]).filter(function (d, i, arr) {
       return d.name.split(" ")[1] == feature_name;
@@ -1054,7 +1055,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
       })
       .attr("y", function (d) { return yIncl(d.strength / d.length); })
       .attr("height", function (d) { return (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - yIncl(d.strength / d.length); });
-      // .delay(function (d, i) { return (i * 10); });
+    // .delay(function (d, i) { return (i * 10); });
   }
   if (class_name == "skip") {
     svg.selectAll("text.ylabel_inclusion").remove();
@@ -1096,7 +1097,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
       })
       .attr("y", (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle))
       .attr("height", function (d) { return ySkip(d.strength / d.length) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); });
-      // .delay(function (d, i) { return (i * 10); });
+    // .delay(function (d, i) { return (i * 10); });
   }
 }
 /**
@@ -1282,7 +1283,7 @@ function nucleotideSort(pos, margin, width, height, svg_sort, svg_zoom, colors) 
 
   inclBars.attr("y", d => sortYIncl(d.strength))
     .attr("height", d => (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - sortYIncl(d.strength));
-    // .delay((_, i) => i * 10);
+  // .delay((_, i) => i * 10);
 
   const skipBars = svg_sort.selectAll("skip-narrow-bar")
     .data(topSkipData)
@@ -1325,7 +1326,7 @@ function nucleotideSort(pos, margin, width, height, svg_sort, svg_zoom, colors) 
   skipBars
     .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
     .attr("height", d => sortYSkip(d.strength) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle));
-    // .delay((_, i) => i * 10);
+  // .delay((_, i) => i * 10);
 }
 /**
  * nucleotideZoom
@@ -1500,7 +1501,7 @@ function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, svg_
 
   inclBars.attr("y", (d) => zoom_yIncl(d.strength))
     .attr("height", (d) => (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - zoom_yIncl(d.strength));
-    // .delay((_, i) => i * 10);
+  // .delay((_, i) => i * 10);
 
   const skipBars = svg_zoom.selectAll("skip-feature-bar")
     .data(skip_data)
@@ -1519,7 +1520,7 @@ function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, svg_
   skipBars
     .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
     .attr("height", (d) => zoom_ySkip(d.strength) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle));
-    // .delay((_, i) => i * 10);
+  // .delay((_, i) => i * 10);
 
   // Add feature labels
   const inclFeatureText = svg_zoom.selectAll("incl-feature-text")
