@@ -7,47 +7,16 @@ let defaultSetting = "off";
 
 
 // setting dropdown
-function toggleDropdown() {
-  const dropdown = document.getElementById("myDropdown");
-  dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-}
-
-function toggleDropdownDownload() {
-  const dropdownDownload = document.getElementById("dropdownDownload");
-  dropdownDownload.style.display = (dropdownDownload.style.display === "block") ? "none" : "block";
-}
-
-function toggleDropdownAdjust() {
-  const dropdownAdjust = document.getElementById("dropdownAdjust");
-  dropdownAdjust.style.display = (dropdownAdjust.style.display === "block") ? "none" : "block";
-}
-
-// setting dropdown
-function toggleDropdown() {
-  const dropdown = document.getElementById("myDropdown");
-  dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-}
-
-function toggleDropdownDownload() {
-  const dropdownDownload = document.getElementById("dropdownDownload");
-  dropdownDownload.style.display = (dropdownDownload.style.display === "block") ? "none" : "block";
-}
-
-function toggleDropdownAdjust() {
-  const dropdownAdjust = document.getElementById("dropdownAdjust");
-  dropdownAdjust.style.display = (dropdownAdjust.style.display === "block") ? "none" : "block";
-}
-
 
 // event for when the screen is resized and we need to re-render the graphs in the page again
 
-window.addEventListener('resize', function () {
+document.addEventListener('DOMContentLoaded', function() {
   featureSelection(featureSelected = null, className = null)
   PSIview(Data); // Redraw the graph with the same data
   hierarchicalBarChart(Data, Data.feature_activations)
   nucleotideView(Data.sequence, Data.structs, Data.nucleotide_activations)
-  hierarchicalBarChart2(featuresParent, featuresChildren)
-  hierarchicalBarChart3(positionsParent, positionsChildren)
+  // hierarchicalBarChart2(featuresParent, featuresChildren)
+  // hierarchicalBarChart3(positionsParent, positionsChildren)
 });
 
 // document.addEventListener("DOMContentLoaded", async function () {
@@ -97,12 +66,4 @@ window.addEventListener('resize', function () {
 // });
 
 
-// Mock function for downloadSelectedSVGs
-function downloadSelectedSVGs() {
-  const selectedCharts = [];
-  document.querySelectorAll('.svg-select label input[type="checkbox"]:checked').forEach(checkbox => {
-    selectedCharts.push(checkbox.value);
-  });
-  console.log('Selected charts for download:', selectedCharts);
-}
 

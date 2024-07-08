@@ -4,63 +4,6 @@ html {
 
 }
 
-.nucleotide-view {
-  grid-area: nv;
-}
-
-.nucleotide-sort {
-  grid-area: ns;
-}
-
-.nucleotide-zoom {
-  grid-area: nz;
-}
-
-.structure-view {
-  grid-area: sv;
-}
-
-.feature-view-1 {
-  grid-area: f1;
-}
-
-.feature-view-2 {
-  grid-area: f2;
-}
-
-.feature-view-3 {
-  grid-area: f3;
-}
-
-.feature-legend-container {
-  grid-area: fl;
-}
-
-.psi-view {
-  grid-area: pv;
-}
-
-.grid-container {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-areas:
-    "fl fl fl fl fl pv pv f1 f1 f2 f2 f2 f2 f2 f3 f3 f3 f3 f3"
-    "fl fl fl fl fl pv pv f1 f1 f2 f2 f2 f2 f2 f3 f3 f3 f3 f3"
-    "fl fl fl fl fl pv pv f1 f1 f2 f2 f2 f2 f2 f3 f3 f3 f3 f3"
-    "nv nv nv nv nv nv nv nv nv nv nv nv nv nz nz nz ns ns ns"
-    "nv nv nv nv nv nv nv nv nv nv nv nv nv nz nz nz ns ns ns"
-    "nv nv nv nv nv nv nv nv nv nv nv nv nv nz nz nz ns ns ns"
-    "nv nv nv nv nv nv nv nv nv nv nv nv nv nz nz nz ns ns ns"
-  ;
-  gap: 0.5rem;
-
-  background-color: whitesmoke;
-  /* padding: 0.5rem; */
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-rows: minmax(0, 1fr);
-}
-
 .grid-container>div {
   background-color: white;
   text-align: center;
