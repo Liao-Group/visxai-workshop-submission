@@ -286,9 +286,7 @@ function featureSelection(featureName = null, className = null) {
           d3.select('div.feature-legend-container')
             .selectAll('.background')
             .style("fill", "none");
-          d3.select('svg.feature-view-1')
-            .selectAll(".bar").attr("fill", d => getFillColor(d));
-
+  
           if (selectedBar !== null) {
             var color = null;
             var highlightColor = null;
@@ -307,8 +305,7 @@ function featureSelection(featureName = null, className = null) {
               .selectAll('svg.feature-long-svg.' + className)
               .style("border", `2px solid ${highlightColor}`);
             d3.select(selectedBar).attr('fill', highlightColor);
-            d3.select('svg.feature-view-2')
-              .selectAll('.bar').attr('fill', color)
+           
             if (selectedFeatureBar !== null) {
               const featureName = d3.select(selectedFeatureBar).attr('class').split(' ')[1];
               d3.select('div.feature-legend-container')
@@ -328,28 +325,6 @@ function featureSelection(featureName = null, className = null) {
           if (Data) {
             nucleotideFeatureView(Data, Data.feature_activations, d.feature);
           }
-          if (selectedClass === 'skip') {
-            d3.select("svg.feature-view-1")
-              .selectAll(`.bar-incl`)
-              .attr("fill", inclusion_color)
-            d3.select("svg.feature-view-1")
-              .selectAll(`.bar-skip`)
-              .attr("fill", skipping_highlight_color);
-          } else if (selectedClass === 'incl') {
-            d3.select("svg.feature-view-1")
-              .selectAll(`.bar-skip`)
-              .attr("fill", skipping_color);
-            d3.select("svg.feature-view-1")
-              .selectAll(`.bar-incl`)
-              .attr("fill", inclusion_highlight_color);
-          }
-
-          d3.select("svg.feature-view-2")
-            .selectAll('.bar')
-            .attr('fill', colors[0]);
-          d3.select("svg.feature-view-2")
-            .select(".bar." + d.feature)
-            .attr("fill", colors[1]);
 
           featureSelection(d.feature, d.feature.split("_")[0]);
           // this is causing to reset the feature legend 
@@ -372,72 +347,6 @@ function featureSelection(featureName = null, className = null) {
   // Update SVGs for long skipping images
   updateSVGs("div.svg-grid-long-skipping", ".feature-long-svg", newImagesData.longSkipping, [skipping_color, skipping_highlight_color]);
 }
-
-function downloadSvg(svgElement, filename) {
-  // Create a temporary SVG element
-  const tempSvg = svgElement.cloneNode(true);
-  document.body.appendChild(tempSvg);
-
-  // Get the bounding box of the SVG element
-  const bbox = svgElement.getBBox();
-  tempSvg.setAttribute('width', bbox.width);
-  tempSvg.setAttribute('height', bbox.height);
-  tempSvg.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
-
-  const svgString = new XMLSerializer().serializeToString(tempSvg);
-  const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-  const DOMURL = window.URL || window.webkitURL || window;
-  const url = DOMURL.createObjectURL(svgBlob);
-  const image = new Image();
-
-  image.onload = function () {
-    const scaleFactor = 2; // Increase this value to improve resolution
-    const canvas = document.createElement('canvas');
-    canvas.width = bbox.width * scaleFactor;
-    canvas.height = bbox.height * scaleFactor;
-    const ctx = canvas.getContext('2d');
-
-    // Fill the canvas with white background
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw the image on the canvas
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    DOMURL.revokeObjectURL(url);
-    const imgURI = canvas.toDataURL('image/png');
-    triggerDownload(imgURI, filename);
-
-    // Remove the temporary SVG element
-    document.body.removeChild(tempSvg);
-  };
-
-  image.src = url;
-}
-
-function triggerDownload(imgURI, filename) {
-  const a = document.createElement('a');
-  a.href = imgURI;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-
-
-
-function downloadSelectedSVGs() {
-  const checkboxes = document.querySelectorAll('.svg-checkbox:checked');
-  console.log("here")
-  checkboxes.forEach((checkbox, index) => {
-    setTimeout(() => {
-      const svgElement = document.querySelector("svg." + checkbox.value);
-      if (svgElement) {
-        downloadSvg(svgElement, checkbox.value);
-      }
-    }, 500 * index);  // Delay each download by 500ms incrementally
-  });
-}
-
 
 function resetGraph() {
   console.log('Graph has been reset to initial state.');

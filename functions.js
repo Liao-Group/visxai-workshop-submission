@@ -191,13 +191,6 @@ function PSIview(data) {
     .attr("stroke", "#000")
     .attr("stroke-width", 1)
     .on("click", function (event, d) {
-      nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
-      hierarchicalBarChart(data, data.feature_activations);
-      d3.select("svg.feature-view-2").selectAll("*").remove();
-      d3.select("svg.feature-view-3").selectAll("*").remove();
-      selectedBar = null;
-      selectedFeatureBar = null;
-      resetHighlight();
     });
 };
 /**
@@ -722,8 +715,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   svg.selectAll("*").remove();
 
   const svgContainer = d3.select(".nucleotide-view"); // Ensure you have a container with this class
-  const width = 1000
-  const height = 500
+  const width = svgContainer.node().clientWidth;
+  const height = svgContainer.node().clientHeight;
   const heightRatio = height / 600;
   const widthRatio = width / 1290;
 

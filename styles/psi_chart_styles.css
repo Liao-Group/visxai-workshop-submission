@@ -1,0 +1,40 @@
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.chart {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+.axis-label {
+    font-size: 12px;
+    fill: #333;
+}
+.line {
+    fill: none;
+    stroke-width: 3;
+}
+.dot {
+    stroke: white;
+    stroke-width: 2;
+    cursor: pointer;
+}
+.tooltip {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 12px;
+}
+.grid line {
+    stroke: rgba(255, 255, 255, 0.5);
+    shape-rendering: crispEdges;
+}
+.grid path {
+    stroke-width: 0;
+}
