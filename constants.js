@@ -8,11 +8,6 @@ const line_color = "#6b6b6b";
 const strength_difference_color = "#dad7cd";
 const nucleotide_color = "black";
 
-// // bar colors
-// var inclusion_color = "";
-// var inclusion_highlight_color = "";
-// var skipping_color = "";
-// var skipping_highlight_color = "";
 // // org colors
 const inclusion_color = "#c5d6fb";
 const inclusion_highlight_color = "#669aff";

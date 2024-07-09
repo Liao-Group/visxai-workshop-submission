@@ -1,44 +1,86 @@
 html, body {
-    background-color: white;
     margin: 0;
     padding: 0;
-  }
-  
-  body {
+    background-color: white;
+}
+
+body {
     font-family: 'Merriweather', serif;
     line-height: 1.6;
     color: #333;
-    max-width: 760px;  /* Reduced from 800px to account for padding */
-    margin: 0 auto;    /* Centers the content and removes top/bottom margin */
-    padding: 20px;
-    background-color: white;
-  }
+}
+
+.full-width-header {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 40px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.header-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+article {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
 
 h1 {
-    font-family: 'Merriweather', serif;
     font-weight: 900;
     color: #1f2937;
     font-size: 2.5em;
     line-height: 1.2;
+    margin-bottom: 10px;
 }
 
 h2 {
-    font-family: 'Merriweather', serif;
     font-weight: 700;
     color: #1f2937;
 }
 
 h3 {
-    font-family: 'Merriweather', serif;
     font-weight: 500;
     color: #1f2937;
 }
 
 .subtitle {
-    font-family: 'Merriweather', serif;
     font-weight: 400;
     font-size: 1.1em;
     color: #4b5563;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.author-info {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.author-info p {
+    margin: 5px 0;
+}
+
+.author {
+    font-weight: 700;
+}
+
+.affiliation {
+    font-style: italic;
 }
 
 .chart {
@@ -47,10 +89,10 @@ h3 {
 
 .button {
     font-family: 'Merriweather', serif;
-    font-weight: 400; /* Optional: you can change this based on your design */
-    font-size: 1em; /* Optional: adjust size as needed */
+    font-weight: 400;
+    font-size: 1em;
     color: #4b5563;
-    background-color: #f1f1f1; /* Optional: adjust background color as needed */
+    background-color: #f1f1f1;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -62,7 +104,7 @@ h3 {
 }
 
 .button:hover {
-    background-color: #ddd; /* Optional: adjust hover background color as needed */
+    background-color: #ddd;
 }
 
 .collapsible {
@@ -105,6 +147,6 @@ h3 {
 hr {
     border: 0;
     height: 1px;
-    background-color: #D3D3D3; /* Light grey color */
+    background-color: #D3D3D3;
     margin: 30px 0;
-  }
+}
