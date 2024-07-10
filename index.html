@@ -7,9 +7,9 @@
   <title>Inside of a interpretable-by-desing ML model</title>
   <link rel="stylesheet" href="styles/chart_styles.css">
   <link rel="stylesheet" href="styles/psi_chart_styles.css">
-    <link rel="stylesheet" href="styles/footer.css">
-
+  <link rel="stylesheet" href="styles/footer.css">
   <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/psi_video_styles.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -76,6 +76,41 @@
         <div class="chart-container">
           <div class="psi-chart-gradient" id="psi-chart-gradient"></div>
         </div>
+
+        <!-- PSI Video Section -->
+        <div class="video-section-container">
+          <section id="video-section">
+            <h2>PSI Explanation Section</h2>
+            <div class="video-buttons">
+              <button class="styled-button one" onclick="showVideo('video1')">
+                Exon 1 <br> GCGGCACC...GUAGUCCU
+              </button>
+              <button class="styled-button two" onclick="showVideo('video2')">
+                Exon 2 <br> UCAAACAG...UAAUGGGA
+              </button>
+              <button class="styled-button three" onclick="showVideo('video3')">
+                Exon 3 <br> AUGAAAUC...CCACAGCA
+              </button>
+            </div>
+            <div class="video-container">
+              <div id="placeholder" class="video-placeholder">Select an exon to see its PSI</div>
+              <video id="video1" width="640" height="360" autoplay>
+                <source src="resources/PSI 1.m4v" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <video id="video2" width="640" height="360" autoplay>
+                <source src="resources/PSI 2.m4v" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <video id="video3" width="640" height="360" autoplay>
+                <source src="resources/PSI 3.m4v" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </section>
+        </div> 
+        <script src="videoSection.js"></script>
+
         <hr>
         <h2>Datasets</h2>
 
