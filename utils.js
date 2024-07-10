@@ -367,7 +367,7 @@ function resetGraph() {
 document.addEventListener("DOMContentLoaded", function () {
   // For this example, we'll ignore the option and dataset parameters
   // and always load the exon_s1.json file
-  fetch('./exon_s1.json')
+  fetch('./data/exon_s1.json')
       .then(response => {
           if (!response.ok) {
               throw new Error('Network response was not ok');
