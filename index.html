@@ -7,6 +7,8 @@
   <title>Inside of a interpretable-by-desing ML model</title>
   <link rel="stylesheet" href="styles/chart_styles.css">
   <link rel="stylesheet" href="styles/psi_chart_styles.css">
+    <link rel="stylesheet" href="styles/footer.css">
+
   <link rel="stylesheet" href="styles/styles.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -18,12 +20,9 @@
 
 <body>
   <script src="functions.js"></script>
-  <script src="main.js"></script>
   <script src="constants.js"></script>
   <script src="events.js"></script>
   <script src="utils.js"></script>
-  <script src="network.js"></script>
-  <script src="psi_chart.js"></script>
   <script src="psiChart_nonLinear.js"></script>
 
   <header>
@@ -40,32 +39,28 @@
       </div>
     </header>
 
-    <hr>
     <main class="content-wrapper">
       <article>
 
-        <section>
+        <!-- <section>
           <h2>Introduction</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed
             erat
             molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
-        </section>
-        <hr>
+        </section> -->
         <h2>Background</h2>
-        <p>1.Splicing explanation (animation)</p>
-        <video width="640" height="360" autoplay loop muted>
-          <source src="resources/WorkshopAnimationUpdated.m4v" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
+
+
         <h3>What is RNA splicing?</h3>
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
           cursus.
           Nam
           nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
+        <p>1.Splicing explanation (animation)</p>
+        <video width="640" height="360" autoplay loop muted>
+          <source src="resources/WorkshopAnimationUpdated.m4v" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
         <h3>Exons, introns, and splice sites</h3>
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
           cursus.
@@ -77,11 +72,15 @@
           Nam
           nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
 
+
+        <div class="chart-container">
+          <div class="psi-chart-gradient" id="psi-chart-gradient"></div>
+        </div>
         <hr>
         <h2>Datasets</h2>
 
         <p>2.Exon inclusion, exon skipping (animation) </p>
-        <video width="640" height="360" autoplay loop muted>
+        <video width="400" height="300" autoplay loop muted>
           <source src="resources/WorkshopAnimationUpdated.m4v" type="video/mp4">
         </video>
 
@@ -96,7 +95,6 @@
           Nam
           nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
         <p>3.PSI definition (interactive?)</p>
-        <div class="chart-container" id="chart"></div>
 
         <hr>
         <h2>Interpretable-by-design network</h2>
@@ -109,7 +107,7 @@
 
         <!-- <div id="chart" class="chart"></div> -->
         <p>5.Structure explanation (animation)
-          </p>
+        </p>
         <video width="640" height="360" autoplay loop muted>
           <source src="resources/WorkshopAnimationUpdated.m4v" type="video/mp4">
         </video>
@@ -130,7 +128,7 @@
         <div class="chart-container">
           <div id="non-linear-chart" class="non-linear-chart"></div>
           <div id="psi-bar-chart" class="non-linear-chart"></div>
-      </div>
+        </div>
         <h3>7./8.Feature visualization (interactive)</h3>
 
         <div class="feature-nucleotide">
@@ -153,7 +151,7 @@
           cursus.
           Nam
           nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-        
+
         <h3>Class strengths</h3>
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
           cursus.
@@ -207,7 +205,39 @@
         <!-- Rest of your content goes here -->
       </article>
     </main>
-
+    <footer class="article-footer">
+      <div class="footer-content">
+        <section>
+          <h3>Acknowledgment</h3>
+          <p>Acknowledgments here</p>
+        </section>
+    
+        <section>
+          <h3>Discussion and Review</h3>
+          <p>if there are any discussions</p>
+        </section>
+    
+        <section>
+          <h3>Further Reading</h3>
+          <ul>
+            <li><a href="#">Link to interface</a></li>
+            <li><a href="#">Link to paper?</a></li>
+          </ul>
+        </section>
+    
+        <section>
+          <h3>References</h3>
+          <ol>
+            <li>formatted references</li>
+          </ol>
+        </section>
+    
+        <section>
+          <h3>Appendix</h3>
+          <p>additional resources</p>
+        </section>
+      </div>
+    </footer>
 </body>
 
 </html>
