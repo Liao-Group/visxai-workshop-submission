@@ -133,7 +133,8 @@ let selected = null
 let selectedClass = null
 let previousClassColor = null
 
-function featureSelection(featureName = null, className = null) {
+function featureSelection(featureName = null, className = null,features = []) {
+
   const gridContainer = document.querySelector('.feature-legend-container');
   const width = gridContainer.clientWidth;
   const height = gridContainer.clientHeight;
@@ -152,7 +153,7 @@ function featureSelection(featureName = null, className = null) {
     .append('svg').attr('width', width)
 
   // Initialize legend
-  const legendItemWidth = 120 * widthRatio;
+  const legendItemWidth = 110 * widthRatio;
   const legendItemHeight = 25 * widthRatio;
   const legendSpacing = 85;
   const xOffset = ((width - widthRatio) - (2 * legendItemWidth + legendSpacing)) / 2; // Adjust the x-offset to position the legend within visible range
@@ -346,6 +347,21 @@ function featureSelection(featureName = null, className = null) {
 
   // Update SVGs for long skipping images
   updateSVGs("div.svg-grid-long-skipping", ".feature-long-svg", newImagesData.longSkipping, [skipping_color, skipping_highlight_color]);
+}
+
+function highlightLogos(listOfLogos = []) {
+  d3.select('div.feature-legend-container')
+  .selectAll('.background')
+  .style("fill", 'none');
+  listOfLogos.forEach(logo => {
+    console.log(logo);
+    const fillColor = getFillColor(logo);
+    // const highlightColor = getHighlightColor(logo);  // Uncomment if needed
+    
+    d3.select('div.feature-legend-container')
+      .select('.background.' + logo)
+      .style("fill", fillColor);
+  });
 }
 
 function resetGraph() {

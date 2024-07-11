@@ -716,9 +716,9 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
 
   const svgContainer = d3.select(".nucleotide-view"); // Ensure you have a container with this class
   const width = svgContainer.node().clientWidth;
-  const height = svgContainer.node().clientHeight;
-  const heightRatio = height / 600;
-  const widthRatio = width / 1290;
+  const height = 400
+  const heightRatio = height / 400;
+  const widthRatio = width / 1000;
 
   var margin = { top: 30, right: 10, bottom: 20, left: 50, middle: 22 };
   var svg_nucl = d3.select("svg.nucleotide-view").attr("width", width)
@@ -770,7 +770,38 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - 5) + ")")
-    .call(xNuAxis);
+    .call(xNuAxis)
+  gxNu.call(xNuAxis)
+    .selectAll('.tick')
+    .style("cursor", "pointer")
+    .on('click', function (event, d) {
+      d3.select(this).select('text')
+      .style("font-weight", "bold");
+      var letter = Array.from(sequence)[d - 1];
+      var pos = "pos_"+String(d - 1)
+      if (d3.selectAll(`.obj.incl.${pos}`).size() == 0) { var incl_data = []; }
+      else {
+        var incl_data = flatten_nested_json(d3.selectAll(`.obj.incl.${pos}`).datum());
+      }
+      if (d3.selectAll(`.obj.skip.${pos}`).size() == 0) { var skip_data = []; }
+      else {
+        var skip_data = flatten_nested_json(d3.selectAll(`.obj.skip.${pos}`).datum());
+      }
+      const uniqueInclValues = [...new Set(incl_data.map(item => {
+        const match = item.name.match(/incl_(\d+)/);
+        return match ? match[0] : null;
+      }))].filter(Boolean);
+      const uniqueSkipValues = [...new Set(skip_data.map(item => {
+        const match = item.name.match(/skip(?:_struct)?_\d+/);
+        return match ? match[0] : null;
+      }))].filter(Boolean);
+      highlightLogos([...uniqueSkipValues, ...uniqueInclValues])
+
+      console.log(uniqueInclValues,uniqueSkipValues);
+      console.log(incl_data, skip_data)
+      console.log("Clicked letter:", letter, d - 1);
+    });
+    
   gxNu.selectAll("path")
     .style("stroke-width", 0);
   gxNu.selectAll(".tick")
@@ -793,18 +824,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   var ySkip = d3.scaleLinear()
     .domain([0, max_skip])
     .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
-
-
-  // //I think we can revome this declarations and bring to inside the functions.
-  // // Set up for nucleotide sort
-  // var sort_width = parseFloat(d3.select("svg.nucleotide-sort").style("width"));
-  // var sort_height = parseFloat(d3.select("svg.nucleotide-sort").style("height"));
-  // var svg_sort = d3.select("svg.nucleotide-sort");
-
-  // // Set up for nucleotide zoom
-  // var zoom_width = parseFloat(d3.select("svg.nucleotide-zoom").style("width"));
-  // var zoom_height = parseFloat(d3.select("svg.nucleotide-zoom").style("height"));
-  // var svg_zoom = d3.select("svg.nucleotide-zoom");
 
   const InclusionAxis = (color = false) => {
     const barColor = color ? lightOther : inclusion_color;
@@ -1460,6 +1479,7 @@ function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, svg_
   else {
     var skip_data = flatten_nested_json(d3.selectAll(`.obj.skip.${pos}`).datum());
   }
+  console.log()
   const max_incl = d3.max(incl_data.map((d) => d.strength));
   const max_skip = d3.max(skip_data.map((d) => d.strength));
   max_strength = d3.max([max_incl, max_skip]);
