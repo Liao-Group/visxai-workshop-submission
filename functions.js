@@ -741,17 +741,19 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .domain(positions)
     .paddingInner(0.2)
     .paddingOuter(0.25);
+
   var xInclAxis = d3.axisBottom(x)
-    .tickSize(2 * widthRatio)
-    .tickFormat(function (d) {
-      return Array.from(structs)[d - 1];
-    });
-  var xSkipAxis = d3.axisTop(x)
     .tickSize(2 * widthRatio)
     .tickFormat(function (d) {
       if (((d - flanking_length) % 10 == 0 && d > flanking_length && d <= flanking_length + exon_length) || (d - flanking_length === 1) || (d - flanking_length === exon_length)) {
         return d - flanking_length;
       } else { return "" };
+      return Array.from(structs)[d - 1];
+    });
+  var xSkipAxis = d3.axisTop(x)
+    .tickSize(2 * widthRatio)
+    .tickFormat(function (d) {
+      return Array.from(structs)[d - 1];
     });
   var xNuAxis = d3.axisBottom(x)
     .tickSize(0)
@@ -773,7 +775,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - 5) + ")")
     .call(xNuAxis)
-  gxNu.call(xNuAxis)
+  
+    gxNu.call(xNuAxis)
     .selectAll('.tick')
     .style("cursor", "pointer")
     .on('click', function (event, d) {
