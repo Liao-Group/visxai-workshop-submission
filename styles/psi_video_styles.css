@@ -3,9 +3,21 @@ body {
   font-family: Arial;
 }
 
-.video-section-container {
+.full-width-header {
   width: 100%;
-  padding: 20px;
+}
+
+.content-wrapper {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.chart-container, .video-section-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+  box-sizing: border-box;
 }
 
 .video-buttons {
@@ -15,17 +27,19 @@ body {
 }
 
 .styled-button {
-  padding: 15px 30px;
+  padding: 10px 20px; /* Adjusted padding */
   border: 3px solid;
   background-color: white;
   color: black;
-  font-size: 22px;
+  font-size: 16px; /* Adjusted font size */
   cursor: pointer;
   border-radius: 10px;
   transition: background-color 0.15s ease, color 0.15s ease;
-  flex: 1;
-  margin: 0 10px;
+  flex: 1 1 30%; /* Adjusted flex */
+  margin: 0 5px; /* Adjusted margin */
+  box-sizing: border-box;
   outline: none;
+  text-align: center; /* Center text */
 }
 
 .styled-button:focus {
@@ -43,24 +57,21 @@ body {
 }
 
 .styled-button.one:hover,
-.styled-button.one:focus,
-.styled-button.active.one {
+.styled-button.one:focus {
   background-color: #024d82;
   color: white;
   outline: none;
 }
 
 .styled-button.two:hover,
-.styled-button.two:focus,
-.styled-button.active.two {
+.styled-button.two:focus {
   background-color: #01ab8e;
   color: white;
   outline: none;
 }
 
 .styled-button.three:hover,
-.styled-button.three:focus,
-.styled-button.active.three {
+.styled-button.three:focus {
   background-color: #f47200;
   color: white;
   outline: none;

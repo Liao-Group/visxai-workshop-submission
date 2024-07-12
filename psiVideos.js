@@ -1,7 +1,6 @@
 function showVideo(videoId) {
   const videos = document.querySelectorAll('video');
   const placeholder = document.getElementById('placeholder');
-  const buttons = document.querySelectorAll('.styled-button');
 
   let videoFound = false;
 
@@ -19,12 +18,4 @@ function showVideo(videoId) {
   });
 
   placeholder.style.display = videoFound ? 'none' : 'flex';
-
-  buttons.forEach(button => {
-    if (button.getAttribute('onclick').includes(videoId)) {
-      button.classList.add('active');
-    } else {
-      button.classList.remove('active');
-    }
-  });
 }
