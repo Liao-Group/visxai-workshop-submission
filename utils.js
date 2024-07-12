@@ -133,7 +133,7 @@ let selected = null
 let selectedClass = null
 let previousClassColor = null
 
-function featureSelection(featureName = null, className = null,features = []) {
+function featureSelection(featureName = null, className = null, features = []) {
 
   const gridContainer = document.querySelector('.feature-legend-container');
   const width = gridContainer.clientWidth;
@@ -177,28 +177,54 @@ function featureSelection(featureName = null, className = null,features = []) {
     .attr('height', legendItemHeight)
     .attr('rx', 4)
     .attr('ry', 4)
+    .style("cursor", "pointer")
     .attr('fill', function (d) {
       if (className !== null && className === d.name) { return d.highlight; }
       else { return d.color; }
     })
-    .on('mouseover', function (d) {
+    .on('click', function (event) {
+      nucleotideView(Data.sequence, Data.structs, Data.nucleotide_activations)
+
+      const classValue = d3.select(this).attr("class").split(' ')[1];
+      console.log(classValue)
+      d3.selectAll(".obj.incl, .obj.skip").attr("opacity", 0.2);
+
       legend.selectAll('.rectangle').attr('fill', (d) => d.color);
       d3.select(this).attr('fill', (d) => d.highlight);
-      d3.select('div.feature-legend-container')
-        .selectAll('svg.feature-svg.' + d.name)
-        .style("border", `2px solid ${d.highlight}`)
-      d3.select('div.feature-legend-container')
-        .selectAll('svg.feature-long-svg.' + d.name)
-        .style("border", `2px solid ${d.highlight}`)
+      d3.selectAll(`.obj.${classValue}`).attr("opacity", 1);
+      // if (classValue === 'skip') {
+      //   d3.select('div.feature-legend-container')
+      //     .selectAll('svg.feature-svg.' + classValue)
+      //     .attr("border", `2px solid ${skipping_highlight_color}`)
+      //   d3.select('div.feature-legend-container')
+      //     .selectAll('svg.feature-long-svg.' + classValue)
+      //     .style("border", `2px solid ${skipping_highlight_color}`)
+      // } else if(classValue === 'incl') {
+      //   d3.select('div.feature-legend-container')
+      //     .selectAll('svg.feature-svg.' + classValue)
+      //     .attr("border", `2px solid ${inclusion_highlight_color}`)
+      // }
+
+    })
+    .on('mouseover', function (d) {
+      console.log("here")
+      // legend.selectAll('.rectangle').attr('fill', (d) => d.color);
+      // d3.select(this).attr('fill', (d) => d.highlight);
+      // d3.select('div.feature-legend-container')
+      //   .selectAll('svg.feature-svg.' + d.name)
+      //   .style("border", `2px solid ${d.highlight}`)
+      // d3.select('div.feature-legend-container')
+      //   .selectAll('svg.feature-long-svg.' + d.name)
+      //   .style("border", `2px solid ${d.highlight}`)
     })
     .on('mouseout', function (d) {
-      legend.selectAll('.rectangle').attr('fill', (d) => d.color);
-      d3.select('div.feature-legend-container')
-        .selectAll('svg.feature-svg.' + d.name)
-        .style("border", `2px solid ${d.color}`)
-      d3.select('div.feature-legend-container')
-        .selectAll('svg.feature-long-svg.' + d.name)
-        .style("border", `2px solid ${d.color}`)
+      // legend.selectAll('.rectangle').attr('fill', (d) => d.color);
+      // d3.select('div.feature-legend-container')
+      //   .selectAll('svg.feature-svg.' + d.name)
+      //   .style("border", `2px solid ${d.color}`)
+      // d3.select('div.feature-legend-container')
+      //   .selectAll('svg.feature-long-svg.' + d.name)
+      //   .style("border", `2px solid ${d.color}`)
     });
 
   // Create legend labels
@@ -208,11 +234,9 @@ function featureSelection(featureName = null, className = null,features = []) {
     .attr('dy', '0.15em')
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
+    .style("cursor", "pointer")
     .style('font-size', `${13 * widthRatio}px`)
     .text(d => d.title);
-
-
-
 
   // Function to update SVGs with new data and highlight the selected feature
   const updateSVGs = (containerSelector, svgSelector, imagesArray, colors) => {
@@ -277,7 +301,6 @@ function featureSelection(featureName = null, className = null,features = []) {
           .attr("fill", colors[1]);
 
         background.style("fill", colors[0]);
-        // svg.select(this).style("border", `3px solid ${colors[1]}`);
       })
         .on("mouseleave", (event, data) => {
 
@@ -287,7 +310,7 @@ function featureSelection(featureName = null, className = null,features = []) {
           d3.select('div.feature-legend-container')
             .selectAll('.background')
             .style("fill", "none");
-  
+
           if (selectedBar !== null) {
             var color = null;
             var highlightColor = null;
@@ -306,7 +329,7 @@ function featureSelection(featureName = null, className = null,features = []) {
               .selectAll('svg.feature-long-svg.' + className)
               .style("border", `2px solid ${highlightColor}`);
             d3.select(selectedBar).attr('fill', highlightColor);
-           
+
             if (selectedFeatureBar !== null) {
               const featureName = d3.select(selectedFeatureBar).attr('class').split(' ')[1];
               d3.select('div.feature-legend-container')
@@ -315,8 +338,16 @@ function featureSelection(featureName = null, className = null,features = []) {
               d3.select(selectedFeatureBar).attr('fill', highlightColor);
             }
           }
-        })
-        .on("click", (event, info) => {
+        }).on("click", (event, info) => {
+          // d3.select('div.feature-legend-container')
+          // .selectAll('svg.feature-svg')
+          // .style("border", `2px solid ${d.color}`);
+          // d3.select('div.feature-legend-container')
+          //   .selectAll('svg.feature-long-svg')
+          //   .style("border", `2px solid ${d.color}`);
+
+          // d3.select(this).attr('fill', d.highlight);
+
           // previous = selected
           selected = d.feature
           // previousClass = selectedClass
@@ -327,12 +358,10 @@ function featureSelection(featureName = null, className = null,features = []) {
             nucleotideFeatureView(Data, Data.feature_activations, d.feature);
           }
 
+          console.log(d.feature)
           featureSelection(d.feature, d.feature.split("_")[0]);
           // this is causing to reset the feature legend 
 
-          selectedBar = d3.select('svg.feature-view-1').select('.bar.' + selectedClass)._groups[0][0];
-          selectedFeatureBar = d3.select('svg.feature-view-2').select('.bar.' + selected)._groups[0][0];
-          resetHighlight();
         });
     });
 
@@ -351,13 +380,13 @@ function featureSelection(featureName = null, className = null,features = []) {
 
 function highlightLogos(listOfLogos = []) {
   d3.select('div.feature-legend-container')
-  .selectAll('.background')
-  .style("fill", 'none');
+    .selectAll('.background')
+    .style("fill", 'none');
   listOfLogos.forEach(logo => {
     console.log(logo);
     const fillColor = getFillColor(logo);
     // const highlightColor = getHighlightColor(logo);  // Uncomment if needed
-    
+
     d3.select('div.feature-legend-container')
       .select('.background.' + logo)
       .style("fill", fillColor);
@@ -384,25 +413,25 @@ document.addEventListener("DOMContentLoaded", function () {
   // For this example, we'll ignore the option and dataset parameters
   // and always load the exon_s1.json file
   fetch('./data/exon_s1.json')
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json();
-      })
-      .then(data => {
-          window.Data = data;
-          // Render data
-          PSIview(data);
-          nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
-          hierarchicalBarChart(data, data.feature_activations);
-          // d3.select("svg.feature-view-2").selectAll("*").remove();
-          // d3.select("svg.feature-view-3").selectAll("*").remove();
-      })
-      .catch(error => {
-          console.error("Failed to fetch or parse data:", error);
-          // Optionally, inform the user visually
-      });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      window.Data = data;
+      // Render data
+      PSIview(data);
+      nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
+      hierarchicalBarChart(data, data.feature_activations);
+      // d3.select("svg.feature-view-2").selectAll("*").remove();
+      // d3.select("svg.feature-view-3").selectAll("*").remove();
+    })
+    .catch(error => {
+      console.error("Failed to fetch or parse data:", error);
+      // Optionally, inform the user visually
+    });
 });
 
 function onGraphRendered(element) {
@@ -419,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function () {
   dropdowns.forEach(dropdown => {
     const button = dropdown.querySelector(".unified-dropbtn");
     const content = dropdown.querySelector(".unified-dropdown-content");
-    
+
     button.addEventListener("click", function (event) {
       event.stopPropagation();
       // Close all dropdowns except the one clicked
@@ -446,19 +475,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   var coll = document.getElementsByClassName("collapsible");
   var i;
 
   for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
+    coll[i].addEventListener("click", function () {
       this.classList.toggle("active");
       var content = this.nextElementSibling;
-      if (content.style.maxHeight){
+      if (content.style.maxHeight) {
         content.style.maxHeight = null;
       } else {
         content.style.maxHeight = content.scrollHeight + "px";
-      } 
+      }
     });
   }
 });
