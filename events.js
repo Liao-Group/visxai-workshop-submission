@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // hierarchicalBarChart3(positionsParent, positionsChildren)
 });
 
+window.addEventListener('resize', function () {
+  nucleotideView(Data.sequence, Data.structs, Data.nucleotide_activations)
+  featureSelection(featureSelected = null, className = null)
+
+});
 // document.addEventListener("DOMContentLoaded", async function () {
 //   const selectElement = document.getElementById("option");
 //   const dateset = document.getElementById('dataset').value;
