@@ -18,4 +18,31 @@ function showVideo(videoId) {
   });
 
   placeholder.style.display = videoFound ? 'none' : 'flex';
+
+  // Update button styles
+  const buttons = document.querySelectorAll('.styled-button');
+  buttons.forEach(button => {
+    if (button.getAttribute('onclick').includes(videoId)) {
+      if (button.classList.contains('one')) {
+        button.style.backgroundColor = '#024d82';
+      } else if (button.classList.contains('two')) {
+        button.style.backgroundColor = '#01ab8e';
+      } else if (button.classList.contains('three')) {
+        button.style.backgroundColor = '#f47200';
+      }
+      button.style.color = 'white';
+    } else {
+      button.style.backgroundColor = 'white';
+      button.style.color = 'black';
+    }
+  });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('.styled-button');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      showVideo(button.getAttribute('onclick').match(/'([^']+)'/)[1]);
+    });
+  });
+});
