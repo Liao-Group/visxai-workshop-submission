@@ -82,42 +82,25 @@
           <section id="video-section">
             <h2>PSI Explanation Section</h2>
             <div class="video-buttons">
-              <button class="styled-button one" onclick="showVideo('video1')">
-                Exon 1 <br> GCGGCACC...GUAGUCCU
-              </button>
-              <button class="styled-button two" onclick="showVideo('video2')">
-                Exon 2 <br> UCAAACAG...UAAUGGGA
-              </button>
-              <button class="styled-button three" onclick="showVideo('video3')">
-                Exon 3 <br> AUGAAAUC...CCACAGCA
-              </button>
+              <button class="styled-button one" onclick="showVideo('video1')">Exon 1 <br> GCGGCACC...GUAGUCCU</button>
+              <button class="styled-button two" onclick="showVideo('video2')">Exon 2 <br> UCAAACAG...UAAUGGGA</button>
+              <button class="styled-button three" onclick="showVideo('video3')">Exon 3 <br> AUGAAAUC...CCACAGCA</button>
             </div>
             <div class="video-container">
               <div id="placeholder" class="video-placeholder">Select an exon to see its PSI</div>
-              <video id="video1" width="640" height="360" autoplay>
-                <source src="resources/PSI 1.m4v" type="video/mp4">
-                Your browser does not support the video tag.
+              <video id="video1" autoplay>
+                <source src="resources/psiVideos/PSI New 1.m4v" type="video/mp4"> Your browser does not support the video tag.
               </video>
-              <video id="video2" width="640" height="360" autoplay>
-                <source src="resources/PSI 2.m4v" type="video/mp4">
-                Your browser does not support the video tag.
+              <video id="video2" autoplay>
+                <source src="resources/psiVideos/PSI New 2.m4v" type="video/mp4"> Your browser does not support the video tag.
               </video>
-              <video id="video3" width="640" height="360" autoplay>
-                <source src="resources/PSI 3.m4v" type="video/mp4">
-                Your browser does not support the video tag.
+              <video id="video3" autoplay>
+                <source src="resources/psiVideos/PSI New 3.m4v" type="video/mp4"> Your browser does not support the video tag.
               </video>
             </div>
           </section>
-        </div> 
-        <script src="videoSection.js"></script>
-
-        <hr>
-        <h2>Datasets</h2>
-
-        <p>2.Exon inclusion, exon skipping (animation) </p>
-        <video width="400" height="300" autoplay loop muted>
-          <source src="resources/WorkshopAnimationUpdated.m4v" type="video/mp4">
-        </video>
+        </div>
+        <script src="psiVideos.js"></script>
 
         <h3>Input</h3>
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
