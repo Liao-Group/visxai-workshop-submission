@@ -1,3 +1,13 @@
+let selectedInfoId = null;
+let selectedClassName = null;
+
+function selectVideo(videoId, infoId, className) {
+  showVideo(videoId);
+  selectedInfoId = infoId;
+  selectedClassName = className;
+  updateInfoContainer(infoId, className);
+}
+
 function showVideo(videoId) {
   const videos = document.querySelectorAll('video');
   const placeholder = document.getElementById('placeholder');
@@ -38,11 +48,32 @@ function showVideo(videoId) {
   });
 }
 
+function showInfo(infoId, className) {
+  updateInfoContainer(infoId, className);
+}
+
+function resetInfo() {
+  if (selectedInfoId) {
+    updateInfoContainer(selectedInfoId, selectedClassName);
+  } else {
+    const infoContainer = document.getElementById('info-container');
+    infoContainer.innerText = "Hover over an exon to see its information";
+    infoContainer.className = 'info-container';
+  }
+}
+
+function updateInfoContainer(infoId, className) {
+  const infoContainer = document.getElementById('info-container');
+  const infoText = {
+    info1: "CGCCGUAUUACCUGCCCUCAAUCAUUAACGCUCUGGUCCGCAUUACAUGACUAUUAUUACCAAGCGCAAA<br>....(((((..........)))))...((((((.....((((.((((.....................))))))))......))).))).",
+    info2: "CCCAGAAAAAUUCCUAACUGCAGAAACCUGACAAAAGCCAAAUCUUGAGGCAAAAACAACUCAAAUAUCG<br>....(((((((.(((............)))..).))))))......((......(((((..........))))).....)).........",
+    info3: "CCACCCAGUCCACCCUCUGCAAUAUUUAGUCGUAUUCCAUGACACAAGUAAUCGAUUCACAUACGCACAA<br>......(((...)))(((.((......(((.......(((((.(((.(.((...)).).)))))))).......))).....)).))).."
+  };
+  infoContainer.innerHTML = infoText[infoId];
+  infoContainer.className = `info-container ${className}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.styled-button');
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      showVideo(button.getAttribute('onclick').match(/'([^']+)'/)[1]);
-    });
-  });
+  // Default to selecting the second option
+  selectVideo('video2', 'info2', 'two');
 });

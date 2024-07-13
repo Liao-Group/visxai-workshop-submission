@@ -82,10 +82,11 @@
           <section id="video-section">
             <h2>PSI Explanation Section</h2>
             <div class="video-buttons">
-              <button class="styled-button one" onclick="showVideo('video1')">Exon 1 <br> GCGGCACC...GUAGUCCU</button>
-              <button class="styled-button two" onclick="showVideo('video2')">Exon 2 <br> UCAAACAG...UAAUGGGA</button>
-              <button class="styled-button three" onclick="showVideo('video3')">Exon 3 <br> AUGAAAUC...CCACAGCA</button>
+              <button class="styled-button one" onclick="selectVideo('video1', 'info1', 'one')" onmouseover="showInfo('info1', 'one')" onmouseout="resetInfo()">Exon 1</button>
+              <button class="styled-button two" onclick="selectVideo('video2', 'info2', 'two')" onmouseover="showInfo('info2', 'two')" onmouseout="resetInfo()">Exon 2</button>
+              <button class="styled-button three" onclick="selectVideo('video3', 'info3', 'three')" onmouseover="showInfo('info3', 'three')" onmouseout="resetInfo()">Exon 3</button>
             </div>
+            <div id="info-container" class="info-container">Hover over an exon to see its information</div>
             <div class="video-container">
               <div id="placeholder" class="video-placeholder">Select an exon to see its PSI</div>
               <video id="video1" autoplay>

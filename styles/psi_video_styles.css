@@ -112,3 +112,41 @@ video {
   display: none;
   z-index: 2;
 }
+
+.info-container {
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 18px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.info-container {
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: white;
+  color: #333;
+  font-size: 18px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 3px solid;
+}
+
+.info-container.one {
+  border-color: #024d82;
+}
+
+.info-container.two {
+  border-color: #01ab8e;
+
+}
+
+.info-container.three {
+  border-color: #f47200;
+}
