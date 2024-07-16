@@ -105,7 +105,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
       // Create axes
       const xAxis = d3.axisBottom(xScale);
-      const yAxis = d3.axisLeft(yScale);
+      const yAxis = d3.axisLeft(yScale)
+      .tickValues([0, 0.25, 0.5, 0.75, 1])
+      .tickFormat((d, i) => {
+        // Show labels only for 0, 0.5, and 1
+        return [0, 0.5, 1].includes(d) ? d3.format(".1f")(d) : "";
+      });
   
       // Add grid
       svg.append("g")
@@ -125,8 +130,11 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add centered y-axis
       const centerX = xScale(0);
       svg.append("g")
-          .attr("transform", `translate(${centerX},0)`)
-          .call(yAxis);
+        .attr("transform", `translate(${centerX},0)`)
+        .call(yAxis)
+        .call(g => g.selectAll(".tick line")
+          .attr("x2", (d) => [0, 0.5, 1].includes(d) ? -6 : -3)
+        );
   
       // Add axis labels
       svg.append("text")
@@ -134,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
           .attr("text-anchor", "middle")
           .attr("x", width / 2)
           .attr("y", height + margin.bottom - 10)
-          .text(`Δ Strenght`);
+          .text(`Δ Strength`);
   
       svg.append("text")
           .attr("class", "axis-label")
@@ -231,83 +239,125 @@ document.addEventListener('DOMContentLoaded', function() {
   
         }
 
-
- // Create and update PSI Bar Chart
- function updatePSIBarChart(data) {
-     d3.select("#psi-bar-chart").selectAll("*").remove();
-
-     const svg = d3.select("#psi-bar-chart")
-         .append("svg")
-         .attr("width", width)
-         .attr("height", height)
-         .append("g")
-         .attr("transform", `translate(${margin.left},${margin.top})`);
-
-     const yScale = d3.scaleLinear()
-         .domain([0, 1])
-         .range([chartHeight, 0]);
-
-     const yAxis = d3.axisLeft(yScale);
-
-     svg.append("g")
-         .call(yAxis);
-
-     const barWidth = 60;
-     const barColor = data.psi < 0.5 ? skipping_color : inclusion_color;
-     const barHeight = Math.abs(yScale(data.psi) - yScale(0.5));
-     const barY = data.psi > 0.5 ? yScale(data.psi) : yScale(0.5);
-
-     svg.append("rect")
-         .attr("x", chartWidth / 2 - barWidth / 2)
-         .attr("y", barY)
-         .attr("width", barWidth)
-         .attr("height", barHeight)
-         .attr("fill", barColor)
-         .attr("stroke", "#000")
-         .attr("stroke-width", 1);
-
-     // Add 0.5 line
-     svg.append("line")
-         .attr("x1", 0)
-         .attr("x2", chartWidth)
-         .attr("y1", yScale(0.5))
-         .attr("y2", yScale(0.5))
-         .attr("stroke", "black")
-         .attr("stroke-width", 1)
-         .attr("stroke-dasharray", "5,5");
-
-     svg.append("text")
-         .attr("x", chartWidth / 2)
-         .attr("y", -margin.top / 2)
-         .attr("text-anchor", "middle")
-         .style("font-size", "16px")
-         .style("font-weight", "bold")
-         .text("PSI Bar Chart");
-
-     svg.append("text")
-         .attr("x", chartWidth / 2)
-         .attr("y", chartHeight + margin.bottom - 30)
-         .attr("text-anchor", "middle")
-         .text(`Δ Strenght: ${data.deltaForce.toFixed(2)}`);
-
-     svg.append("text")
-         .attr("x", chartWidth / 2)
-         .attr("y", chartHeight + margin.bottom - 10)
-         .attr("text-anchor", "middle")
-         .text(`PSI: ${data.psi.toFixed(6)}`);
-
-     svg.append("text")
-         .attr("class", "axis-label")
-         .attr("text-anchor", "middle")
-         .attr("transform", "rotate(-90)")
-         .attr("x", -chartHeight / 2)
-         .attr("y", -margin.left + 20)
-         .text("PSI");
- }
-
+        function updatePSIBarChart(data) {
+            d3.select("#psi-bar-chart").selectAll("*").remove();
+            const svgContainer = d3.select("#psi-bar-chart");
+            const width = 300;
+            const height = 400;
+            const heightRatio = height / 370;
+            const widthRatio = width / 193;
+          
+            const svg = svgContainer
+              .append("svg")
+              .attr("width", width)
+              .attr("height", height);
+          
+            const margin = { top: 40, right: 50, bottom: 30, left: 50 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+          
+            const chartGroup = svg.append('g')
+              .attr('transform', `translate(${margin.left}, ${margin.top})`);
+          
+            // Main Y-axis (Δ Strength)
+            const deltaForce = [-100, -20, -10, -5, 0, 5, 10, 20, 100];
+            const correspondingPSI = [0.000006, 0.071174, 0.232515, 0.361840, 0.5, 0.638148, 0.756705, 0.892360, 0.987334];
+            const yScale = d3.scaleLinear().domain([0, 1]).range([chartHeight, 0]);
+            const yAxis = d3.axisLeft(yScale)
+              .tickValues(correspondingPSI)
+              .tickFormat((d, i) => deltaForce[i]);
+          
+            chartGroup.append('g')
+              .attr('transform', `translate(${chartWidth / 2 - 30 * widthRatio}, 0)`)
+              .call(yAxis);
+          
+            // Secondary Y-axis (PSI)
+            const yScale2 = d3.scaleLinear()
+              .domain([0, 1])
+              .range([chartHeight, 0]);
+            const yAxis2 = d3.axisRight(yScale2).ticks(5);
+          
+            chartGroup.append('g')
+              .attr('transform', `translate(${chartWidth / 2 + 30 * widthRatio}, 0)`)
+              .call(yAxis2);
+          
+            // 0.5 line
+            chartGroup.append("line")
+              .attr("x1", chartWidth / 2 - 30 * widthRatio)
+              .attr("x2", chartWidth / 2 + 30 * widthRatio)
+              .attr("y1", yScale(0.5))
+              .attr("y2", yScale(0.5))
+              .attr("stroke", "black")
+              .attr("stroke-width", 1);
+          
+            // Title
+            svg.append('text')
+              .attr('x', (width / 2))
+              .attr('y', (margin.top / 2))
+              .attr('text-anchor', 'middle')
+              .style('font-size', `${14 * widthRatio}px`)
+              .text('PSI Bar Chart');
+          
+            // Tooltips
+            const tooltip1 = chartGroup.append('text')
+              .attr('x', chartWidth / 2)
+              .attr('y', height - margin.bottom - 20)
+              .attr('text-anchor', 'middle')
+              .attr('font-size', `${12 * heightRatio}px`)
+              .attr('font-weight', 'bold')
+              .attr('fill', 'black')
+              .style('opacity', 0)
+              .text(`Δ Strength: ${data.deltaForce.toFixed(2)}`);
+          
+            const tooltip2 = chartGroup.append('text')
+              .attr('x', chartWidth / 2)
+              .attr('y', height - margin.bottom - 20)
+              .attr('text-anchor', 'middle')
+              .attr('font-size', `${12 * heightRatio}px`)
+              .attr('font-weight', 'bold')
+              .attr('fill', 'black')
+              .style('opacity', 0)
+              .text(`PSI: ${data.psi.toFixed(6)}`);
+          
+            // Y-axis labels
+            const psi = chartGroup.append('text')
+              .attr('transform', `translate(${chartWidth + 60}, ${chartHeight / 2}) rotate(-90)`)
+              .attr("font-size", `${12 * heightRatio}px`)
+              .attr("y", -23)
+              .style('text-anchor', 'middle')
+              .text('Predicted PSI')
+              .on("mouseover", () => tooltip2.style("opacity", .9))
+              .on("mouseout", () => tooltip2.style("opacity", 0));
+          
+            const strength = chartGroup.append('text')
+              .attr('transform', 'rotate(-90)')
+              .attr('x', -chartHeight / 2)
+              .attr("y", -25)
+              .attr("font-size", `${12 * heightRatio}px`)
+              .style('text-anchor', 'middle')
+              .text('Δ Strength (a.u.)')
+              .on("mouseover", () => tooltip1.style("opacity", .9))
+              .on("mouseout", () => tooltip1.style("opacity", 0));
+          
+            // Bar
+            const barColor = data.psi < 0.5 ? skipping_color : inclusion_color;
+            const barWidth = 25 * widthRatio;
+            const barHeight = Math.abs(yScale(data.psi) - yScale(0.5));
+            const barY = data.psi > 0.5 ? yScale(data.psi) : yScale(0.5);
+          
+            chartGroup.append('rect')
+              .attr('x', (chartWidth / 2) - (barWidth / 2))
+              .attr('width', barWidth)
+              .attr('y', barY)
+              .attr('height', barHeight)
+              .attr('fill', barColor)
+              .attr("stroke", "#000")
+              .attr("stroke-width", 1);
+          }
  // Initialize visualizations
  createNonLinearPSIGraph("#non-linear-chart");
  createNonLinearPSIGraph("#psi-chart-gradient");
+
 
  updatePSIBarChart(data[Math.floor(data.length / 2)]); // Start with middle data point
 });
