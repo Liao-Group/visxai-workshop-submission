@@ -17,6 +17,29 @@
   width: 100%;
   height: 400px;
 }
+.bottom {
+  display: flex;
+  gap: 20px;
+}
+
+.nucleotide-mini-charts {
+  display: flex;
+  gap: 20px;
+  /* height: 400px; */
+}
+
+.nucleotide-sort,
+.nucleotide-zoom {
+  width: 100%;
+  height:100%;
+}
+
+.nucleotide-sort svg,
+.nucleotide-zoom svg {
+  width: 100%;
+  height: 100%;
+}
+
 
 .feature-legend-container {
   flex: 0 1 auto;

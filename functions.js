@@ -712,7 +712,6 @@ function hierarchicalBarChart3(parentName, data) {
  * nucleotideView 
  */
 function nucleotideView(sequence, structs, data, classSelected = null) {
-  console.log("nuc view")
   svg = d3.select("svg.nucleotide-view")
   svg.selectAll("*").remove();
 
@@ -1002,7 +1001,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         d3.select(".obj.nt." + pos)
           .style("font-weight", "bold")
           .classed("free", false);
-
+          nucleotideSort(pos, margin, 300, 500,[skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
+          nucleotideZoom(sequence, structs, pos, margin, 300, 500, max_strength, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
       });
   }
   return svg_nucl
@@ -1135,7 +1135,10 @@ function nucleotideFeatureView(parent, data, feature_name) {
 /**
  * nucleotideSort
  */
-function nucleotideSort(pos, margin, width, height, svg_sort, svg_zoom, colors) {
+function nucleotideSort(pos, margin, width, height, colors) {
+  console.log("nuc sort")
+  var svg_sort = d3.select("svg.nucleotide-sort");
+  var svg_zoom = d3.select("svg.nucleotide-zoom");
   const inclusionColor = colors[2]
   const inclusionHighlightColor = colors[3]
   const skippingColor = colors[0]
@@ -1363,7 +1366,9 @@ function nucleotideSort(pos, margin, width, height, svg_sort, svg_zoom, colors) 
 /**
  * nucleotideZoom
  */
-function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, svg_zoom, max_strength, colors) {
+function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, max_strength, colors) {
+
+  var svg_zoom = d3.select("svg.nucleotide-zoom");
   const heightRatio = height / 622;
   const widthRatio = zoom_width / 292;
   const int_pos = parseInt(pos.slice(4));
