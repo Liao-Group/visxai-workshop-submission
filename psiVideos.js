@@ -2,6 +2,7 @@ let selectedInfoId = 'info2';
 let selectedClassName = 'two';
 
 function selectVideo(videoId, infoId, className) {
+  // Select only videos within the video-section-container
   const videos = document.querySelectorAll('.video-section-container video');
   videos.forEach(video => {
     video.style.display = video.id === videoId ? 'block' : 'none';
@@ -13,7 +14,7 @@ function selectVideo(videoId, infoId, className) {
   selectedClassName = className;
   updateInfoContainer(infoId, className);
 
-  // Update button styles
+  // Update button styles only within the video-section-container
   const buttons = document.querySelectorAll('.video-section-container .styled-button');
   buttons.forEach(button => {
     const isSelected = button.getAttribute('onclick').includes(videoId);
@@ -31,6 +32,7 @@ function resetInfo() {
 }
 
 function updateInfoContainer(infoId, className) {
+  // Select only the info container within the video-section-container
   const infoContainer = document.querySelector('.video-section-container #info-container');
   const infoText = {
     info1: "CGCCGUAUUACCUGCCCUCAAUCAUUAACGCUCUGGUCCGCAUUACAUGACUAUUAUUACCAAGCGCAAA<br>....(((((..........)))))...((((((.....((((.((((.....................))))))))......))).))).",
