@@ -29,7 +29,7 @@
 
     <header class="full-width-header">
       <div class="header-content">
-        <h1>Inside of an Interpretable-by-Design Machine Learning Model for Deciphering RNA Splicing</h1>
+        <h1>Inside of an interpretable-by-design machine learning model for deciphering RNA splicing</h1>
         <p class="subtitle">Subtitle</p>
         <div class="author-info">
           <p><span class="author">Autho1</span>, <span class="author">Author2</span></p>
@@ -50,60 +50,82 @@
         </section> -->
         <h2>Background</h2>
 
-
-        <h3>What is RNA splicing?</h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-        <p>1.Splicing explanation (animation)</p>
         <video width="640" height="360" autoplay loop muted>
           <source src="resources/WorkshopAnimationUpdated.m4v" type="video/mp4">
           Your browser does not support the video tag.
         </video>
-        <h3>Exons, introns, and splice sites</h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-        <h3>RNA structure </h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
 
+        <h3><b>RNA Splicing</b></h3>
+        <p>Genetic information stored in the human genome in DNA is used as a template for RNA. <br><br>
+          For many genes in the human genome, different RNA products can be produced from the same DNA. <br><br>
+          The process of generating these different RNA products is termed alternative RNA splicing.<br><br>
+          The most common form of alternative splicing involves the joining of differential RNA exon sequences.
+        </p>
+        
+        <h3><b>Exon Inclusion</b></h3>
+        <p>
+          In the case of exon inclusion, an exon is included in the spliced product.
+          <br><br>
+          <br><br>
+          <br><br>
+        </p>
+        <video width="640" height="480" controls autoplay loop>
+          <source src="resources/psiVideos/PSI_New_1.m4v" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
 
-        <div class="chart-container">
-          <div class="psi-chart-gradient" id="psi-chart-gradient"></div>
-        </div>
+        <h3><b>Exon Skipping</b></h3>
+        <p>
+          In the case of exon skipping, an exon is removed from the spliced product.
+          <br><br>
+          <br><br>
+          <br><br>
+        </p>
 
+        <h3><b>Percent Spliced In (PSI)</b></h3>
+        <p>
+          When information is read out from the genome (transcribed), multiple RNAs are produced for each gene. 
+          These RNAs are then alternatively spliced, often generating both inclusion and skipping products. 
+          For example, a hundred RNAs can be transcribed from the same DNA sequence. 
+        </p>
         <!-- PSI Video Section -->
         <div class="video-section-container">
           <section id="video-section">
-            <h2>PSI Explanation Section</h2>
             <div class="video-buttons">
-              <button class="styled-button one" onclick="showVideo('video1')">Exon 1 <br> GCGGCACC...GUAGUCCU</button>
-              <button class="styled-button two" onclick="showVideo('video2')">Exon 2 <br> UCAAACAG...UAAUGGGA</button>
-              <button class="styled-button three" onclick="showVideo('video3')">Exon 3 <br> AUGAAAUC...CCACAGCA</button>
+              <button class="styled-button one" onclick="selectVideo('video1', 'info1', 'one')" onmouseover="showInfo('info1', 'one')" onmouseout="resetInfo()">Exon 1</button>
+              <button class="styled-button two" onclick="selectVideo('video2', 'info2', 'two')" onmouseover="showInfo('info2', 'two')" onmouseout="resetInfo()">Exon 2</button>
+              <button class="styled-button three" onclick="selectVideo('video3', 'info3', 'three')" onmouseover="showInfo('info3', 'three')" onmouseout="resetInfo()">Exon 3</button>
             </div>
+            <div id="info-container" class="info-container">Hover over an exon to see its information</div>
             <div class="video-container">
-              <div id="placeholder" class="video-placeholder">Select an exon to see its PSI</div>
               <video id="video1" autoplay>
-                <source src="resources/psiVideos/PSI New 1.m4v" type="video/mp4"> Your browser does not support the
-                video tag.
+                <source src="resources/psiVideos/PSI_New_1.m4v" type="video/mp4"> Your browser does not support the video tag.
               </video>
               <video id="video2" autoplay>
-                <source src="resources/psiVideos/PSI New 2.m4v" type="video/mp4"> Your browser does not support the
-                video tag.
+                <source src="resources/psiVideos/PSI_New_2.m4v" type="video/mp4"> Your browser does not support the video tag.
               </video>
               <video id="video3" autoplay>
-                <source src="resources/psiVideos/PSI New 3.m4v" type="video/mp4"> Your browser does not support the
-                video tag.
+                <source src="resources/psiVideos/PSI_New_3.m4v" type="video/mp4"> Your browser does not support the video tag.
               </video>
             </div>
           </section>
         </div>
         <script src="psiVideos.js"></script>
+
+        <h3><b>Splicing Logic</b></h3>
+        <p>
+          One of the major challenges in modern genomics research is understanding the logic underlying RNA splicing, 
+          specifically understanding which RNA-encoded features lead to a specific PSI. 
+          While RNAs encode two-dimensional information (sequence), 
+          they can also form more complex three-dimensional structures (structures).
+          <br><br>
+          <br><br>
+          <br><br> 
+        </p>
+        
+        <div class="chart-container">
+          <div class="psi-chart-gradient" id="psi-chart-gradient"></div>
+        </div>
 
         <h3>Input</h3>
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
