@@ -53,3 +53,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Default to selecting the second option
   selectVideo('video2', 'info2', 'two');
 });
+
+
+// replay button logic
+document.addEventListener("DOMContentLoaded", function() {
+  var video = document.getElementById("myVideo");
+  var replayButton = document.getElementById("replayButton");
+
+  replayButton.addEventListener("click", function() {
+      video.currentTime = 0;
+      video.play();
+  });
+});
+
+document.getElementById('replayButton2').addEventListener('click', function() {
+  var video = document.getElementById('myVideo2');
+  video.currentTime = 0;
+  video.play();
+});
