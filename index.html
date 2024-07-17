@@ -21,9 +21,10 @@
 <body>
   <script src="functions.js"></script>
   <script src="constants.js"></script>
-  <script src="events.js"></script>
   <script src="utils.js"></script>
   <script src="psiChart_nonLinear.js"></script>
+  <script src="comparison.js"></script>
+
 
   <header>
 
@@ -224,24 +225,38 @@
         <hr>
 
         <h2>Applications</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-          magna
-          aliqua.</p>
-        <div id="chart" class="chart"></div>
-
-        <h3>Comparisons</h3>
+        <p>One key aspect of interpretability is comparing the network’s reasoning
+          process across multiple inputs. At the local level, this involves examin-
+          ing how the network’s complex reasoning differs across input instances,
+          specifically examining how the network identifies different features
+          across inputs yet follows the same reasoning process to arrive at similar
+          predictions. By analyzing reasoning across multiple input instances,
+          researchers can also gain insights into the global reasoning processing
+          within a network. </p>
+          <p>
+         Our first use case demonstrates how these visualizations can be used
+          to examine how the network can arrive at the same output prediction
+          from three different inputs from the original dataset. We
+          generated difference-to-prediction charts, strongest skipping feature
+          charts, and exon view visualizations for all three inputs. While
+          the difference-to-prediction view is the same across the two inputs and
+          the feature class view appears very similar, closer inspection reveals that
+          the specific inclusion and skipping values vary for each input. Drilling
+          down into the hierarchical feature-focused charts for each sequence also
+          reveals different specific skipping features. Furthermore, a comparison 
+          of exon views reveals differences in the distribution of feature strengths
+          across the three inputs.
+          </p>
+ 
+        <h3>Comparisions & Mutations</h3>
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
           cursus.
           Nam
           nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-
-        <h3>Mutations</h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-
         <hr>
+        <div class="chart-container">
+          <svg id="nucleotide-comp" class="nucleotide-comp"></svg>
+      </div>
 
         <h2>Summary</h2>
         <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum

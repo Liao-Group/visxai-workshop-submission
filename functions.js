@@ -8,6 +8,8 @@ This variable represents the data coming formt he json file.
  other values as we call that function. 
 */
 var Data = []
+var comp = []
+
 var featuresParent = []
 var featuresChildren = []
 var positionsParent = []
