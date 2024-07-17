@@ -89,13 +89,19 @@ body {
   max-width: calc(100% - 10px);
   text-align: center;
   margin: 10px auto;
-  padding: 10px;
+  padding: 5px;
   background-color: white;
-  color: #333;
-  font-size: 18px;
   border-radius: 10px;
   box-sizing: border-box;
   border: 3px solid;
+}
+
+.video-section-container .info-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
 }
 
 .video-section-container .info-container.one { border-color: #024d82; }
