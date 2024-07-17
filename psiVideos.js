@@ -32,14 +32,14 @@ function resetInfo() {
 }
 
 function updateInfoContainer(infoId, className) {
-  // Select only the info container within the video-section-container
   const infoContainer = document.querySelector('.video-section-container #info-container');
-  const infoText = {
-    info1: "CGCCGUAUUACCUGCCCUCAAUCAUUAACGCUCUGGUCCGCAUUACAUGACUAUUAUUACCAAGCGCAAA<br>....(((((..........)))))...((((((.....((((.((((.....................))))))))......))).))).",
-    info2: "CCCAGAAAAAUUCCUAACUGCAGAAACCUGACAAAAGCCAAAUCUUGAGGCAAAAACAACUCAAAUAUCG<br>....(((((((.(((............)))..).))))))......((......(((((..........))))).....)).........",
-    info3: "CCACCCAGUCCACCCUCUGCAAUAUUUAGUCGUAUUCCAUGACACAAGUAAUCGAUUCACAUACGCACAA<br>......(((...)))(((.((......(((.......(((((.(((.(.((...)).).)))))))).......))).....)).))).."
+  const infoImage = document.querySelector('.video-section-container #info-image');
+  const infoImages = {
+    info1: 'resources/psiVideos/psi_option_01.png',
+    info2: 'resources/psiVideos/psi_option_02.png',
+    info3: 'resources/psiVideos/psi_option_03.png'
   };
-  infoContainer.innerHTML = infoText[infoId];
+  infoImage.src = infoImages[infoId];
   infoContainer.className = `info-container ${className}`;
 }
 
@@ -52,4 +52,22 @@ function getButtonColor(button) {
 document.addEventListener('DOMContentLoaded', () => {
   // Default to selecting the second option
   selectVideo('video2', 'info2', 'two');
+});
+
+
+// replay button logic
+document.addEventListener("DOMContentLoaded", function() {
+  var video = document.getElementById("myVideo");
+  var replayButton = document.getElementById("replayButton");
+
+  replayButton.addEventListener("click", function() {
+      video.currentTime = 0;
+      video.play();
+  });
+});
+
+document.getElementById('replayButton2').addEventListener('click', function() {
+  var video = document.getElementById('myVideo2');
+  video.currentTime = 0;
+  video.play();
 });
