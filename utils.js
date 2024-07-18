@@ -1,3 +1,5 @@
+
+
 /**
  * Recursively calculates the total strength of a nested data structure.
  * @param {Object} data - The nested data object.
@@ -409,9 +411,23 @@ function resetGraph() {
 }
 
 
+
 document.addEventListener("DOMContentLoaded", function () {
-  // For this example, we'll ignore the option and dataset parameters
-  // and always load the exon_s1.json file
+  fetch('./data/exon_s1_34c>a.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      comp = data
+    })
+    .catch(error => {
+      console.error("Failed to fetch or parse data:", error);
+      // Optionally, inform the user visually
+    });
+
   fetch('./data/exon_s1.json')
     .then(response => {
       if (!response.ok) {
@@ -422,9 +438,12 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       window.Data = data;
       // Render data
-      PSIview(data);
+
       nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
-      hierarchicalBarChart(data, data.feature_activations);
+      // hierarchicalBarChart(data, data.feature_activations);
+      featureSelection(featureSelected = null, className = null)
+      nucleotideComparison(data, comp)
+
       // d3.select("svg.feature-view-2").selectAll("*").remove();
       // d3.select("svg.feature-view-3").selectAll("*").remove();
     })
