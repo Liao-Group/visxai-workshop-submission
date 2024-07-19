@@ -7,7 +7,7 @@
  */
 function recursive_total_strength(data) {
   if (!("children" in data)) { return data.strength; }
-  else { return d3.sum(d3.map(data["children"], recursive_total_strength).keys()); }
+  else { return d3.sum(d3.map(data["children"], recursive_total_strength).keys()) }
 }
 
 /**
@@ -185,48 +185,25 @@ function featureSelection(featureName = null, className = null, features = []) {
       else { return d.color; }
     })
     .on('click', function (event) {
+      d3.selectAll('.background').style('fill', 'none');
+
       nucleotideView(Data.sequence, Data.structs, Data.nucleotide_activations)
 
       const classValue = d3.select(this).attr("class").split(' ')[1];
       console.log(classValue)
-      d3.selectAll(".obj.incl, .obj.skip").attr("opacity", 0.2);
+      d3.selectAll(".obj.incl, .obj.skip").attr("opacity", 0.1);
 
       legend.selectAll('.rectangle').attr('fill', (d) => d.color);
       d3.select(this).attr('fill', (d) => d.highlight);
-      d3.selectAll(`.obj.${classValue}`).attr("opacity", 1);
-      // if (classValue === 'skip') {
-      //   d3.select('div.feature-legend-container')
-      //     .selectAll('svg.feature-svg.' + classValue)
-      //     .attr("border", `2px solid ${skipping_highlight_color}`)
-      //   d3.select('div.feature-legend-container')
-      //     .selectAll('svg.feature-long-svg.' + classValue)
-      //     .style("border", `2px solid ${skipping_highlight_color}`)
-      // } else if(classValue === 'incl') {
-      //   d3.select('div.feature-legend-container')
-      //     .selectAll('svg.feature-svg.' + classValue)
-      //     .attr("border", `2px solid ${inclusion_highlight_color}`)
-      // }
+      // d3.selectAll(`.obj.${classValue}`).attr("opacity", 1);
 
     })
     .on('mouseover', function (d) {
       console.log("here")
-      // legend.selectAll('.rectangle').attr('fill', (d) => d.color);
-      // d3.select(this).attr('fill', (d) => d.highlight);
-      // d3.select('div.feature-legend-container')
-      //   .selectAll('svg.feature-svg.' + d.name)
-      //   .style("border", `2px solid ${d.highlight}`)
-      // d3.select('div.feature-legend-container')
-      //   .selectAll('svg.feature-long-svg.' + d.name)
-      //   .style("border", `2px solid ${d.highlight}`)
+
     })
     .on('mouseout', function (d) {
-      // legend.selectAll('.rectangle').attr('fill', (d) => d.color);
-      // d3.select('div.feature-legend-container')
-      //   .selectAll('svg.feature-svg.' + d.name)
-      //   .style("border", `2px solid ${d.color}`)
-      // d3.select('div.feature-legend-container')
-      //   .selectAll('svg.feature-long-svg.' + d.name)
-      //   .style("border", `2px solid ${d.color}`)
+
     });
 
   // Create legend labels
@@ -296,73 +273,27 @@ function featureSelection(featureName = null, className = null, features = []) {
           .attr("height", "100%"); // Use percentage height
       }
 
-      svg.on("mouseover", (event, data) => {
-
-        d3.select("svg.feature-view-2")
-          .selectAll(".bar." + d.feature)
-          .attr("fill", colors[1]);
-
+      svg
+      .style("cursor", "pointer")
+      .on("mouseover", (event, data) => {
         background.style("fill", colors[0]);
       })
         .on("mouseleave", (event, data) => {
-
-          d3.select('div.feature-legend-container')
-            .selectAll('rect.rectangle')
-            .attr('fill', (d) => d.color);
-          d3.select('div.feature-legend-container')
-            .selectAll('.background')
-            .style("fill", "none");
-
-          if (selectedBar !== null) {
-            var color = null;
-            var highlightColor = null;
-            const className = d3.select(selectedBar).attr('class').split(' ')[1];
-            d3.select('div.feature-legend-container')
-              .select('rect.rectangle.' + className)
-              .attr('fill', function (d) {
-                color = d.color;
-                highlightColor = d.highlight;
-                return highlightColor;
-              });
-            d3.select('div.feature-legend-container')
-              .selectAll('svg.feature-svg.' + className)
-              .style("border", `2px solid ${highlightColor}`);
-            d3.select('div.feature-legend-container')
-              .selectAll('svg.feature-long-svg.' + className)
-              .style("border", `2px solid ${highlightColor}`);
-            d3.select(selectedBar).attr('fill', highlightColor);
-
-            if (selectedFeatureBar !== null) {
-              const featureName = d3.select(selectedFeatureBar).attr('class').split(' ')[1];
-              d3.select('div.feature-legend-container')
-                .select('.background.' + featureName)
-                .style("fill", color);
-              d3.select(selectedFeatureBar).attr('fill', highlightColor);
+            if (selectedFeatureBar === null) {
+              d3.selectAll('.background').style('fill', 'none');
+            }else{
+              d3.selectAll('.background').style('fill', 'none');
+              d3.select('.background.' +selectedFeatureBar).style('fill', colors[0]);
             }
-          }
+          // }
         }).on("click", (event, info) => {
-          // d3.select('div.feature-legend-container')
-          // .selectAll('svg.feature-svg')
-          // .style("border", `2px solid ${d.color}`);
-          // d3.select('div.feature-legend-container')
-          //   .selectAll('svg.feature-long-svg')
-          //   .style("border", `2px solid ${d.color}`);
-
-          // d3.select(this).attr('fill', d.highlight);
-
-          // previous = selected
-          selected = d.feature
-          // previousClass = selectedClass
-          selectedClass = d.feature.split('_')[0]
-          const childrenData = d.feature.split("_")[0] === 'incl' ? Data.feature_activations.children[0] : Data.feature_activations.children[1]
-
+          d3.selectAll('.background').style('fill', 'none');
+          background.style("fill", colors[0]);
+          console.log(selectedFeatureBar,info.feature)
+          selectedFeatureBar = info.feature
           if (Data) {
             nucleotideFeatureView(Data, Data.feature_activations, d.feature);
           }
-
-          console.log(d.feature)
-          featureSelection(d.feature, d.feature.split("_")[0]);
-          // this is causing to reset the feature legend 
 
         });
     });
@@ -395,40 +326,10 @@ function highlightLogos(listOfLogos = []) {
   });
 }
 
-function resetGraph() {
-  console.log('Graph has been reset to initial state.');
-  nucleotideView(Data.sequence, Data.structs, Data.nucleotide_activations);
-  hierarchicalBarChart(Data, Data.feature_activations);
-  featureSelection(null, Data);
-  d3.select("svg.feature-view-2").selectAll("*").remove();
-
-  d3.select("svg.feature-view-3").selectAll("*").remove();
-
-
-  selectedBar = null;
-  selectedFeatureBar = null;
-  resetHighlight();
-}
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('./data/exon_s1_34c>a.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      comp = data
-    })
-    .catch(error => {
-      console.error("Failed to fetch or parse data:", error);
-      // Optionally, inform the user visually
-    });
-
-  fetch('./data/exon_s1.json')
+  fetch('./data/exon.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -442,8 +343,6 @@ document.addEventListener("DOMContentLoaded", function () {
       nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
       // hierarchicalBarChart(data, data.feature_activations);
       featureSelection(featureSelected = null, className = null)
-      nucleotideComparison(data, comp)
-
       // d3.select("svg.feature-view-2").selectAll("*").remove();
       // d3.select("svg.feature-view-3").selectAll("*").remove();
     })
@@ -452,6 +351,10 @@ document.addEventListener("DOMContentLoaded", function () {
       // Optionally, inform the user visually
     });
 });
+
+
+
+
 
 function onGraphRendered(element) {
   // Target the container where the graph is rendered
