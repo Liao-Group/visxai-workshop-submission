@@ -1,3 +1,5 @@
+var comp = []
+
 document.addEventListener("DOMContentLoaded", function () {
   fetch('exon_s1_34c>a_strengths.json')
     .then(response => {
@@ -6,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return response.json();
     })
-    .then(data => {
-      comp = data
+    .then(dados => {
+      comp = dados
     })
     .catch(error => {
       console.error("Failed to fetch or parse data:", error);
@@ -21,9 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return response.json();
     })
-    .then(data => {
-      nucleotideComparison(data, comp)
-      nucleotideComparison2(data, comp)
+    .then(dados => {
+      nucleotideComparison(dados, comp)
+      nucleotideComparison2(dados, comp)
     })
     .catch(error => {
       console.error("Failed to fetch or parse data:", error);
@@ -41,6 +43,7 @@ function nucleotideComparison(data, comparison, classSelected = null) {
   // Check if comparison data exists and has the expected structure
   var compIncl = comparison && comparison.inclusion ? comparison.inclusion : null;
   var compSkip = comparison && comparison.skipping ? comparison.skipping : null;
+  console.log(data)
   const addLegend = () => {
     const legendData = [];
     if (classSelected === "incl" || classSelected === null) {
