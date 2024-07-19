@@ -182,25 +182,7 @@ gxNu.selectAll(".tick")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
     .call(xSkipAxis);
-  // var gxNu = svg_nucl.append("g")
-  //   .attr("class", "x axis")
-  //   .attr("font-size", `${12 * heightRatio}px`)
-  //   .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - 5) + ")")
-  //   .call(xNuAxis)
 
-  // gxNu.call(xNuAxis)
-  //   .selectAll('.tick')
-  //   .style("cursor", "pointer");
-
-  // gxNu.selectAll("path")
-  //   .style("stroke-width", 0);
-  // gxNu.selectAll(".tick")
-  //   .each(function (d, i) {
-  //     d3.select(this)
-  //       .select("text")
-  //       .attr("font-size", `${12 * widthRatio}px`)
-  //       .attr("fill", (d <= flanking_length || d > flanking_length + exon_length) ? line_color : nucleotide_color)
-  //   });
 
   // Add Y axis
   var max_incl = d3.max(compIncl ?

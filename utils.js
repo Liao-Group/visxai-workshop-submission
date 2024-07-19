@@ -329,7 +329,7 @@ function highlightLogos(listOfLogos = []) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('./data/exon.json')
+  fetch('exon_1_strengths_flattened.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -339,77 +339,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       window.Data = data;
       // Render data
-
-      nucleotideView(data.sequence, data.structs, data.nucleotide_activations);
-      // hierarchicalBarChart(data, data.feature_activations);
+      nucleotideView(data.sequence, data.structs, data);
       featureSelection(featureSelected = null, className = null)
-      // d3.select("svg.feature-view-2").selectAll("*").remove();
-      // d3.select("svg.feature-view-3").selectAll("*").remove();
+
     })
     .catch(error => {
       console.error("Failed to fetch or parse data:", error);
-      // Optionally, inform the user visually
     });
-});
-
-
-
-
-
-function onGraphRendered(element) {
-  // Target the container where the graph is rendered
-  const featureView2 = document.querySelector(element);
-  const event = new CustomEvent('graphRendered', { detail: { view: featureView2 } });
-  featureView2.dispatchEvent(event);
-
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Add event listener to all dropdown buttons
-  const dropdowns = document.querySelectorAll(".unified-dropdown");
-  dropdowns.forEach(dropdown => {
-    const button = dropdown.querySelector(".unified-dropbtn");
-    const content = dropdown.querySelector(".unified-dropdown-content");
-
-    button.addEventListener("click", function (event) {
-      event.stopPropagation();
-      // Close all dropdowns except the one clicked
-      closeAllDropdowns();
-      content.style.display = content.style.display === "block" ? "none" : "block";
-    });
-
-    // Prevent closing the dropdown when clicking inside the dropdown content
-    content.addEventListener("click", function (event) {
-      event.stopPropagation();
-    });
-  });
-
-  // Close dropdowns if clicked outside
-  document.addEventListener("click", function () {
-    closeAllDropdowns();
-  });
-
-  function closeAllDropdowns() {
-    const contents = document.querySelectorAll(".unified-dropdown-content");
-    contents.forEach(content => {
-      content.style.display = "none";
-    });
-  }
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
-
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
-    });
-  }
 });

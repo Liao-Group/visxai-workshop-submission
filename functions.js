@@ -709,24 +709,57 @@ function hierarchicalBarChart3(parentName, data) {
 
 }
 
-function getFeaturesForPosition(pos) {
-  if (d3.selectAll(`.obj.incl.${pos}`).size() == 0) { var incl_data = []; }
-  else {
-    var incl_data = flatten_nested_json(d3.selectAll(`.obj.incl.${pos}`).datum());
+function getFeaturesForPosition(pos, data) {
+  console.log("Getting features for position:", pos);
+  console.log("Data received:", data);
+
+  // Helper function to extract features from flattened data
+  function extractFeatures(flattenedData) {
+      return flattenedData.map(item => {
+        console.log(item)
+          const nameParts = item.name.split(' ');
+          console.log(nameParts)
+          return {
+              name: nameParts[1],
+              strength: item.strength,
+              length: item.length
+          };
+      });
   }
-  if (d3.selectAll(`.obj.skip.${pos}`).size() == 0) { var skip_data = []; }
-  else {
-    var skip_data = flatten_nested_json(d3.selectAll(`.obj.skip.${pos}`).datum());
-  }
-  const uniqueInclValues = [...new Set(incl_data.map(item => {
-    const match = item.name.match(/incl_(\d+)/);
-    return match ? match[0] : null;
+
+  // Get inclusion data
+  const inclData = data.flattened_inclusion[`pos_${pos}`] || [];
+  const inclFeatures = extractFeatures(inclData);
+  console.log("Inclusion features:", inclFeatures);
+
+  // Get skipping data
+  const skipData = data.flattened_skipping[`pos_${pos}`] || [];
+  const skipFeatures = extractFeatures(skipData);
+  console.log("Skipping features:", skipFeatures);
+
+  // Extract unique inclusion values
+  const uniqueInclValues = [...new Set(inclFeatures.map(item => {
+      const match = item.name.match(/incl_(\d+)/);
+      return match ? match[0] : null;
   }))].filter(Boolean);
-  const uniqueSkipValues = [...new Set(skip_data.map(item => {
-    const match = item.name.match(/skip(?:_struct)?_\d+/);
-    return match ? match[0] : null;
+
+  // Extract unique skipping values
+  const uniqueSkipValues = [...new Set(skipFeatures.map(item => {
+      const match = item.name.match(/skip(?:_struct)?_\d+/);
+      return match ? match[0] : null;
   }))].filter(Boolean);
+
+  console.log("Unique inclusion values:", uniqueInclValues);
+  console.log("Unique skipping values:", uniqueSkipValues);
+
+  // Highlight logos (assuming this function exists elsewhere in your code)
   highlightLogos([...uniqueSkipValues, ...uniqueInclValues]);
+
+  // Return the extracted features if needed
+  return {
+      inclusion: inclFeatures,
+      skipping: skipFeatures
+  };
 }
 /**
  * nucleotideView 
@@ -808,6 +841,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       d3.select(this).select('text').style("font-weight", "bold");
 
       var letter = Array.from(sequence)[d - 1];
+      var position = String(d);
       var pos = "pos_" + String(d);
 
       // Highlight the clicked bars
@@ -817,9 +851,9 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       svg_nucl.select(`.obj.skip.${pos}`)
         .style("fill", skipping_highlight_color)
         .attr("opacity", 1);
-      getFeaturesForPosition(pos)
-      nucleotideSort(pos, margin, 250, 450, colors);
-      nucleotideZoom(sequence, structs, pos, margin, 250, 450, max_strength, colors);
+      getFeaturesForPosition(position,data)
+      nucleotideSort(position,data, margin, 250, 450, colors);
+      nucleotideZoom(data,sequence, structs, position, margin, 250, 450, max_strength, colors);
     });
 
   gxNu.selectAll("path")
@@ -832,18 +866,20 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("fill", (d <= flanking_length || d > flanking_length + exon_length) ? line_color : nucleotide_color)
     });
 
-    var max_incl = d3.max(data.children[0].children, d => recursive_total_strength(d));
-    var max_skip = d3.max(data.children[1].children, d => recursive_total_strength(d));
-    var max_strength = Math.max(max_incl, max_skip, 9);
-  /* Change y range to a fix range */
-  // var max_strength = d3.max([max_incl, max_skip]);
-  // var max_strength = 9
-  var yIncl = d3.scaleLinear()
-  .domain([0, max_strength])
-  .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
-var ySkip = d3.scaleLinear()
-  .domain([0, max_strength])
-  .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
+    var max_incl = d3.max(Object.values(data.inclusion));
+    var max_skip = d3.max(Object.values(data.skipping));
+    console.log("Max inclusion strength:", max_incl);
+    console.log("Max skipping strength:", max_skip);
+
+    var max_strength = d3.max([max_incl, max_skip]);
+
+    var yIncl = d3.scaleLinear()
+        .domain([0, max_strength])
+        .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
+    var ySkip = d3.scaleLinear()
+        .domain([0, max_strength])
+        .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
+
 
 
   const InclusionAxis = (color = false) => {
@@ -867,21 +903,54 @@ var ySkip = d3.scaleLinear()
       .text("Inclusion strength (a.u.)");
 
       svg_nucl.selectAll("nucleotide-incl-bar")
-      .data(data.children[0].children)
+      .data(Object.entries(data.inclusion))
       .enter()
       .append("rect")
-      .datum(function (d) { return d; })
-      .attr("class", function (d) { return "obj incl pos_" + d.name.slice(4); })
-      .attr("x", function (d) { return x(parseInt(d.name.slice(4))); })
-      .attr("y", function (d) { return yIncl(recursive_total_strength(d)); })
+      .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
+      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+      .attr("y", function (d) { return yIncl(d[1]); })
       .attr("width", x.bandwidth())
-      .attr("height", function (d) { 
-        return (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - yIncl(recursive_total_strength(d)); 
-      })
-      .attr("fill", color ? lightOther : inclusion_color)
+      .attr("height", function (d) { return (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - yIncl(d[1]); })
+      .attr("fill", barColor)
       .attr("stroke", line_color)
-      .attr("opacity", 1)
-      .lower();
+      .attr("opacity", .1)
+
+      .lower()
+      .on("click", function (d) {
+        d3.selectAll(".obj.incl")
+        .style("fill", inclusion_color)
+        .attr("opacity", 0.1)
+        .classed("free", true);
+      d3.selectAll(".obj.skip")
+        .style("fill", skipping_color)
+        .attr("opacity", 0.1)
+
+        .classed("free", true);
+      d3.selectAll(".obj.nt")
+        .style("font-weight", "normal")
+        .classed("free", true);
+
+      var pos = d3.select(this)
+        .attr("class")
+        .slice(9, -4);
+      d3.select(".obj.incl.free." + pos)
+        .style("fill", inclusion_highlight_color)
+        .attr("opacity", 1)
+        .classed("free", false);
+      d3.select(".obj.skip.free." + pos)
+        .style("fill", skipping_highlight_color)
+        .attr("opacity", 1)
+
+        .classed("free", false);
+      d3.select(".obj.nt." + pos)
+        .style("font-weight", "bold")
+        .classed("free", false);
+        var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+        console.log(d3.select(this).attr("class").split(" ")[2])
+        getFeaturesForPosition(position,data)
+        nucleotideSort(position,data, margin, 250, 450, colors);
+        nucleotideZoom(data,sequence, structs, position, margin, 250, 450, max_strength, colors);
+      });
   }
 
   const SkipAxis = (color = false) => {
@@ -905,39 +974,70 @@ var ySkip = d3.scaleLinear()
       .text("Skipping strength (a.u.)");
 
       svg_nucl.selectAll("nucleotide-skip-bar")
-      .data(data.children[1].children)
+      .data(Object.entries(data.skipping))
       .enter()
       .append("rect")
-      .datum(function (d) { return d; })
-      .attr("class", function (d) { return "obj skip pos_" + d.name.slice(4); })
-      .attr("x", function (d) { return x(parseInt(d.name.slice(4))); })
+      .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
+      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
       .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
       .attr("width", x.bandwidth())
-      .attr("height", function (d) { 
-        return ySkip(recursive_total_strength(d)) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle);
-      })
-      .attr("fill", color ? lightOther : skipping_color)
+      .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
+      .attr("fill", barColor)
       .attr("stroke", line_color)
-      .attr("opacity", 1)
-      .lower();
-    
+      .attr("opacity", .1)
+      .lower()
+      .on("click", function (d) {
+        d3.selectAll(".obj.incl")
+        .style("fill", inclusion_color)
+        .attr("opacity", 0.1)
+        .classed("free", true);
+      d3.selectAll(".obj.skip")
+        .style("fill", skipping_color)
+        .attr("opacity", 0.1)
+
+        .classed("free", true);
+      d3.selectAll(".obj.nt")
+        .style("font-weight", "normal")
+        .classed("free", true);
+
+      var pos = d3.select(this)
+        .attr("class")
+        .slice(9, -4);
+      d3.select(".obj.incl.free." + pos)
+        .style("fill", inclusion_highlight_color)
+        .attr("opacity", 1)
+        .classed("free", false);
+      d3.select(".obj.skip.free." + pos)
+        .style("fill", skipping_highlight_color)
+        .attr("opacity", 1)
+
+        .classed("free", false);
+      d3.select(".obj.nt." + pos)
+        .style("font-weight", "bold")
+        .classed("free", false);
+        var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+        console.log(d3.select(this).attr("class").split(" ")[2])
+        getFeaturesForPosition(position,data)
+        nucleotideSort(position,data, margin, 250, 450, colors);
+        nucleotideZoom(data,sequence, structs, position, margin, 250, 450, max_strength, colors);
+      });
   };
 
   if (classSelected === "incl") {
     InclusionAxis()
     SkipAxis(true)
     hovering('skip')
-    clicking('skip')
+    // clicking('skip')
   } else if (classSelected === "skip") {
     SkipAxis()
     InclusionAxis(true)
     hovering('incl')
-    clicking('incl')
+    // clicking('incl')
   } else {
     InclusionAxis()
     SkipAxis()
     hovering()
-    clicking()
+    // clicking()
   }
   function hovering(color = null) {
     const skipBarColor = color == 'skip' ? lightOther : skipping_color;
@@ -973,55 +1073,53 @@ var ySkip = d3.scaleLinear()
           .attr("class")
           .slice(9, -4);
         d3.select(".obj.incl.free." + pos)
-          .attr("opacity", 0.1);  // Reset to initial low opacity
+          .attr("opacity", .1);  // Reset to initial low opacity
         d3.select(".obj.skip.free." + pos)
-          .attr("opacity", 0.1);  // Reset to initial low opacity
+          .attr("opacity", .1);  // Reset to initial low opacity
         d3.select(".obj.nt." + pos)
           .style("font-weight", "normal");
       });
   };
-  function clicking(color = null) {
-    // Show nucleotide zoom on click
-    const skipBarColor = color == 'skip' ? lightOther : skipping_color;
-    const skipBarHighlightColor = color == 'skip' ? darkBackground : skipping_highlight_color;
-    const inclBarColor = color == 'incl' ? lightOther : inclusion_color;
-    const inclBarHighlightColor = color == 'incl' ? darkBackground : inclusion_highlight_color;
-    svg_nucl.selectAll(".obj.free")
-      .on("click", function (d) {
-        d3.selectAll(".obj.incl")
-          .style("fill", inclBarColor)
-          .attr("opacity", 0.1)
-          .classed("free", true);
-        d3.selectAll(".obj.skip")
-          .style("fill", skipBarColor)
-          .attr("opacity", 0.1)
+  // function clicking(color = null) {
+  //   const skipBarColor = color == 'skip' ? lightOther : skipping_color;
+  //   const skipBarHighlightColor = color == 'skip' ? darkBackground : skipping_highlight_color;
+  //   const inclBarColor = color == 'incl' ? lightOther : inclusion_color;
+  //   const inclBarHighlightColor = color == 'incl' ? darkBackground : inclusion_highlight_color;
+  //   svg_nucl.selectAll(".obj.free")
+  //     .on("click", function (d) {
+  //       d3.selectAll(".obj.incl")
+  //         .style("fill", inclBarColor)
+  //         .attr("opacity", 0.1)
+  //         .classed("free", true);
+  //       d3.selectAll(".obj.skip")
+  //         .style("fill", skipBarColor)
+  //         .attr("opacity", 0.1)
 
-          .classed("free", true);
-        d3.selectAll(".obj.nt")
-          .style("font-weight", "normal")
-          .classed("free", true);
+  //         .classed("free", true);
+  //       d3.selectAll(".obj.nt")
+  //         .style("font-weight", "normal")
+  //         .classed("free", true);
 
-        var pos = d3.select(this)
-          .attr("class")
-          .slice(9, -4);
-        d3.select(".obj.incl.free." + pos)
-          .style("fill", inclBarHighlightColor)
-          .attr("opacity", 1)
-          .classed("free", false);
-        d3.select(".obj.skip.free." + pos)
-          .style("fill", skipBarHighlightColor)
-          .attr("opacity", 1)
+  //       var pos = d3.select(this)
+  //         .attr("class")
+  //         .slice(9, -4);
+  //       d3.select(".obj.incl.free." + pos)
+  //         .style("fill", inclBarHighlightColor)
+  //         .attr("opacity", 1)
+  //         .classed("free", false);
+  //       d3.select(".obj.skip.free." + pos)
+  //         .style("fill", skipBarHighlightColor)
+  //         .attr("opacity", 1)
 
-          .classed("free", false);
-        d3.select(".obj.nt." + pos)
-          .style("font-weight", "bold")
-          .classed("free", false);
-        getFeaturesForPosition(pos)
+  //         .classed("free", false);
+  //       d3.select(".obj.nt." + pos)
+  //         .style("font-weight", "bold")
+  //         .classed("free", false);
 
-        nucleotideSort(pos, margin, 250, 500, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
-        nucleotideZoom(sequence, structs, pos, margin, 250, 500, max_strength, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
-      });
-  }
+  //       nucleotideSort(pos, margin, 250, 500, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
+  //       nucleotideZoom(sequence, structs, pos, margin, 250, 500, max_strength, [skipBarColor, skipBarHighlightColor, inclBarColor, inclBarHighlightColor]);
+  //     });
+  // }
   return svg_nucl
 }
 
@@ -1410,8 +1508,10 @@ function nucleotideFeatureView(parent, data, feature_name) {
 /**
  * nucleotideSort
  */
-function nucleotideSort(pos, margin, width, height, colors) {
-  console.log("nuc sort")
+function nucleotideSort(pos, data, margin, width, height, colors) {
+  console.log("nucleotideSort called for position:", pos);
+  console.log("Data received:", data);
+
   var svg_sort = d3.select("svg.nucleotide-sort");
   var svg_zoom = d3.select("svg.nucleotide-zoom");
   const inclusionColor = colors[2]
@@ -1421,7 +1521,6 @@ function nucleotideSort(pos, margin, width, height, colors) {
 
   const heightRatio = height / 622;
   const widthRatio = width / 292;
-
 
   svg_sort.selectAll("*").remove(); // Clear SVG before redrawing
 
@@ -1434,15 +1533,9 @@ function nucleotideSort(pos, margin, width, height, colors) {
     .text("Nucleotide View");
 
   // Data preparation
-  if (d3.selectAll(`.obj.incl.${pos}`).size() == 0) { var inclData = []; }
-  else {
-    var inclData = flatten_nested_json(d3.selectAll(`.obj.incl.${pos}`).datum());
-  }
-  if (d3.selectAll(`.obj.skip.${pos}`).size() == 0) { var skipData = []; }
-  else {
-    var skipData = flatten_nested_json(d3.selectAll(`.obj.skip.${pos}`).datum());
-  }
-
+  const inclData = data.flattened_inclusion[`pos_${pos}`] || [];
+  const skipData = data.flattened_skipping[`pos_${pos}`] || [];
+  console.log(inclData)
   const maxStrength = 6;
 
   const fillerData = [
@@ -1458,13 +1551,13 @@ function nucleotideSort(pos, margin, width, height, colors) {
   // X axis setup
   const sortXIncl = d3.scaleBand()
     .range([margin.left, width - margin.right])
-    .domain(topInclData.map(d => d.name))
+    .domain(topInclData.map(d => d.name.split(' ').pop()))
     .paddingInner(0.2)
     .paddingOuter(0.25);
 
   const sortXSkip = d3.scaleBand()
     .range([margin.left, width - margin.right])
-    .domain(topSkipData.map(d => d.name))
+    .domain(topSkipData.map(d => d.name.split(' ').pop()))
     .padding(0.2);
 
   const sortXInclAxis = d3.axisBottom(sortXIncl).tickSize(0);
@@ -1553,18 +1646,19 @@ function nucleotideSort(pos, margin, width, height, colors) {
     .remove();
 
   // Add new bars
-  const inclBars = svg_sort.selectAll("incl-narrow-bar")
-    .data(topInclData)
-    .enter()
-    .append("rect")
-    .attr("class", d => `obj incl narrow-bar ${d.name.split(" ").join("-")}`)
-    .attr("x", d => sortXIncl(d.name))
-    .attr("y", sortYIncl(0))
-    .attr("width", sortXIncl.bandwidth())
-    .attr("height", 0)
-    .attr("fill", inclusionColor)
-    .attr("stroke", line_color)
-    .lower();
+   // Add new bars
+   const inclBars = svg_sort.selectAll("incl-narrow-bar")
+   .data(topInclData)
+   .enter()
+   .append("rect")
+   .attr("class", d => `obj incl narrow-bar ${d.name.split(" ").join("-")}`)
+   .attr("x", d => sortXIncl(d.name.split(' ').pop()))
+   .attr("y", sortYIncl(0))
+   .attr("width", sortXIncl.bandwidth())
+   .attr("height", 0)
+   .attr("fill", inclusionColor)
+   .attr("stroke", line_color)
+   .lower();
 
   /* Hover over Nucleotide sort view */
   inclBars.on("mouseover", function (event, d) {
@@ -1590,17 +1684,15 @@ function nucleotideSort(pos, margin, width, height, colors) {
     svg_zoom.selectAll(".incl.annotate").attr("opacity", 0);
     resetHighlight();
   });
-
   inclBars.attr("y", d => sortYIncl(d.strength))
     .attr("height", d => (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - sortYIncl(d.strength));
-  // .delay((_, i) => i * 10);
 
-  const skipBars = svg_sort.selectAll("skip-narrow-bar")
+    const skipBars = svg_sort.selectAll("skip-narrow-bar")
     .data(topSkipData)
     .enter()
     .append("rect")
     .attr("class", d => `obj skip narrow-bar ${d.name.split(" ").join("-")}`)
-    .attr("x", d => sortXSkip(d.name))
+    .attr("x", d => sortXSkip(d.name.split(' ').pop()))
     .attr("y", sortYSkip(0))
     .attr("width", sortXSkip.bandwidth())
     .attr("height", 0)
@@ -1636,12 +1728,12 @@ function nucleotideSort(pos, margin, width, height, colors) {
   skipBars
     .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
     .attr("height", d => sortYSkip(d.strength) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle));
-  // .delay((_, i) => i * 10);
+
 }
 /**
  * nucleotideZoom
  */
-function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, max_strength, colors) {
+function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height, max_strength, colors) {
 
   var svg_zoom = d3.select("svg.nucleotide-zoom");
   const heightRatio = height / 622;
@@ -1770,16 +1862,9 @@ function nucleotideZoom(sequence, structs, pos, margin, zoom_width, height, max_
   left_border.raise().attr("opacity", 1);
   right_border.raise().attr("opacity", 1);
 
-  // Data
-  if (d3.selectAll(`.obj.incl.${pos}`).size() == 0) { var incl_data = []; }
-  else {
-    var incl_data = flatten_nested_json(d3.selectAll(`.obj.incl.${pos}`).datum());
-  }
-  if (d3.selectAll(`.obj.skip.${pos}`).size() == 0) { var skip_data = []; }
-  else {
-    var skip_data = flatten_nested_json(d3.selectAll(`.obj.skip.${pos}`).datum());
-  }
-  console.log()
+  const incl_data = data.flattened_inclusion[`pos_${pos}`] || [];
+  const skip_data = data.flattened_skipping[`pos_${pos}`] || [];
+  console.log(incl_data,skip_data)
   const max_incl = d3.max(incl_data.map((d) => d.strength));
   const max_skip = d3.max(skip_data.map((d) => d.strength));
   max_strength = d3.max([max_incl, max_skip]);
