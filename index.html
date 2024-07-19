@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="stylesheet" href="styles/psi_video_styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="styles/networkVideos.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -142,7 +143,37 @@
 
         <hr>
         <h2>Interpretable-by-design network</h2>
-        <div class="neural-network"></div>
+        <!-- Network Video Section -->
+        <div class="network-video-section-container">
+          <section id="network-video-section">
+            <div class="network-buttons">
+              <div class="selector"></div>
+              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo1', 0)">Step 1</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo2', 1)">Step 2</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo3', 2)">Step 3</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo4', 3)">Step 4</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo5', 4)">Step 5</button>
+            </div>
+            <div class="network-video-container">
+              <video id="networkVideo1" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="networkVideo2" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Network_2.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="networkVideo3" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Network_3.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="networkVideo4" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Network_4.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="networkVideo5" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Network_5.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+            </div>
+          </section>
+        </div>
+        <script src="networkVideos.js"></script>
 
         <p>4.Features in layer (animation) </p>
         <video width="640" height="360" autoplay loop muted>
