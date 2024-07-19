@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('exon_strength_analysis_comp.json')
+  fetch('exon_s1_34c>a_strengths.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Optionally, inform the user visually
     });
 
-  fetch('exon_strength_analysis.json')
+  fetch('exon_1_strengths.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
