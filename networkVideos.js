@@ -1,4 +1,3 @@
-// Network Videos Section JS
 let selectedNetworkVideoId = 'networkVideo1';
 
 function selectNetworkVideo(videoId, buttonIndex) {
@@ -21,17 +20,12 @@ function selectNetworkVideo(videoId, buttonIndex) {
   // Move the selector box
   const selector = document.querySelector('.network-video-section-container .selector');
   const buttonWidth = buttons[0].offsetWidth; // Get the width of a button
-  const selectorWidth = selector.offsetWidth; // Get the width of the selector
-  const containerWidth = selector.parentElement.offsetWidth; // Get the width of the container
+  const buttonLeft = buttons[buttonIndex].offsetLeft; // Get the left offset of the button
 
-  // Calculate the left offset to keep the selector within bounds
-  const leftOffset = buttonIndex * buttonWidth + (buttonWidth - selectorWidth) / 2;
+  // Calculate the left offset to center the selector around the button text
+  const leftOffset = buttonLeft + (buttonWidth / 2) - (selector.offsetWidth / 2);
 
-  // Ensure the selector stays within the bounds of the container
-  const minLeft = 0;
-  const maxLeft = containerWidth - selectorWidth;
-
-  selector.style.left = `${Math.min(Math.max(leftOffset, minLeft), maxLeft)}px`;
+  selector.style.left = `${leftOffset}px`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
