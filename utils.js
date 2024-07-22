@@ -292,7 +292,7 @@ function featureSelection(featureName = null, className = null, features = []) {
           console.log(selectedFeatureBar,info.feature)
           selectedFeatureBar = info.feature
           if (Data) {
-            nucleotideFeatureView(Data, Data.feature_activations, d.feature);
+            nucleotideFeatureView(exon_s1_data, exon_s1_data.feature_activations, d.feature);
           }
 
         });
@@ -327,7 +327,7 @@ function highlightLogos(listOfLogos = []) {
 }
 
 
-
+var exon_s1_data = []
 document.addEventListener("DOMContentLoaded", function () {
   fetch('exon_1_strengths_flattened.json')
     .then(response => {
@@ -341,6 +341,21 @@ document.addEventListener("DOMContentLoaded", function () {
       // Render data
       nucleotideView(data.sequence, data.structs, data);
       featureSelection(featureSelected = null, className = null)
+
+    })
+    .catch(error => {
+      console.error("Failed to fetch or parse data:", error);
+    });
+
+    fetch('data/exon_s1.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      exon_s1_data = data;
 
     })
     .catch(error => {

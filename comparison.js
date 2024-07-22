@@ -1,37 +1,35 @@
-var comp = []
+let comp = [];
 
-document.addEventListener("DOMContentLoaded", function () {
-  fetch('exon_s1_34c>a_strengths.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(dados => {
-      comp = dados
-    })
-    .catch(error => {
-      console.error("Failed to fetch or parse data:", error);
-      // Optionally, inform the user visually
+function callFunctions() {
+    document.addEventListener("DOMContentLoaded", function () {
+        Promise.all([
+            fetch('exon_s1_34c>a_strengths.json').then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }),
+            fetch('exon_1_strengths.json').then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+        ])
+        .then(([compData, dados]) => {
+            comp = compData;
+            console.log(comp);
+            nucleotideComparison(dados, comp);
+            nucleotideComparison2(dados, comp);
+        })
+        .catch(error => {
+            console.error("Failed to fetch or parse data:", error);
+            // Optionally, inform the user visually
+        });
     });
+}
 
-  fetch('exon_1_strengths.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(dados => {
-      nucleotideComparison(dados, comp)
-      nucleotideComparison2(dados, comp)
-    })
-    .catch(error => {
-      console.error("Failed to fetch or parse data:", error);
-      // Optionally, inform the user visually
-    });
-});
+callFunctions()
 
 function nucleotideComparison(data, comparison, classSelected = null) {
   var sequence = data.sequence;
@@ -41,9 +39,13 @@ function nucleotideComparison(data, comparison, classSelected = null) {
   var dataSkip = data.skipping;
 
   // Check if comparison data exists and has the expected structure
-  var compIncl = comparison && comparison.inclusion ? comparison.inclusion : null;
-  var compSkip = comparison && comparison.skipping ? comparison.skipping : null;
-  console.log(data)
+ 
+  if (!comparison.sequence){
+    console.log(comparison.sequence)
+    callFunctions()
+  }
+  var compIncl = comparison.inclusion 
+  var compSkip =comparison.skipping
   const addLegend = () => {
     const legendData = [];
     if (classSelected === "incl" || classSelected === null) {
