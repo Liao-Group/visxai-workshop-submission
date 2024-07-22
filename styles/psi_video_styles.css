@@ -109,7 +109,7 @@ body {
 .video-section-container .info-container.three { border-color: #f47200; }
 
 /* replay button */
-#replayButton, #replayButton2 {
+#replayButton, #replayButton2, #replayButton3 {
   margin-left: 10px;
   width: 30px;
   height: 30px;
@@ -126,7 +126,7 @@ body {
   line-height: 30px;
 }
 
-#replayButton:hover, #replayButton2:hover {
+#replayButton:hover, #replayButton2:hover, #replayButton3:hover {
   background-color: #5a6268;
 }
 

@@ -71,3 +71,13 @@ document.getElementById('replayButton2').addEventListener('click', function() {
   video.currentTime = 0;
   video.play();
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  var replayButton3 = document.getElementById("replayButton3");
+
+  replayButton3.addEventListener("click", function() {
+      var video = document.getElementById("myVideo3");
+      video.currentTime = 0;
+      video.play();
+  });
+});
