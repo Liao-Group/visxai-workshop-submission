@@ -763,6 +763,7 @@ function getFeaturesForPosition(pos, data) {
 /**
  * nucleotideView 
  */
+
 function nucleotideView(sequence, structs, data, classSelected = null) {
 
   svg = d3.select("svg.nucleotide-view")
@@ -773,6 +774,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   const height = svgContainer.node().clientHeight;
   const heightRatio = height / 400;
   const widthRatio = width / 1000;
+  var dataIncl = data.inclusion;
+  var dataSkip = data.skipping;
 
   var margin = { top: 30, right: 10, bottom: 20, left: 50, middle: 22 };
   var svg_nucl = d3.select("svg.nucleotide-view");
@@ -884,6 +887,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   const InclusionAxis = (color = false) => {
     const barColor = color ? lightOther : inclusion_color;
     const barHighlightColor = color ? darkBackground : inclusion_highlight_color;
+    const lineColor = color ? lightOther : inclusion_color;
+    const lineHighlightColor = color ? darkBackground : inclusion_highlight_color;
 
     var gyIncl = svg_nucl.append("g")
       .attr("class", "y axis")
@@ -900,19 +905,43 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
       .text("Inclusion strength (a.u.)");
-
+      var extendedData = [];
+      Object.entries(dataIncl).forEach(function(d, i, arr) {
+        var xValue = parseInt(d[0].slice(4));
+        extendedData.push([xValue, d[1]]);
+        if (i < arr.length - 1) {
+          extendedData.push([xValue + 1, d[1]]);
+        }
+      });
+      
+      // Draw the line along the edges of the bars
+      var line = d3.line()
+        .x(function (d) { return x(d[0]); })
+        .y(function (d) { return yIncl(d[1]); })
+        .curve(d3.curveStepAfter);
+      
+      svg_nucl.append("path")
+        .datum(extendedData)
+        .attr("class", "line incl original")
+        .attr("d", line)
+        .attr("fill", "none")
+        .attr("stroke", lineHighlightColor)
+        .style("stroke-width", "1px"); // Add px and !important if necessary
+      
+      // Draw the bars
       svg_nucl.selectAll("nucleotide-incl-bar")
-      .data(Object.entries(data.inclusion))
-      .enter()
-      .append("rect")
-      .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
-      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
-      .attr("y", function (d) { return yIncl(d[1]); })
-      .attr("width", x.bandwidth())
-      .attr("height", function (d) { return (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - yIncl(d[1]); })
-      .attr("fill", barColor)
-      .attr("stroke", line_color)
-      .attr("opacity", .1)
+        .data(Object.entries(data.inclusion))
+        .enter()
+        .append("rect")
+        .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
+        .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+        .attr("y", function (d) { return yIncl(d[1]); })
+        .attr("width", x.bandwidth())
+        .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
+        .attr("fill", barColor)
+        .attr("stroke", barColor)
+        .attr("opacity", .1)
+  
 
       .lower()
       .on("click", function (d) {
@@ -953,6 +982,9 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   }
 
   const SkipAxis = (color = false) => {
+    const lineColor = color ? lightOther : skipping_color;
+    const lineHighlightColor = color ? darkBackground : skipping_highlight_color;
+
     const barColor = color ? lightOther : skipping_color;
     const barHighlightColor = color ? darkBackground : skipping_highlight_color;
 
@@ -972,18 +1004,44 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("transform", "rotate(-90)")
       .text("Skipping strength (a.u.)");
 
-      svg_nucl.selectAll("nucleotide-skip-bar")
-      .data(Object.entries(data.skipping))
-      .enter()
-      .append("rect")
-      .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
-      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
-      .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-      .attr("width", x.bandwidth())
-      .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
-      .attr("fill", barColor)
-      .attr("stroke", line_color)
-      .attr("opacity", .1)
+// Create extended data points to mark the left and right edges of each bar
+var extendedSkipData = [];
+Object.entries(dataSkip).forEach(function(d, i, arr) {
+  var xValue = parseInt(d[0].slice(4));
+  extendedSkipData.push([xValue, d[1]]);
+  if (i < arr.length - 1) {
+    extendedSkipData.push([xValue + 1, d[1]]);
+  }
+});
+
+// Draw the line along the edges of the bars
+var line = d3.line()
+  .x(function (d) { return x(d[0]); })
+  .y(function (d) { return ySkip(d[1]); })
+  .curve(d3.curveStepAfter)
+  .defined(function (d) { return !isNaN(x(d[0])) && !isNaN(ySkip(d[1])); });
+
+svg_nucl.append("path")
+  .datum(extendedSkipData)
+  .attr("class", "line skip original")
+  .attr("d", line)
+  .attr("fill", "none")
+  .attr("stroke", lineHighlightColor)
+  .style("stroke-width", "1px"); // Add px and !important if necessary
+// Draw the bars
+svg_nucl.selectAll("nucleotide-skip-bar")
+  .data(Object.entries(data.skipping))
+  .enter()
+  .append("rect")
+  .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
+  .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+  .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
+  .attr("width", x.bandwidth())
+  .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
+  .attr("fill", barColor)
+  .attr("stroke", barColor)
+  .attr("opacity", .1) // Adjust opacity as needed
+
       .lower()
       .on("click", function (d) {
         d3.selectAll(".obj.incl")
@@ -1003,11 +1061,11 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("class")
         .slice(9, -4);
       d3.select(".obj.incl.free." + pos)
-        .style("fill", inclusion_highlight_color)
+        .style("fill", inclusion_color)
         .attr("opacity", 1)
         .classed("free", false);
       d3.select(".obj.skip.free." + pos)
-        .style("fill", skipping_highlight_color)
+        .style("fill", skipping_color)
         .attr("opacity", 1)
 
         .classed("free", false);
@@ -1233,6 +1291,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
       .attr("class", "y axis")
       .attr("transform", "translate(" + margin.left + ",0)");
     gySkip.call(d3.axisLeft(ySkip).ticks(3));
+    
 
 
     svg.selectAll("nucleotide-skip-bar")

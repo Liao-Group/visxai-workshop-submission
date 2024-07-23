@@ -14,13 +14,21 @@ function callFunctions() {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
-            })
+            }),
+            fetch('exon_s1_comp1_strengths.json').then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
         ])
-        .then(([compData, dados]) => {
+        .then(([compData, dados,exon_s1_comp1_data]) => {
             comp = compData;
             console.log(comp);
-            nucleotideComparison(dados, comp);
-            nucleotideComparison2(dados, comp);
+            var svg_name = ".nucleotide-comp"
+            nucleotideComparison(dados, comp,svg_name);
+            var svg_name = ".nucleotide-comp2"
+            nucleotideComparison(dados, exon_s1_comp1_data,svg_name);
         })
         .catch(error => {
             console.error("Failed to fetch or parse data:", error);
@@ -31,7 +39,7 @@ function callFunctions() {
 
 callFunctions()
 
-function nucleotideComparison(data, comparison, classSelected = null) {
+function nucleotideComparison(data, comparison,svg_name,classSelected = null) {
   var sequence = data.sequence;
   var compSequence = comparison.sequence;
   var structs = data.structs;
@@ -110,7 +118,7 @@ function nucleotideComparison(data, comparison, classSelected = null) {
   const widthRatio = width / 1000;
 
   var margin = { top: 30, right: 10, bottom: 20, left: 50, middle: 22 };
-  var svg_nucl = d3.select(".nucleotide-comp").attr("width", width)
+  var svg_nucl = d3.select(svg_name).attr("width", width)
     .attr("height", height);
 
   // Title
