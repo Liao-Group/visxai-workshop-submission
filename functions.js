@@ -926,7 +926,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("d", line)
         .attr("fill", "none")
         .attr("stroke", lineHighlightColor)
-        .style("stroke-width", "1px"); // Add px and !important if necessary
+        .style("stroke-width", "2px"); // Add px and !important if necessary
       
       // Draw the bars
       svg_nucl.selectAll("nucleotide-incl-bar")
@@ -939,7 +939,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("width", x.bandwidth())
         .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
         .attr("fill", barColor)
-        .attr("stroke", barColor)
+        .attr("stroke", inclusion_highlight_color)
+        .style("stroke-width", "2px") // Add px and !important if necessary
         .attr("opacity", .1)
   
 
@@ -1027,7 +1028,7 @@ svg_nucl.append("path")
   .attr("d", line)
   .attr("fill", "none")
   .attr("stroke", lineHighlightColor)
-  .style("stroke-width", "1px"); // Add px and !important if necessary
+  .style("stroke-width", "2px"); // Add px and !important if necessary
 // Draw the bars
 svg_nucl.selectAll("nucleotide-skip-bar")
   .data(Object.entries(data.skipping))
@@ -1039,7 +1040,8 @@ svg_nucl.selectAll("nucleotide-skip-bar")
   .attr("width", x.bandwidth())
   .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
   .attr("fill", barColor)
-  .attr("stroke", barColor)
+  .attr("stroke", lineHighlightColor)
+  .style("stroke-width", "2px") // Add px and !important if necessary
   .attr("opacity", .1) // Adjust opacity as needed
 
       .lower()
@@ -1061,11 +1063,11 @@ svg_nucl.selectAll("nucleotide-skip-bar")
         .attr("class")
         .slice(9, -4);
       d3.select(".obj.incl.free." + pos)
-        .style("fill", inclusion_color)
+        .style("fill", inclusion_highlight_color)
         .attr("opacity", 1)
         .classed("free", false);
       d3.select(".obj.skip.free." + pos)
-        .style("fill", skipping_color)
+        .style("fill", skipping_highlight_color)
         .attr("opacity", 1)
 
         .classed("free", false);
@@ -1191,6 +1193,8 @@ function nucleotideFeatureView(parent, data, feature_name) {
   svg = d3.select("svg.nucleotide-view")
   svg.selectAll("rect").remove();
   svg.selectAll(".y.axis").remove();
+  svg.selectAll(".line.incl.original").remove();
+  svg.selectAll(".line.skip.original").remove();
   d3.select("svg.nucleotide-sort").selectAll("*").remove();
   d3.select("svg.nucleotide-zoom").selectAll("*").remove();
 
@@ -1555,15 +1559,12 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
  * nucleotideZoom
  */
 function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height, max_strength, colors) {
-
   var svg_zoom = d3.select("svg.nucleotide-zoom");
+
+  pos = "pos_"+pos
   const heightRatio = height / 622;
   const widthRatio = zoom_width / 292;
-  console.log(pos,structs)
-  
-  pos = 'pos_'+pos
   const int_pos = parseInt(pos.slice(4));
-
   const positions = Array.from({ length: 11 }, (_, i) => i - 5);
 
   const inclusionColor = colors[2]
@@ -1616,6 +1617,7 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
   zoom_xAxis.tickFormat((d) => structs[int_pos - 1 + d])
   zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length && int_pos + d <= flanking_length + exon_length) ? int_pos + d - flanking_length : "");
   zoom_xNuAxis.tickFormat((d) => sequence[int_pos - 1 + d]);
+
   zoom_gxIncl.call(zoom_xAxis);
   zoom_gxSkip.call(zoom_xSkipAxis);
   zoom_gxNu.call(zoom_xNuAxis);
@@ -1685,16 +1687,18 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
 
   left_border.raise().attr("opacity", 1);
   right_border.raise().attr("opacity", 1);
+  console.log(pos)
 
- const incl_data = data.flattened_inclusion[`${pos}`] || [];
-  const skip_data = data.flattened_skipping[`${pos}`] || [];
-  console.log("Inclusion data:", incl_data);
-  console.log("Skipping data:", skip_data);
+  // Data
 
-  // Also, update the max_strength calculation:
-  const max_incl = d3.max(incl_data, d => d.strength) || 0;
-  const max_skip = d3.max(skip_data, d => d.strength) || 0;
-  max_strength = Math.max(max_incl, max_skip, max_strength);
+    var incl_data = flatten_nested_json(data.flattened_inclusion[pos]);
+
+    var skip_data = flatten_nested_json(data.flattened_skipping[pos]);
+  
+  console.log(incl_data,skip_data,pos)
+  const max_incl = d3.max(incl_data.map((d) => d.strength));
+  const max_skip = d3.max(skip_data.map((d) => d.strength));
+  max_strength = d3.max([max_incl, max_skip]);
 
   // Remove previous bars
   svg_zoom.selectAll(".incl.wide-bar")
@@ -1714,8 +1718,12 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
     .data(incl_data)
     .enter()
     .append("rect")
-    .attr("class", (d) => `obj incl wide-bar ${d.name.split(" ").join("-")}`)
-    .attr("x", (d) => d.length <= 6 ? zoom_x(1 - parseInt(d.name.slice(-1))) : zoom_x(-5))
+    .attr("class", (d) => {
+      console.log(d['name']); // Check the value of d.name
+      const className = `obj incl wide-bar ${d.name.split(" ").join("-")}`;
+      console.log(className); // Check the resulting class string
+      return className;
+  })    .attr("x", (d) => d.length <= 6 ? zoom_x(1 - parseInt(d.name.slice(-1))) : zoom_x(-5))
     .attr("y", zoom_yIncl(0))
     .attr("width", (d) => d.length <= 6 ? zoom_x.bandwidth() * d.length : zoom_x.bandwidth() * 11)
     .attr("height", 0)
@@ -1726,7 +1734,7 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
 
   inclBars.attr("y", (d) => zoom_yIncl(d.strength))
     .attr("height", (d) => (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - zoom_yIncl(d.strength));
-  // .delay((_, i) => i * 10);
+    // .delay((_, i) => i * 10);
 
   const skipBars = svg_zoom.selectAll("skip-feature-bar")
     .data(skip_data)
@@ -1745,7 +1753,7 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
   skipBars
     .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
     .attr("height", (d) => zoom_ySkip(d.strength) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle));
-  // .delay((_, i) => i * 10);
+    // .delay((_, i) => i * 10);
 
   // Add feature labels
   const inclFeatureText = svg_zoom.selectAll("incl-feature-text")

@@ -187,7 +187,7 @@ function featureSelection(featureName = null, className = null, features = []) {
     .on('click', function (event) {
       d3.selectAll('.background').style('fill', 'none');
 
-      nucleotideView(Data.sequence, Data.structs, Data.nucleotide_activations)
+      nucleotideView(Data.sequence, Data.structs, Data);
 
       const classValue = d3.select(this).attr("class").split(' ')[1];
       console.log(classValue)
@@ -292,6 +292,9 @@ function featureSelection(featureName = null, className = null, features = []) {
           console.log(selectedFeatureBar,info.feature)
           selectedFeatureBar = info.feature
           if (Data) {
+            d3.selectAll(".line incl original").remove();
+            // d3.select("svg.nucleotide-view").select('line incl original').remove();
+
             nucleotideFeatureView(exon_s1_data, exon_s1_data.feature_activations, d.feature);
           }
 
@@ -339,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       window.Data = data;
       // Render data
-      nucleotideView(data.sequence, data.structs, data);
+      nucleotideView(Data.sequence, Data.structs, Data);
       featureSelection(featureSelected = null, className = null)
 
     })
