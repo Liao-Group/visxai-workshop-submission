@@ -109,7 +109,7 @@ body {
 .video-section-container .info-container.three { border-color: #f47200; }
 
 /* replay button */
-#replayButton, #replayButton2 {
+#replayButton, #replayButton2, #replayButton3 {
   margin-left: 10px;
   width: 30px;
   height: 30px;
@@ -126,11 +126,38 @@ body {
   line-height: 30px;
 }
 
-#replayButton:hover, #replayButton2:hover {
+#replayButton:hover, #replayButton2:hover, #replayButton3:hover {
   background-color: #5a6268;
 }
 
+/* Adding styles for the new container layout */
 .container {
   display: flex;
   align-items: center;
+}
+
+#previewImage {
+  width: 270px;
+  height: 270px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+#myVideo {
+  width: 270px;
+  height: 270px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+#myVideo2 {
+  width: 270px;
+  height: 270px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.fas.fa-arrow-right {
+  font-size: 24px;
+  margin: 0 10px;
 }

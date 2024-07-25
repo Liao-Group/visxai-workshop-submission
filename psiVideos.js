@@ -2,7 +2,6 @@ let selectedInfoId = 'info2';
 let selectedClassName = 'two';
 
 function selectVideo(videoId, infoId, className) {
-  // Select only videos within the video-section-container
   const videos = document.querySelectorAll('.video-section-container video');
   videos.forEach(video => {
     video.style.display = video.id === videoId ? 'block' : 'none';
@@ -14,21 +13,12 @@ function selectVideo(videoId, infoId, className) {
   selectedClassName = className;
   updateInfoContainer(infoId, className);
 
-  // Update button styles only within the video-section-container
   const buttons = document.querySelectorAll('.video-section-container .styled-button');
   buttons.forEach(button => {
     const isSelected = button.getAttribute('onclick').includes(videoId);
     button.style.backgroundColor = isSelected ? getButtonColor(button) : 'white';
     button.style.color = isSelected ? 'white' : 'black';
   });
-}
-
-function showInfo(infoId, className) {
-  updateInfoContainer(infoId, className);
-}
-
-function resetInfo() {
-  updateInfoContainer(selectedInfoId, selectedClassName);
 }
 
 function updateInfoContainer(infoId, className) {
@@ -50,7 +40,6 @@ function getButtonColor(button) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Default to selecting the second option
   selectVideo('video2', 'info2', 'two');
 });
 
@@ -70,4 +59,14 @@ document.getElementById('replayButton2').addEventListener('click', function() {
   var video = document.getElementById('myVideo2');
   video.currentTime = 0;
   video.play();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  var replayButton3 = document.getElementById("replayButton3");
+
+  replayButton3.addEventListener("click", function() {
+      var video = document.getElementById("myVideo3");
+      video.currentTime = 0;
+      video.play();
+  });
 });
