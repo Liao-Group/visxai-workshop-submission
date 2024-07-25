@@ -1689,11 +1689,13 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
   right_border.raise().attr("opacity", 1);
   console.log(pos)
 
-  // Data
+  // Data  
+  const incl_data = data.flattened_inclusion[`${pos}`] || [];
+  const skip_data = data.flattened_skipping[`${pos}`] || [];
 
-    var incl_data = flatten_nested_json(data.flattened_inclusion[pos]);
+    // var incl_data = flatten_nested_json(data.flattened_inclusion[pos]);
 
-    var skip_data = flatten_nested_json(data.flattened_skipping[pos]);
+    // var skip_data = flatten_nested_json(data.flattened_skipping[pos]);
   
   console.log(incl_data,skip_data,pos)
   const max_incl = d3.max(incl_data.map((d) => d.strength));
@@ -1718,12 +1720,8 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
     .data(incl_data)
     .enter()
     .append("rect")
-    .attr("class", (d) => {
-      console.log(d['name']); // Check the value of d.name
-      const className = `obj incl wide-bar ${d.name.split(" ").join("-")}`;
-      console.log(className); // Check the resulting class string
-      return className;
-  })    .attr("x", (d) => d.length <= 6 ? zoom_x(1 - parseInt(d.name.slice(-1))) : zoom_x(-5))
+    .attr("class", (d) => `obj incl wide-bar ${d.name.split(" ").join("-")}`)
+    .attr("x", (d) => d.length <= 6 ? zoom_x(1 - parseInt(d.name.slice(-1))) : zoom_x(-5))
     .attr("y", zoom_yIncl(0))
     .attr("width", (d) => d.length <= 6 ? zoom_x.bandwidth() * d.length : zoom_x.bandwidth() * 11)
     .attr("height", 0)
