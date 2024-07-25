@@ -160,15 +160,15 @@
         <hr>
         <h2>Interpretable-by-design network</h2>
         <!-- Network Video Section -->
-        <div class="network-video-section-container">
-          <section id="network-video-section">
+        <div class="network-video-section-container" id="network-section-1">
+          <section id="network-video-section-1">
             <div class="network-buttons">
               <div class="selector"></div>
-              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo1', 0)">Step 1</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo2', 1)">Step 2</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo3', 2)">Step 3</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo4', 3)">Step 4</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('networkVideo5', 4)">Step 5</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo1', 0)">Step 1</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo2', 1)">Step 2</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo3', 2)">Step 3</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo4', 3)">Step 4</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo5', 4)">Step 5</button>
             </div>
             <div class="network-video-container">
               <video id="networkVideo1" autoplay muted preload="auto">
@@ -256,6 +256,37 @@
           cursus.
           Nam
           nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
+
+        <!-- Local Network Video Section -->
+        <div class="network-video-section-container" id="network-section-2">
+          <section id="network-video-section-2">
+            <div class="network-buttons">
+              <div class="selector"></div>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0)">Step 1</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo2', 1)">Step 2</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo3', 2)">Step 3</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo4', 3)">Step 4</button>
+              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo5', 4)">Step 5</button>
+            </div>
+            <div class="network-video-container">
+              <video id="newNetworkVideo1" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Local_Network_1.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="newNetworkVideo2" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Local_Network_2.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="newNetworkVideo3" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Local_Network_3.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="newNetworkVideo4" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Local_Network_4.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+              <video id="newNetworkVideo5" autoplay muted preload="auto">
+                <source src="resources/networkVideos/Local_Network_5.m4v" type="video/mp4"> Your browser does not support the video tag.
+              </video>
+            </div>
+          </section>
+        </div>
 
         <hr>
 

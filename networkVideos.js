@@ -1,34 +1,36 @@
-let selectedNetworkVideoId = 'networkVideo1';
+let selectedNetworkVideoId = {
+  'network-section-1': 'networkVideo1',
+  'network-section-2': 'newNetworkVideo1'
+};
 
-function selectNetworkVideo(videoId, buttonIndex) {
-  // Select only videos within the network-video-section-container
-  const videos = document.querySelectorAll('.network-video-section-container video');
+function selectNetworkVideo(sectionId, videoId, buttonIndex) {
+  const section = document.querySelector(`#${sectionId}`);
+  const videos = section.querySelectorAll('video');
   videos.forEach(video => {
     video.style.display = video.id === videoId ? 'block' : 'none';
-    video.id === videoId ? video.play() : video.pause();
-    video.currentTime = 0;
+    if (video.id === videoId) {
+      video.play();
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
   });
 
-  selectedNetworkVideoId = videoId;
+  selectedNetworkVideoId[sectionId] = videoId;
 
-  // Update button styles only within the network-video-section-container
-  const buttons = document.querySelectorAll('.network-video-section-container .network-styled-button');
+  const buttons = section.querySelectorAll('.network-styled-button');
   buttons.forEach((button, index) => {
     button.classList.toggle('selected', index === buttonIndex);
   });
 
-  // Move the selector box
-  const selector = document.querySelector('.network-video-section-container .selector');
-  const buttonWidth = buttons[0].offsetWidth; // Get the width of a button
-  const buttonLeft = buttons[buttonIndex].offsetLeft; // Get the left offset of the button
-
-  // Calculate the left offset to center the selector around the button text
+  const selector = section.querySelector('.selector');
+  const buttonWidth = buttons[0].offsetWidth;
+  const buttonLeft = buttons[buttonIndex].offsetLeft;
   const leftOffset = buttonLeft + (buttonWidth / 2) - (selector.offsetWidth / 2);
-
   selector.style.left = `${leftOffset}px`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Default to selecting the first network video
-  selectNetworkVideo('networkVideo1', 0);
+  selectNetworkVideo('network-section-1', 'networkVideo1', 0);
+  selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0);
 });
