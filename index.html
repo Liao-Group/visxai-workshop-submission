@@ -35,7 +35,8 @@
         <h1>Inside of an interpretable-by-design machine learning model for deciphering RNA splicing</h1>
         <!-- <p class="subtitle">Subtitle</p> -->
         <div class="author-info">
-          <p><span class="author">Mateus Aragao</span>, <span class="author">Shiwen Zhu</span>, <span class="author">Susan Liao</span></p>
+          <p><span class="author">Mateus Aragao</span>, <span class="author">Shiwen Zhu</span>, <span
+              class="author">Susan Liao</span></p>
           <p class="affiliation">Department of Computer Science, New York University</p>
           <!-- <p>Published on <time datetime="2024-07-09">July 9, 2024</time></p> -->
         </div>
@@ -59,7 +60,7 @@
           The process of generating these different RNA products is termed alternative RNA splicing.<br><br>
           The most common form of alternative splicing involves the joining of differential RNA exon sequences.
         </p>
-        
+
         <h3><b>Exon Inclusion</b></h3>
         <p>
           In the case of exon inclusion, an exon is included in the spliced product.
@@ -76,7 +77,7 @@
 
         <h3><b>Exon Skipping</b></h3>
         <p>
-          In the case of exon skipping, an exon is removed from the spliced product. 
+          In the case of exon skipping, an exon is removed from the spliced product.
         </p>
         <div class="container">
           <img id="previewImage" src="resources/RNA_Splicing.jpeg" alt="Preview Image">
@@ -90,9 +91,9 @@
 
         <h3><b>Percent Spliced In (PSI)</b></h3>
         <p>
-          When information is read out from the genome (transcribed), multiple RNAs are produced for each gene. 
-          These RNAs are then alternatively spliced, often generating both inclusion and skipping products. 
-          For example, a hundred RNAs can be transcribed from the same DNA sequence. 
+          When information is read out from the genome (transcribed), multiple RNAs are produced for each gene.
+          These RNAs are then alternatively spliced, often generating both inclusion and skipping products.
+          For example, a hundred RNAs can be transcribed from the same DNA sequence.
         </p>
         <!-- PSI Video Section -->
         <div class="video-section-container">
@@ -107,13 +108,16 @@
             <h3>Output (Result and PSI)</h3>
             <div class="video-container">
               <video id="video1" autoplay muted>
-                <source src="resources/psiVideos/PSI_New_1.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/psiVideos/PSI_New_1.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
               <video id="video2" autoplay muted>
-                <source src="resources/psiVideos/PSI_New_2.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/psiVideos/PSI_New_2.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
               <video id="video3" autoplay muted>
-                <source src="resources/psiVideos/PSI_New_3.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/psiVideos/PSI_New_3.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
             </div>
           </section>
@@ -132,15 +136,15 @@
 
         <h3><b>Splicing Logic</b></h3>
         <p>
-          One of the major challenges in modern genomics research is understanding the logic underlying RNA splicing, 
-          specifically understanding which RNA-encoded features lead to a specific PSI. 
-          While RNAs encode two-dimensional information (sequence), 
+          One of the major challenges in modern genomics research is understanding the logic underlying RNA splicing,
+          specifically understanding which RNA-encoded features lead to a specific PSI.
+          While RNAs encode two-dimensional information (sequence),
           they can also form more complex three-dimensional structures (structures).
           <br><br>
           <br><br>
-          <br><br> 
+          <br><br>
         </p>
-        
+
         <div class="chart-container">
           <div class="psi-chart-gradient" id="psi-chart-gradient"></div>
         </div>
@@ -164,27 +168,37 @@
           <section id="network-video-section-1">
             <div class="network-buttons">
               <div class="selector"></div>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo1', 0)">Step 1</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo2', 1)">Step 2</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo3', 2)">Step 3</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo4', 3)">Step 4</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-1', 'networkVideo5', 4)">Step 5</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-1', 'networkVideo1', 0)">Step 1</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-1', 'networkVideo2', 1)">Step 2</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-1', 'networkVideo3', 2)">Step 3</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-1', 'networkVideo4', 3)">Step 4</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-1', 'networkVideo5', 4)">Step 5</button>
             </div>
             <div class="network-video-container">
               <video id="networkVideo1" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
               <video id="networkVideo2" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_2.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Network_2.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
               <video id="networkVideo3" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_3.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Network_3.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
               <video id="networkVideo4" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_4.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Network_4.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
               <video id="networkVideo5" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_5.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Network_5.m4v" type="video/mp4"> Your browser does not support the
+                video tag.
               </video>
             </div>
           </section>
@@ -211,7 +225,7 @@
         <h3>7./8.Feature visualization (interactive)</h3>
 
         <div class="feature-nucleotide">
-          <button id="switch-dataset-button">Switch Dataset</button>
+          <!-- <button id="switch-dataset-button">Switch Dataset</button> -->
 
           <div class="nucleotide-view" id="nucleotide-view">
             <svg class="nucleotide-view" width="100%" height="100%"></svg>
@@ -238,7 +252,7 @@
             </div>
           </div>
         </div>
-        
+
         <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
           cursus.
           Nam
@@ -264,27 +278,37 @@
           <section id="network-video-section-2">
             <div class="network-buttons">
               <div class="selector"></div>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0)">Step 1</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo2', 1)">Step 2</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo3', 2)">Step 3</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo4', 3)">Step 4</button>
-              <button class="network-styled-button" onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo5', 4)">Step 5</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0)">Step 1</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo2', 1)">Step 2</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo3', 2)">Step 3</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo4', 3)">Step 4</button>
+              <button class="network-styled-button"
+                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo5', 4)">Step 5</button>
             </div>
             <div class="network-video-container">
               <video id="newNetworkVideo1" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_1.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Local_Network_1.m4v" type="video/mp4"> Your browser does not
+                support the video tag.
               </video>
               <video id="newNetworkVideo2" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_2.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Local_Network_2.m4v" type="video/mp4"> Your browser does not
+                support the video tag.
               </video>
               <video id="newNetworkVideo3" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_3.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Local_Network_3.m4v" type="video/mp4"> Your browser does not
+                support the video tag.
               </video>
               <video id="newNetworkVideo4" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_4.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Local_Network_4.m4v" type="video/mp4"> Your browser does not
+                support the video tag.
               </video>
               <video id="newNetworkVideo5" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_5.m4v" type="video/mp4"> Your browser does not support the video tag.
+                <source src="resources/networkVideos/Local_Network_5.m4v" type="video/mp4"> Your browser does not
+                support the video tag.
               </video>
             </div>
           </section>
@@ -294,63 +318,74 @@
 
         <h2>Applications</h2>
 
- 
+
         <h3>Mutations</h3>
 
-           <p>A common task to probe interpretability is to examine how the network predicts an outcome when an input is edited. 
-            Tracing the consequences of input editing is often highly domain-specific; for example, natural language processing 
-            researchers examine how altering a single character can affect meaning (e.g. adding ``s'' to the word ``cat'') and 
-            vision researchers examine how altering a set of pixels can affect classification. Thus, a common experimental approach 
-            in molecular biology is to perform single nucleotide mutagenesis - substituting one nucleotide for another (e.g. replacing
-             A with G at a specific position in an exon). For machine learning researchers, mutagenesis provides an approach to probe whether
-              the local interpretability of a neural network generalizes beyond the training and testing datasets \cite{whatiftool}. For domain 
-              experts in molecular biology, whether \textit{in silico} mutagenesis predictions match results from laboratory mutagenesis experiments 
-              often serves as a litmus test for whether a neural network captures the ground truth. Furthermore, mutagenesis experiments are often used to 
-              model real-world disease mutations as single nucleotide splicing mutations have been directly implicated in several diseases \cite{lorson1999single,ezquerra2017high,ars2000mutations, teraoka1999splicing}, 
-              and are estimated to contribute to up to 30\% of rare genetic disorders \cite{lim2011using}.
-           </p>
-           <p>
-      To illustrate how our visualizations can be useful for mutagenesis modeling,
-       we generate exon view visualizations for a single mutation from Liao, Sudarshan, 
-       and Regev's original paper (\cref{fig:mutation}). Each visualization elucidates 
-       important facets of the network's local reasoning process. Comparing class strengths 
-       charts between the original input and the single mutation reveals that the single mutation 
-       shifted the dominant feature class from skipping to inclusion (\cref{fig:mutation}, left panels). 
-       Examining the feature-focused charts reveals that the mutation resulted in a two-fold decrease in a 
-       skipping feature (\cref{fig:mutation}, middle panels). Finally, comparing exon visualizations 
-       illustrates the consequences of the single nucleotide mutation at position 34. Examining the RNAfold 
-      on \textit{both} inclusion and skipping features at position 34.
-      
-      We further demonstrate that our visualizations can also extend to a double mutation scenario 
-      (Supplemental Fig.~S5).
-           </p>
-           <p>
-                  As reflected in the class strengths chart, the additional mutation at position 46 results in an 
-      increase in skipping class strengths. Examining the feature-focused chart reveals that the second 
-      mutation increased the strength of the secondary structure feature. Analysis of structure in exon 
-      view reveals that the second mutation at position 46 re-establishes base pairing with the first mutation
-       at position 34, restoring the strong skipping feature.
-           </p>
+        <p>A common task to probe interpretability is to examine how the network predicts an outcome when an input is
+          edited.
+          Tracing the consequences of input editing is often highly domain-specific; for example, natural language
+          processing
+          researchers examine how altering a single character can affect meaning (e.g. adding ``s'' to the word ``cat'')
+          and
+          vision researchers examine how altering a set of pixels can affect classification. Thus, a common experimental
+          approach
+          in molecular biology is to perform single nucleotide mutagenesis - substituting one nucleotide for another
+          (e.g. replacing
+          A with G at a specific position in an exon). For machine learning researchers, mutagenesis provides an
+          approach to probe whether
+          the local interpretability of a neural network generalizes beyond the training and testing datasets
+          \cite{whatiftool}. For domain
+          experts in molecular biology, whether \textit{in silico} mutagenesis predictions match results from laboratory
+          mutagenesis experiments
+          often serves as a litmus test for whether a neural network captures the ground truth. Furthermore, mutagenesis
+          experiments are often used to
+          model real-world disease mutations as single nucleotide splicing mutations have been directly implicated in
+          several diseases \cite{lorson1999single,ezquerra2017high,ars2000mutations, teraoka1999splicing},
+          and are estimated to contribute to up to 30\% of rare genetic disorders \cite{lim2011using}.
+        </p>
+        <p>
+          To illustrate how our visualizations can be useful for mutagenesis modeling,
+          we generate exon view visualizations for a single mutation from Liao, Sudarshan,
+          and Regev's original paper (\cref{fig:mutation}). Each visualization elucidates
+          important facets of the network's local reasoning process. Comparing class strengths
+          charts between the original input and the single mutation reveals that the single mutation
+          shifted the dominant feature class from skipping to inclusion (\cref{fig:mutation}, left panels).
+          Examining the feature-focused charts reveals that the mutation resulted in a two-fold decrease in a
+          skipping feature (\cref{fig:mutation}, middle panels). Finally, comparing exon visualizations
+          illustrates the consequences of the single nucleotide mutation at position 34. Examining the RNAfold
+          on \textit{both} inclusion and skipping features at position 34.
 
-      <p>
-      By comparing visualizations across the original input, single mutation, and double mutation, scenarios,
-       we illuminate the local reasoning processes of the neural network. These visualizations not only provide 
-       a means to assess the generalization of interpretability beyond training and testing datasets but also 
-       serve as a bridge between \textit{in silico} predictions and real-world mutagenesis experiments. 
-       This alignment with real-world molecular biology scenarios, such as disease mutations implicated in 
-       genetic disorders, underscores the utility and relevance of our visualizations in enhancing the interpretability 
-       and applicability of this neural network model in advancing molecular biology research.</p>
+          We further demonstrate that our visualizations can also extend to a double mutation scenario
+          (Supplemental Fig.~S5).
+        </p>
+        <p>
+          As reflected in the class strengths chart, the additional mutation at position 46 results in an
+          increase in skipping class strengths. Examining the feature-focused chart reveals that the second
+          mutation increased the strength of the secondary structure feature. Analysis of structure in exon
+          view reveals that the second mutation at position 46 re-establishes base pairing with the first mutation
+          at position 34, restoring the strong skipping feature.
+        </p>
+
+        <p>
+          By comparing visualizations across the original input, single mutation, and double mutation, scenarios,
+          we illuminate the local reasoning processes of the neural network. These visualizations not only provide
+          a means to assess the generalization of interpretability beyond training and testing datasets but also
+          serve as a bridge between \textit{in silico} predictions and real-world mutagenesis experiments.
+          This alignment with real-world molecular biology scenarios, such as disease mutations implicated in
+          genetic disorders, underscores the utility and relevance of our visualizations in enhancing the
+          interpretability
+          and applicability of this neural network model in advancing molecular biology research.</p>
 
         <!-- <button id="s1-exon">S1 Exon</button>
         <button id="s1-mutation">S1 Mutation</button> -->
         <!-- <div class="chart-container">
           <svg id="nucleotide-view-exon-s1" class="nucleotide-view-exon-s1"></svg>
       </div> -->
-      <div class="chart-container">
-        <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
-    </div>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
+        </div>
 
-    <h3>Comparisons</h3>        
+        <h3>Comparisons</h3>
         <p>One key aspect of interpretability is comparing the network’s reasoning
           process across multiple inputs. At the local level, this involves examin-
           ing how the network’s complex reasoning differs across input instances,
@@ -359,8 +394,8 @@
           predictions. By analyzing reasoning across multiple input instances,
           researchers can also gain insights into the global reasoning processing
           within a network. </p>
-          <p>
-         Our first use case demonstrates how these visualizations can be used
+        <p>
+          Our first use case demonstrates how these visualizations can be used
           to examine how the network can arrive at the same output prediction
           from three different inputs from the original dataset. We
           generated difference-to-prediction charts, strongest skipping feature
@@ -369,18 +404,19 @@
           the feature class view appears very similar, closer inspection reveals that
           the specific inclusion and skipping values vary for each input. Drilling
           down into the hierarchical feature-focused charts for each sequence also
-          reveals different specific skipping features. Furthermore, a comparison 
+          reveals different specific skipping features. Furthermore, a comparison
           of exon views reveals differences in the distribution of feature strengths
           across the three inputs.
-          </p>
-      <div class="chart-container">
-        <svg id="nucleotide-comp2" class="nucleotide-comp2"></svg>
-    </div>  
-      <div class="chart-container">
-      <div id="psi-bar-chart-s1" class="psi-bar-chart-s1"></div>
-      <div id="psi-bar-chart-s1-comparison" class="psi-bar-chart-s1-somparison"></div>
+        </p>
+          <div class="chart-container">
+              <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
+              <div id="psi-bar-chart-s1" class="psi-bar-chart-s1"></div>
+          </div>
+          <div class="chart-container">
+              <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
+              <div id="psi-bar-chart-s1-comparison" class="psi-bar-chart-s1-comparison"></div>
+          </div>
 
-    </div>
         <h2>Summary</h2>
         <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
           tortor
