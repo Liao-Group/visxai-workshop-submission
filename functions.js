@@ -1600,8 +1600,8 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
     .text("Nucleotide Features");
 
   // Add X axis
-  const zoom_xAxis = d3.axisBottom(zoom_x).tickSize(2);
-  const zoom_xSkipAxis = d3.axisTop(zoom_x).tickSize(2);
+  const zoom_xAxis = d3.axisTop(zoom_x).tickSize(2);
+  const zoom_xSkipAxis = d3.axisBottom(zoom_x).tickSize(2);
   const zoom_xNuAxis = d3.axisBottom(zoom_x).tickSize(0);
 
   const zoom_gxIncl = svg_zoom.append("g")
@@ -1617,11 +1617,11 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
     .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`);
 
   zoom_xAxis.tickFormat((d) => structs[int_pos - 1 + d])
-  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length && int_pos + d <= flanking_length + exon_length) ? int_pos + d - flanking_length : "");
+  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length) ? int_pos + d - flanking_length : "");
   zoom_xNuAxis.tickFormat((d) => sequence[int_pos - 1 + d]);
 
-  zoom_gxIncl.call(zoom_xAxis);
-  zoom_gxSkip.call(zoom_xSkipAxis);
+  zoom_gxIncl.call(zoom_xSkipAxis);
+  zoom_gxSkip.call(zoom_xAxis );
   zoom_gxNu.call(zoom_xNuAxis);
 
   zoom_gxNu.selectAll("path").style("stroke-width", 0);
@@ -1667,6 +1667,8 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
   zoom_skip_ylabel.style("fill", "black");
   zoom_gyIncl.call(d3.axisLeft(zoom_yIncl).ticks(5));
   zoom_gySkip.call(d3.axisLeft(zoom_ySkip).ticks(5));
+  zoom_gySkip.selectAll(".tick line")
+    .style("display", "none");
 
   // Add borders
   const left_border = svg_zoom.append("line")
