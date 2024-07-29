@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .tickValues([0, 0.25, 0.5, 0.75, 1])
       .tickFormat((d, i) => {
         // Show labels only for 0, 0.5, and 1
-        return [0, 0.5, 1].includes(d) ? d3.format(".1f")(d) : "";
+        return [ 0.5, 1].includes(d) ? d3.format(".1f")(d) : "";
       });
   
       // Add grid
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
           .attr("text-anchor", "middle")
           .attr("x", width / 2)
           .attr("y", height + margin.bottom - 10)
-          .text(`Δ Strength`);
+          .text(`Δ Strength (a.u.)`);
   
       svg.append("text")
           .attr("class", "axis-label")
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
           .attr("transform", "rotate(-90)")
           .attr("x", -height / 2)
           .attr("y", -margin.left + 20)
-          .text("PSI");
+          .text("Predicted PSI");
       svg.append("text")
           .attr("class", "floating-label")
           .attr("text-anchor", "end")
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
  // Initialize visualizations
  createNonLinearPSIGraph("#non-linear-chart");
- createNonLinearPSIGraph("#psi-chart-gradient");
+//  createNonLinearPSIGraph("#psi-chart-gradient");
 
 
  updatePSIBarChart(data[6],'#psi-bar-chart','PSI Graph'); // Start with middle data point
