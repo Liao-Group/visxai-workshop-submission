@@ -124,3 +124,26 @@
   width: 100%;
   height: 500px;
 }
+
+.nucleotide-view-exon1  {
+  width: 100%;
+  height: 500px;
+}
+.nucleotide-view-exon1 svg {
+  width: 100%;
+  height: 500px;
+}
+
+.nucleotide-view-exon-comp  {
+  width: 100%;
+  height: 500px;
+}
+.nucleotide-view-exon-comp svg {
+  width: 100%;
+  height: 500px;
+}
+.psi-bar-chart-s1,
+.psi-bar-chart-s1-comparison {
+  width: 30%;
+  height: 500px;
+}
