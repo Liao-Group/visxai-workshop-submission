@@ -786,6 +786,20 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .attr("text-anchor", "middle")
     .style('font-size', `${14 * widthRatio}px`)
     .text("Exon View");
+    var max_incl = d3.max(Object.values(data.inclusion));
+    var max_skip = d3.max(Object.values(data.skipping));
+    console.log("Max inclusion strength:", max_incl);
+    console.log("Max skipping strength:", max_skip);
+
+    var max_strength = d3.max([max_incl, max_skip]);
+
+    var yIncl = d3.scaleLinear()
+        .domain([0, max_strength])
+        .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
+    var ySkip = d3.scaleLinear()
+        .domain([0, max_strength])
+        .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
+
 
   // Add X axis
   var positions = Array.from(new Array(sequence.length), (x, i) => i + 1);
@@ -823,6 +837,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
     .call(xSkipAxis);
+    gxSkip.selectAll(".tick line")
+  .style("display", "none");
   var gxNu = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -854,8 +870,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .style("fill", skipping_highlight_color)
         .attr("opacity", 1);
       getFeaturesForPosition(position,data)
-      nucleotideSort(position,data, margin, 250, 450, colors);
-      nucleotideZoom(data,sequence, structs, position, margin, 250, 450, max_strength, colors);
+      nucleotideSort(position,data, margin,max_strength, 230, 450, colors);
+      nucleotideZoom(data,sequence, structs, position, margin, 230, 450, max_strength, colors);
     });
 
   gxNu.selectAll("path")
@@ -867,21 +883,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("font-size", `${12 * widthRatio}px`)
         .attr("fill", (d <= flanking_length || d > flanking_length + exon_length) ? line_color : nucleotide_color)
     });
-
-    var max_incl = d3.max(Object.values(data.inclusion));
-    var max_skip = d3.max(Object.values(data.skipping));
-    console.log("Max inclusion strength:", max_incl);
-    console.log("Max skipping strength:", max_skip);
-
-    var max_strength = d3.max([max_incl, max_skip]);
-
-    var yIncl = d3.scaleLinear()
-        .domain([0, max_strength])
-        .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
-    var ySkip = d3.scaleLinear()
-        .domain([0, max_strength])
-        .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
-
 
 
   const InclusionAxis = (color = false) => {
@@ -936,11 +937,11 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
         .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
         .attr("y", function (d) { return yIncl(d[1]); })
-        .attr("width", x.bandwidth())
+        .attr("width", x.bandwidth()+1)
         .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
         .attr("fill", barColor)
-        .attr("stroke", inclusion_highlight_color)
-        .style("stroke-width", "2px") // Add px and !important if necessary
+        // .attr("stroke", inclusion_highlight_color)
+        // .style("stroke-width", "2px") // Add px and !important if necessary
         .attr("opacity", .1)
   
 
@@ -977,8 +978,8 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
         console.log(d3.select(this).attr("class").split(" ")[2])
         getFeaturesForPosition(position,data)
-        nucleotideSort(position,data, margin, 250, 450, colors);
-        nucleotideZoom(data,sequence, structs, position, margin, 250, 450, max_strength, colors);
+        nucleotideSort(position,data, margin,max_strength, 230, 450, colors);
+        nucleotideZoom(data,sequence, structs, position, margin, 230, 450, max_strength, colors);
       });
   }
 
@@ -1037,11 +1038,11 @@ svg_nucl.selectAll("nucleotide-skip-bar")
   .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
   .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
   .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-  .attr("width", x.bandwidth())
+  .attr("width", x.bandwidth()+1)
   .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
   .attr("fill", barColor)
-  .attr("stroke", lineHighlightColor)
-  .style("stroke-width", "2px") // Add px and !important if necessary
+  // .attr("stroke", lineHighlightColor)
+  // .style("stroke-width", "2px") // Add px and !important if necessary
   .attr("opacity", .1) // Adjust opacity as needed
 
       .lower()
@@ -1077,8 +1078,8 @@ svg_nucl.selectAll("nucleotide-skip-bar")
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
         console.log(d3.select(this).attr("class").split(" ")[2])
         getFeaturesForPosition(position,data)
-        nucleotideSort(position,data, margin, 250, 450, colors);
-        nucleotideZoom(data,sequence, structs, position, margin, 250, 450, max_strength, colors);
+        nucleotideSort(position,data, margin,max_strength, 230, 450, colors);
+        nucleotideZoom(data,sequence, structs, position, margin, 230, 450, max_strength, colors);
       });
   };
 
@@ -1333,7 +1334,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
 /**
  * nucleotideSort
  */
-function nucleotideSort(pos, data, margin, width, height, colors) {
+function nucleotideSort(pos, data, margin,maxStrength, width, height, colors) {
   console.log("nucleotideSort called for position:", pos);
   console.log("Data received:", data);
 
@@ -1361,7 +1362,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
   const inclData = data.flattened_inclusion[`pos_${pos}`] || [];
   const skipData = data.flattened_skipping[`pos_${pos}`] || [];
   console.log(inclData)
-  const maxStrength = 6;
+  // const maxStrength = 6;
 
   const fillerData = [
     { 'name': '1', 'strength': 0, 'length': 0 }, { 'name': '2', 'strength': 0, 'length': 0 },
@@ -1373,6 +1374,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
   const topInclData = inclData.sort((a, b) => b.strength - a.strength).concat(fillerData).slice(0, 10);
   const topSkipData = skipData.sort((a, b) => b.strength - a.strength).concat(fillerData).slice(0, 10);
 
+  console.log(topInclData,topSkipData)
   // X axis setup
   const sortXIncl = d3.scaleBand()
     .range([margin.left, width - margin.right])
@@ -1479,7 +1481,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
    .attr("class", d => `obj incl narrow-bar ${d.name.split(" ").join("-")}`)
    .attr("x", d => sortXIncl(d.name.split(' ').pop()))
    .attr("y", sortYIncl(0))
-   .attr("width", sortXIncl.bandwidth())
+   .attr("width", sortXIncl.bandwidth() )
    .attr("height", 0)
    .attr("fill", inclusionColor)
    .attr("stroke", line_color)
@@ -1558,7 +1560,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
 /**
  * nucleotideZoom
  */
-function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height, max_strength, colors) {
+function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height, maxStrength, colors) {
   var svg_zoom = d3.select("svg.nucleotide-zoom");
 
   pos = "pos_"+pos
@@ -1575,7 +1577,7 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
     .padding(0);
 
   /* Change y range to a fix range */
-  max_strength = 6;
+  max_strength = maxStrength;
   const zoom_yIncl = d3.scaleLinear()
     .domain([0, max_strength])
     .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
@@ -1700,7 +1702,7 @@ function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height,
   console.log(incl_data,skip_data,pos)
   const max_incl = d3.max(incl_data.map((d) => d.strength));
   const max_skip = d3.max(skip_data.map((d) => d.strength));
-  max_strength = d3.max([max_incl, max_skip]);
+  max_strength =maxStrength
 
   // Remove previous bars
   svg_zoom.selectAll(".incl.wide-bar")
