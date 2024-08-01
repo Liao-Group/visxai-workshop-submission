@@ -113,8 +113,7 @@
 .chart-container {
   width: 800px;
   margin: 0 auto;
-  border: solid black; /* Add border here */
-  border-radius: 25px;
+
 }
 .nucleotide-view {
   flex: 1;
@@ -126,8 +125,7 @@
 .nucleotide-view svg {
   width: 100%;
   height: 500px;
-  border: solid black; /* Add border here */
-  border-radius: 25px;
+
 }
 
 .nucleotide-view-exon1  {
@@ -137,8 +135,7 @@
 .nucleotide-view-exon1 svg {
   width: 100%;
   height: 500px;
-  border: solid black; /* Add border here */
-  border-radius: 25px;
+
 }
 .nucleotide-view-exon-s1-mutation{
   width: 100%;
@@ -153,11 +150,44 @@
 .nucleotide-view-exon-comp svg {
   width: 100%;
   height: 500px;
-  border: solid black; /* Add border here */
-  border-radius: 25px;
+
 }
+.nucleotide-view-exon-brca2,
+.nucleotide-view-exon-brca2 svg {
+  width: 100%;
+  height: 500px;
+
+}
+.nucleotide-view-exon-cfrt,
+.nucleotide-view-exon-cfrt svg {
+  width: 100%;
+  height: 500px;
+
+}
+
+
 .psi-bar-chart-s1,
-.psi-bar-chart-s1-comparison {
+.psi-bar-chart-s1-comparison,
+.psi-bar-chart-exon-brca2,
+.psi-bar-chart-exon-cfrt {
   width: 30%;
   height: 400px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.grid-item {
+  width:400px;
+  height: 200px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+
+.nucleotide-view-exon-grid {
+  width: 100%;
+  height: 100%;
 }

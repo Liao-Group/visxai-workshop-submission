@@ -332,7 +332,7 @@ function highlightLogos(listOfLogos = []) {
 
 var exon_s1_data = []
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('exon_1_strengths_flattened.json')
+  fetch('data/exon_s1_strengths.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -350,18 +350,18 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Failed to fetch or parse data:", error);
     });
 
-    fetch('data/exon_s1.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      exon_s1_data = data;
+    // fetch('data/exon_s1.json')
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   return response.json();
+    // })
+    // .then(data => {
+    //   exon_s1_data = data;
 
-    })
-    .catch(error => {
-      console.error("Failed to fetch or parse data:", error);
-    });
+    // })
+    // .catch(error => {
+    //   console.error("Failed to fetch or parse data:", error);
+    // });
 });
