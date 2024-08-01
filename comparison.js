@@ -480,18 +480,41 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("fill", "black")
       .text("Orignal");
 
+    const button2 = svg.append("g")
+      .attr("cursor", "pointer")
+      .attr("transform", `translate(${x+100}, ${y})`);
+
+
+      button2.append("rect")
+      .attr("width", 70)
+      .attr("height", 30)
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .style("stroke", 'black')
+      .attr("fill", "white");
+
+    const buttonText2 = button2.append("text")
+      .attr("x", 10)
+      .attr("y", 20)
+      .attr("text-anchor", "center")
+      .attr("fill", "black")
+      .text("31C>A");
+
     button.on("click", function () {
-      isActive = !isActive;
+      isActive = true;
       buttonText
         .attr("x", 10)     
-        .text(isActive ? "Orignal" : "Mutation 31C>A");
+      drawInclusionAxis(isActive);
+      drawSkipAxis(isActive);
+      // addLegend(isActive)
 
-      d3.select(this)
-        .select("rect")
-        .attr("width", isActive ? 70 : 140)
-        // .attr("y", isActive ?20)
-        .attr("fill", 'white');
-      // Toggle the axes
+    });
+
+
+    button2.on("click", function () {
+      isActive = false;
+      buttonText2
+        .attr("x", 10)     
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
       // addLegend(isActive)
