@@ -271,35 +271,41 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     .tickSize(2 * widthRatio)
     .tickFormat(d => Array.from(structs)[d - 1]);
 
-  var xNuAxis = d3.axisBottom(x)
-    .tickSize(0)
-    .tickFormat((d, i) => {
-      if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
-        return sequence[i];
-      }
-      return i < sequence.length ? sequence[i] : '';
-    });
+  function comparisonSequence(isMutation=false) {
+    const sequenceToChange = isMutation ? compSequence : sequence;
+    svg_nucl.selectAll(".x.axis.nuc.ticks").remove(); // Remove the existing nucleotide letter ticks
 
-  var gxNu = svg_nucl.append("g")
-    .attr("class", "x axis")
-    .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`)
-    .attr("id", "#nucleotide ticks")
-    .call(xNuAxis);
+    var xNuAxis = d3.axisBottom(x)
+      .tickSize(0)
+      .tickFormat((d, i) => {
+        if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
+          return sequenceToChange[i];
+        }
+        return i < sequence.length ? sequence[i] : '';
+      });
 
-  gxNu.selectAll('.tick').style("cursor", "pointer");
-  gxNu.selectAll("path").style("stroke-width", 0);
+    var gxNu = svg_nucl.append("g")
+      .attr("class", "x axis nuc ticks")
+      .attr("font-size", `${12 * heightRatio}px`)
+      .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`)
+      .attr("id", "#nucleotide ticks")
+      .call(xNuAxis);
 
-  gxNu.selectAll(".tick text")
-    .attr("font-size", `${12 * widthRatio}px`)
-    .attr("fill", (d, i) => {
-      if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
-        return "#BF40BF";
-      }
-      return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
-    })
-    .attr("font-weight", (d, i) => (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) ? "bold" : "normal")
+    gxNu.selectAll('.tick').style("cursor", "pointer");
+    gxNu.selectAll("path").style("stroke-width", 0);
 
+    gxNu.selectAll(".tick text")
+      .attr("font-size", `${12 * widthRatio}px`)
+      .attr("fill", (d, i) => {
+        if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
+          return "#BF40BF";
+        }
+        return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
+      })
+      .attr("font-weight", (d, i) => (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) ? "bold" : "normal")
+  }
+
+  comparisonSequence()
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -506,17 +512,18 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         .attr("x", 10)     
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
+      comparisonSequence(!isActive)
       // addLegend(isActive)
 
     });
-
-
     button2.on("click", function () {
       isActive = false;
       buttonText2
         .attr("x", 10)     
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
+      comparisonSequence(!isActive)
+
       // addLegend(isActive)
 
     });
