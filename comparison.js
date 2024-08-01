@@ -82,7 +82,7 @@ function callFunctions() {
   });
   document.addEventListener("DOMContentLoaded", function () {
     Promise.all([
-      fetch('data/exon_s1_comp_grid1_strengths.json').then(response => {
+      fetch('data/exon_s1_comp1_strengths.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -158,6 +158,7 @@ function callFunctions() {
 callFunctions()
 
 function nucleotideComparison(data, comparison, svg_name, labels, classSelected = null) {
+  var exon_length = data.sequence.length - 10*2;  
   var sequence = data.sequence;
   var compSequence = comparison.sequence || [];
   var structs = data.structs;
@@ -884,6 +885,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
 }
 
 function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
+  var exon_length = data.sequence.length - 10*2;  
   var sequence = data.sequence;
   var structs = data.structs;
   var dataIncl = data.inclusion;
