@@ -765,7 +765,7 @@ function getFeaturesForPosition(pos, data) {
  */
 
 function nucleotideView(sequence, structs, data, classSelected = null) {
-
+  var exon_length = sequence.length - flanking_length*2;  
   svg = d3.select("svg.nucleotide-view")
   svg.selectAll("*").remove();
 
@@ -876,6 +876,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
 
   gxNu.selectAll("path")
     .style("stroke-width", 0);
+
   gxNu.selectAll(".tick")
     .each(function (d, i) {
       d3.select(this)

@@ -82,7 +82,7 @@ function callFunctions() {
   });
   document.addEventListener("DOMContentLoaded", function () {
     Promise.all([
-      fetch('data/exon_s1_comp_grid1_strengths.json').then(response => {
+      fetch('data/exon_s1_comp1_strengths.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -158,6 +158,7 @@ function callFunctions() {
 callFunctions()
 
 function nucleotideComparison(data, comparison, svg_name, labels, classSelected = null) {
+  var exon_length = data.sequence.length - 10*2;  
   var sequence = data.sequence;
   var compSequence = comparison.sequence || [];
   var structs = data.structs;
@@ -270,35 +271,41 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     .tickSize(2 * widthRatio)
     .tickFormat(d => Array.from(structs)[d - 1]);
 
-  var xNuAxis = d3.axisBottom(x)
-    .tickSize(0)
-    .tickFormat((d, i) => {
-      if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
-        return sequence[i];
-      }
-      return i < sequence.length ? sequence[i] : '';
-    });
+  function comparisonSequence(isMutation=false) {
+    const sequenceToChange = isMutation ? compSequence : sequence;
+    svg_nucl.selectAll(".x.axis.nuc.ticks").remove(); // Remove the existing nucleotide letter ticks
 
-  var gxNu = svg_nucl.append("g")
-    .attr("class", "x axis")
-    .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`)
-    .attr("id", "#nucleotide ticks")
-    .call(xNuAxis);
+    var xNuAxis = d3.axisBottom(x)
+      .tickSize(0)
+      .tickFormat((d, i) => {
+        if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
+          return sequenceToChange[i];
+        }
+        return i < sequence.length ? sequence[i] : '';
+      });
 
-  gxNu.selectAll('.tick').style("cursor", "pointer");
-  gxNu.selectAll("path").style("stroke-width", 0);
+    var gxNu = svg_nucl.append("g")
+      .attr("class", "x axis nuc ticks")
+      .attr("font-size", `${12 * heightRatio}px`)
+      .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`)
+      .attr("id", "#nucleotide ticks")
+      .call(xNuAxis);
 
-  gxNu.selectAll(".tick text")
-    .attr("font-size", `${12 * widthRatio}px`)
-    .attr("fill", (d, i) => {
-      if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
-        return "#BF40BF";
-      }
-      return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
-    })
-    .attr("font-weight", (d, i) => (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) ? "bold" : "normal")
+    gxNu.selectAll('.tick').style("cursor", "pointer");
+    gxNu.selectAll("path").style("stroke-width", 0);
 
+    gxNu.selectAll(".tick text")
+      .attr("font-size", `${12 * widthRatio}px`)
+      .attr("fill", (d, i) => {
+        if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
+          return "#BF40BF";
+        }
+        return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
+      })
+      .attr("font-weight", (d, i) => (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) ? "bold" : "normal")
+  }
+
+  comparisonSequence()
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -479,20 +486,44 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("fill", "black")
       .text("Orignal");
 
+    const button2 = svg.append("g")
+      .attr("cursor", "pointer")
+      .attr("transform", `translate(${x+100}, ${y})`);
+
+
+      button2.append("rect")
+      .attr("width", 70)
+      .attr("height", 30)
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .style("stroke", 'black')
+      .attr("fill", "white");
+
+    const buttonText2 = button2.append("text")
+      .attr("x", 10)
+      .attr("y", 20)
+      .attr("text-anchor", "center")
+      .attr("fill", "black")
+      .text("31C>A");
+
     button.on("click", function () {
-      isActive = !isActive;
+      isActive = true;
       buttonText
         .attr("x", 10)     
-        .text(isActive ? "Orignal" : "Mutation 31C>A");
-
-      d3.select(this)
-        .select("rect")
-        .attr("width", isActive ? 70 : 140)
-        // .attr("y", isActive ?20)
-        .attr("fill", 'white');
-      // Toggle the axes
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
+      comparisonSequence(!isActive)
+      // addLegend(isActive)
+
+    });
+    button2.on("click", function () {
+      isActive = false;
+      buttonText2
+        .attr("x", 10)     
+      drawInclusionAxis(isActive);
+      drawSkipAxis(isActive);
+      comparisonSequence(!isActive)
+
       // addLegend(isActive)
 
     });
@@ -884,6 +915,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
 }
 
 function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
+  var exon_length = data.sequence.length - 10*2;  
   var sequence = data.sequence;
   var structs = data.structs;
   var dataIncl = data.inclusion;
@@ -898,7 +930,7 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
   const heightRatio = height / 400;
   const widthRatio = width / 1000;
 
-  var margin = { top: 30, right: 10, bottom: 20, left: 20, middle: 22 };
+  var margin = { top: 30, right: 10, bottom: 10, left: 20, middle: 22 };
   var svg_nucl = d3.select(svg_name);
   // Title
   svg_nucl.append("text")
@@ -917,7 +949,7 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
     .paddingOuter(0.25);
 
   var xInclAxis = d3.axisBottom(x)
-    .tickSize(1 * widthRatio)
+    .tickSize(1)
     .tickFormat(function (d) {
       if (((d - flanking_length) % 10 == 0)) {
         return d - flanking_length;
@@ -925,7 +957,7 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
       return Array.from(structs)[d - 1];
     });
   var xSkipAxis = d3.axisTop(x)
-    .tickSize(1 * widthRatio)
+    .tickSize(1 * heightRatio)
     .tickFormat(function (d) {
       return Array.from(structs)[d - 1];
     });
@@ -934,25 +966,30 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
     .tickFormat(function (d) {
       return Array.from(sequence)[d - 1];
     });
+
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
-    .attr("font-size", `${12 * heightRatio}px`)
+    .attr("font-size", `${10 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
     .call(xInclAxis);
+
   var gxSkip = svg_nucl.append("g")
     .attr("class", "x axis")
-    .attr("font-size", `${12 * heightRatio}px`)
+    .attr("font-size", `${10 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
     .call(xSkipAxis);
+  
   var gxNu = svg_nucl.append("g")
     .attr("class", "x axis")
-    .attr("font-size", `${12 * heightRatio}px`)
+    .attr("font-size", `${40 * heightRatio}px`)
     .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - 5) + ")")
     .call(xNuAxis)
+
   var colors = [skipping_color, skipping_highlight_color, inclusion_color, inclusion_highlight_color]
   gxNu.call(xNuAxis)
     .selectAll('.tick')
     .style("cursor", "pointer")
+    .attr("font-size", `${30}px`)
     .on('click', function (event, d) {
       // Reset all bars to low opacity
       svg_nucl.selectAll(".obj.incl, .obj.skip").attr("opacity", 0.1);
@@ -988,7 +1025,10 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
         .attr("font-size", `${12 * widthRatio}px`)
         .attr("fill", (d <= flanking_length || d > flanking_length + exon_length) ? line_color : nucleotide_color)
     });
-
+  gxNu.selectAll('.tick text').style("font-size", "6px");
+  
+  gxSkip.selectAll('.tick text').style("font-size", "6px");
+  gxIncl.selectAll('.tick text').style("font-size", "6px");
   var max_incl = d3.max(Object.values(data.inclusion));
   var max_skip = d3.max(Object.values(data.skipping));
   console.log("Max inclusion strength:", max_incl);
