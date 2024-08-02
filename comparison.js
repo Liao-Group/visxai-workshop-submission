@@ -482,6 +482,8 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     const buttonText = button.append("text")
       .attr("x", 10)
       .attr("y", 20)
+      .style('fill', "#BF40BF")
+      .style('font-weight', "bold")
       .attr("text-anchor", "center")
       .attr("fill", "black")
       .text("Orignal");
@@ -508,8 +510,14 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
 
     button.on("click", function () {
       isActive = true;
+      buttonText2.
+      style('fill', "black")
+      .style('font-weight', "normal")
+
       buttonText
-        .attr("x", 10)     
+        .attr("x", 10)   
+        .style('fill', "#BF40BF")  
+        .style('font-weight', "bold")
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
       comparisonSequence(!isActive)
@@ -518,8 +526,15 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     });
     button2.on("click", function () {
       isActive = false;
+      buttonText
+      .style('fill', "black")
+      .style('font-weight', "normal")
+
       buttonText2
-        .attr("x", 10)     
+        .attr("x", 10)  
+        .style('fill', "#BF40BF")
+        .style('font-weight', "bold")
+
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
       comparisonSequence(!isActive)
@@ -530,7 +545,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   }
   drawInclusionAxis(true);
   drawSkipAxis(true);
-  createToggleButton(svg_nucl, 100, 0);
+  createToggleButton(svg_nucl, 100, 30);
 
   return svg_nucl;
 }
