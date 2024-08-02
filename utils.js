@@ -1,4 +1,5 @@
 
+var exon_s1_data = []
 
 /**
  * Recursively calculates the total strength of a nested data structure.
@@ -185,17 +186,6 @@ function featureSelection(featureName = null, className = null, features = []) {
       else { return d.color; }
     })
     .on('click', function (event) {
-      d3.selectAll('.background').style('fill', 'none');
-
-      nucleotideView(Data.sequence, Data.structs, Data);
-
-      const classValue = d3.select(this).attr("class").split(' ')[1];
-      console.log(classValue)
-      d3.selectAll(".obj.incl, .obj.skip").attr("opacity", 0.1);
-
-      legend.selectAll('.rectangle').attr('fill', (d) => d.color);
-      d3.select(this).attr('fill', (d) => d.highlight);
-      // d3.selectAll(`.obj.${classValue}`).attr("opacity", 1);
 
     })
     .on('mouseover', function (d) {
@@ -330,7 +320,6 @@ function highlightLogos(listOfLogos = []) {
 }
 
 
-var exon_s1_data = []
 document.addEventListener("DOMContentLoaded", function () {
   fetch('data/exon_s1_strengths.json')
     .then(response => {
@@ -350,18 +339,33 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Failed to fetch or parse data:", error);
     });
 
-    // fetch('data/exon_s1.json')
-    // .then(response => {
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   return response.json();
-    // })
-    // .then(data => {
-    //   exon_s1_data = data;
+    fetch('data/exon_s1.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      exon_s1_data = data;
 
-    // })
-    // .catch(error => {
-    //   console.error("Failed to fetch or parse data:", error);
-    // });
+    })
+    .catch(error => {
+      console.error("Failed to fetch or parse data:", error);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  var replayButtonNucleotideView = document.getElementById("replayButtonNucleotideView");
+
+  replayButtonNucleotideView.addEventListener("click", function() {
+      nucleotideView(Data.sequence, Data.structs, Data);
+      d3.selectAll('.background').style('fill', 'none');
+      d3.selectAll('svg.nucleotide-sort')
+      .attr('opacity', 0);
+      d3.selectAll('svg.nucleotide-zoom')
+      .attr('opacity', 0);
+
+      selectedFeatureBar = null;
+  });
 });

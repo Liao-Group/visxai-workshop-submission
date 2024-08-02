@@ -802,7 +802,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
 
 
   // Add X axis
-  var positions = Array.from(new Array(sequence.length), (x, i) => i + 1);
+  var positions = Array.from(new Array(sequence.length +1), (x, i) => i + 1);
   var x = d3.scaleBand()
     .range([margin.left, (width - margin.right)])
     .domain(positions)
@@ -830,7 +830,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
+    .attr("transform", "translate(0," + (margin.top  + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
     .call(xInclAxis);
   var gxSkip = svg_nucl.append("g")
     .attr("class", "x axis")
@@ -907,14 +907,20 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
       .text("Inclusion strength (a.u.)");
-      var extendedData = [];
-      Object.entries(dataIncl).forEach(function(d, i, arr) {
-        var xValue = parseInt(d[0].slice(4));
-        extendedData.push([xValue, d[1]]);
-        if (i < arr.length - 1) {
-          extendedData.push([xValue + 1, d[1]]);
-        }
-      });
+
+    var extendedData = [];
+    Object.entries(dataIncl).forEach(function (d, i, arr) {
+      var xValue = parseInt(d[0].slice(4));
+      extendedData.push([xValue, d[1]]);
+      if (i < arr.length - 1) {
+        extendedData.push([xValue + 1, d[1]]);
+      } else {
+        // Add two extra points to close the path
+        extendedData.push([xValue + 1, d[1]]);
+        extendedData.push([xValue + 1, 0]);  // Close to y=0
+        extendedData.push([xValue + 2, 0]);  // Extend one more step at y=0
+      }
+    });
       
       // Draw the line along the edges of the bars
       var line = d3.line()
@@ -944,8 +950,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         // .attr("stroke", inclusion_highlight_color)
         // .style("stroke-width", "2px") // Add px and !important if necessary
         .attr("opacity", .1)
-  
-
       .lower()
       .on("click", function (d) {
         d3.selectAll(".obj.incl")
@@ -1009,11 +1013,16 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
 
 // Create extended data points to mark the left and right edges of each bar
 var extendedSkipData = [];
-Object.entries(dataSkip).forEach(function(d, i, arr) {
+Object.entries(dataSkip).forEach(function (d, i, arr) {
   var xValue = parseInt(d[0].slice(4));
   extendedSkipData.push([xValue, d[1]]);
   if (i < arr.length - 1) {
     extendedSkipData.push([xValue + 1, d[1]]);
+  } else {
+    // Add two extra points to close the path
+    extendedSkipData.push([xValue + 1, d[1]]);
+    extendedSkipData.push([xValue + 1, 0]);  // Close to y=0
+    extendedSkipData.push([xValue + 2, 0]);  // Extend one more step at y=0
   }
 });
 
@@ -1211,6 +1220,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
       return d.name.split(" ")[1] == feature_name;
     });
   }
+  
 
   /* Change y range to a fix range */
   // var max_strength = d3.max(d3.map(data, function (d) { return d.strength / d.length; }).keys());
@@ -1339,7 +1349,8 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
   console.log("nucleotideSort called for position:", pos);
   console.log("Data received:", data);
 
-  var svg_sort = d3.select("svg.nucleotide-sort");
+  var svg_sort = d3.select("svg.nucleotide-sort")
+  .attr('opacity', 1);
   var svg_zoom = d3.select("svg.nucleotide-zoom");
   const inclusionColor = colors[2]
   const inclusionHighlightColor = colors[3]
@@ -1567,8 +1578,9 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
 /**
  * nucleotideZoom
  */
-function nucleotideZoom(data,sequence, structs, pos, margin, zoom_width, height, colors) {
-  var svg_zoom = d3.select("svg.nucleotide-zoom");
+function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height, colors) {
+  var svg_zoom = d3.select("svg.nucleotide-zoom")
+  .attr('opacity', 1);
 
   pos = "pos_"+pos
   const heightRatio = height / 622;
