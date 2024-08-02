@@ -565,8 +565,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
   var x = d3.scaleBand()
     .range([margin.left, (width - margin.right)])
     .domain(positions)
-    .paddingInner(0.2)
-    .paddingOuter(0.25);
+
 
   var xInclAxis = d3.axisBottom(x)
     .tickSize(2 * widthRatio)
@@ -930,7 +929,7 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
   const heightRatio = height / 400;
   const widthRatio = width / 1000;
 
-  var margin = { top: 30, right: 10, bottom: 10, left: 20, middle: 22 };
+  var margin = { top: 50, right: 10, bottom: 20, left: 20, middle: 22 };
   var svg_nucl = d3.select(svg_name);
   // Title
   svg_nucl.append("text")
