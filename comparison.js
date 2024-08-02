@@ -955,7 +955,7 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
     .text("Exon View");
 
   // Add X axis
-  var positions = Array.from(new Array(sequence.length), (x, i) => i + 1);
+  var positions = Array.from(new Array(sequence.length +1), (x, i) => i + 1);
   var x = d3.scaleBand()
     .range([margin.left, (width - margin.right)])
     .domain(positions)
@@ -1055,7 +1055,12 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
       extendedData.push([xValue, d[1]]);
       if (i < arr.length - 1) {
         extendedData.push([xValue + 1, d[1]]);
-      }
+    } else {
+     // Add twoxtra points to close the path
+        extendedData.push([xValue + 1, d[1]]);
+        extendedData.push([xValue + 1, 0]);  // Close to y=0
+        extendedData.push([xValue + 2, 0]);  // Extend one more step at y=0
+    }
     });
 
     // Draw the line along the edges of the bars
@@ -1152,27 +1157,32 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
     // Create extended data points to mark the left and right edges of each bar
     var extendedSkipData = [];
     Object.entries(dataSkip).forEach(function (d, i, arr) {
-      var xValue = parseInt(d[0].slice(4));
-      extendedSkipData.push([xValue, d[1]]);
-      if (i < arr.length - 1) {
-        extendedSkipData.push([xValue + 1, d[1]]);
-      }
+        var xValue = parseInt(d[0].slice(4));
+        extendedSkipData.push([xValue, d[1]]);
+        if (i < arr.length - 1) {
+            extendedSkipData.push([xValue + 1, d[1]]);
+        } else {
+            // Add two extra points to close the path
+            extendedSkipData.push([xValue + 1, d[1]]);
+            extendedSkipData.push([xValue + 1, 0]);  // Close to y=0
+            extendedSkipData.push([xValue + 2, 0]);  // Extend one more step at y=0
+        }
     });
-
-    // Draw the line along the edges of the bars
+    
+    // The rest of the code remains the same
     var line = d3.line()
-      .x(function (d) { return x(d[0]); })
-      .y(function (d) { return ySkip(d[1]); })
-      .curve(d3.curveStepAfter)
-      .defined(function (d) { return !isNaN(x(d[0])) && !isNaN(ySkip(d[1])); });
-
+        .x(function (d) { return x(d[0]); })
+        .y(function (d) { return ySkip(d[1]); })
+        .curve(d3.curveStepAfter)
+        .defined(function (d) { return !isNaN(x(d[0])) && !isNaN(ySkip(d[1])); });
+    
     svg_nucl.append("path")
-      .datum(extendedSkipData)
-      .attr("class", "line skip original")
-      .attr("d", line)
-      .attr("fill", "none")
-      .attr("stroke", lineHighlightColor)
-      .style("stroke-width", "2px"); // Add px and !important if necessary
+        .datum(extendedSkipData)
+        .attr("class", "line skip original")
+        .attr("d", line)
+        .attr("fill", "none")
+        .attr("stroke", lineHighlightColor)
+        .style("stroke-width", "2px");
     // // Draw the bars
     // svg_nucl.selectAll("nucleotide-skip-bar")
     //   .data(Object.entries(data.skipping))
