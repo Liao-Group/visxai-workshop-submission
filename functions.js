@@ -1012,19 +1012,19 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .text("Skipping strength (a.u.)");
 
 // Create extended data points to mark the left and right edges of each bar
-var extendedSkipData = [];
-Object.entries(dataSkip).forEach(function (d, i, arr) {
-  var xValue = parseInt(d[0].slice(4));
-  extendedSkipData.push([xValue, d[1]]);
-  if (i < arr.length - 1) {
-    extendedSkipData.push([xValue + 1, d[1]]);
-  } else {
-    // Add two extra points to close the path
-    extendedSkipData.push([xValue + 1, d[1]]);
-    extendedSkipData.push([xValue + 1, 0]);  // Close to y=0
-    extendedSkipData.push([xValue + 2, 0]);  // Extend one more step at y=0
-  }
-});
+    var extendedSkipData = [];
+    Object.entries(dataSkip).forEach(function (d, i, arr) {
+      var xValue = parseInt(d[0].slice(4));
+      extendedSkipData.push([xValue, d[1]]);
+      if (i < arr.length - 1) {
+        extendedSkipData.push([xValue + 1, d[1]]);
+      } else {
+        // Add two extra points to close the path
+        extendedSkipData.push([xValue + 1, d[1]]);
+        extendedSkipData.push([xValue + 1, 0]);  // Close to y=0
+        extendedSkipData.push([xValue + 2, 0]);  // Extend one more step at y=0
+      }
+    });
 
 // Draw the line along the edges of the bars
 var line = d3.line()
@@ -1437,7 +1437,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     .attr("class", "y label")
     .attr("text-anchor", "middle")
     .attr("x", -(margin.top + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
-    .attr("y", margin.left)
+    .attr("y", margin.left -15)
     .attr("dy", "-2.25em")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
@@ -1448,7 +1448,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     .attr("class", "y label")
     .attr("text-anchor", "middle")
     .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
-    .attr("y", margin.left)
+    .attr("y", margin.left -15)
     .attr("dy", "-2.25em")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
@@ -1675,7 +1675,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("class", "y label")
     .attr("text-anchor", "middle")
     .attr("x", -(margin.top + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
-    .attr("y", margin.left)
+    .attr("y", margin.left -15)
     .attr("dy", "-3.25em")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
@@ -1686,7 +1686,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("class", "y label")
     .attr("text-anchor", "middle")
     .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
-    .attr("y", margin.left)
+    .attr("y", margin.left -15)
     .attr("dy", "-3.25em")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
