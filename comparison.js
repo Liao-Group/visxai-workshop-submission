@@ -964,33 +964,31 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
 
   var xInclAxis = d3.axisBottom(x)
     .tickSize(1)
-    .tickFormat(function (d) {
-      if (((d - flanking_length) % 10 == 0)) {
-        return d - flanking_length;
-      } else { return "" };
-      return Array.from(structs)[d - 1];
-    });
-  var xSkipAxis = d3.axisTop(x)
-    .tickSize(1 * heightRatio)
-    .tickFormat(function (d) {
-      return Array.from(structs)[d - 1];
-    });
-  var xNuAxis = d3.axisBottom(x)
-    .tickSize(0)
-    .tickFormat(function (d) {
-      return Array.from(sequence)[d - 1];
+    .tickFormat(function (d) {  
+      return "";  
     });
 
+  var xSkipAxis = d3.axisTop(x)
+    .tickSize(1 * heightRatio)
+    .tickFormat(function (d) {  
+      return "";  
+    });
+
+  var xNuAxis = d3.axisBottom(x)
+    .tickSize(0)
+    .tickFormat(function (d) {  
+      return "";  
+    }); 
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${10 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
+    .attr("transform", "translate(0," + (margin.top +15+ (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
     .call(xInclAxis);
 
   var gxSkip = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${10 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
+    .attr("transform", "translate(0," + (margin.top- 15+ (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
     .call(xSkipAxis);
   
   var gxNu = svg_nucl.append("g")
@@ -1000,35 +998,6 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
     .call(xNuAxis)
 
   var colors = [skipping_color, skipping_highlight_color, inclusion_color, inclusion_highlight_color]
-  gxNu.call(xNuAxis)
-    .selectAll('.tick')
-    .style("cursor", "pointer")
-    .attr("font-size", `${30}px`)
-    .on('click', function (event, d) {
-      // Reset all bars to low opacity
-      svg_nucl.selectAll(".obj.incl, .obj.skip").attr("opacity", 0.1);
-
-      // Reset all nucleotides to normal font weight
-      gxNu.selectAll('.tick text').style("font-weight", "normal");
-
-      // Make the clicked nucleotide bold
-      d3.select(this).select('text').style("font-weight", "bold");
-
-      var letter = Array.from(sequence)[d - 1];
-      var position = String(d);
-      var pos = "pos_" + String(d);
-
-      // Highlight the clicked bars
-      svg_nucl.select(`.obj.incl.${pos}`)
-        .style("fill", inclusion_highlight_color)
-        .attr("opacity", 1);
-      svg_nucl.select(`.obj.skip.${pos}`)
-        .style("fill", skipping_highlight_color)
-        .attr("opacity", 1);
-      getFeaturesForPosition(position, data)
-      nucleotideSort(position, data, margin, 250, 450, colors);
-      nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
-    });
 
   gxNu.selectAll("path")
     .style("stroke-width", 0);
@@ -1052,10 +1021,10 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
 
   var yIncl = d3.scaleLinear()
     .domain([0, max_strength])
-    .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
+    .range([margin.top +15+ (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
   var ySkip = d3.scaleLinear()
     .domain([0, max_strength])
-    .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
+    .range([margin.top -15+ (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
 
 
 
@@ -1103,58 +1072,58 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
       .attr("stroke", lineHighlightColor)
       .style("stroke-width", "2px"); // Add px and !important if necessary
 
-    // Draw the bars
-    svg_nucl.selectAll("nucleotide-incl-bar")
-      .data(Object.entries(data.inclusion))
-      .enter()
-      .append("rect")
-      .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
-      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
-      .attr("y", function (d) { return yIncl(d[1]); })
-      .attr("width", x.bandwidth())
-      .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
-      .attr("fill", barColor)
-      .attr("stroke", inclusion_highlight_color)
-      .style("stroke-width", "2px") // Add px and !important if necessary
-      .attr("opacity", .1)
+    // // Draw the bars
+    // svg_nucl.selectAll("nucleotide-incl-bar")
+    //   .data(Object.entries(data.inclusion))
+    //   .enter()
+    //   .append("rect")
+    //   .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
+    //   .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+    //   .attr("y", function (d) { return yIncl(d[1]); })
+    //   .attr("width", x.bandwidth())
+    //   .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
+    //   .attr("fill", barColor)
+    //   .attr("stroke", inclusion_highlight_color)
+    //   .style("stroke-width", "2px") // Add px and !important if necessary
+    //   .attr("opacity", .1)
 
 
-      .lower()
-      .on("click", function (d) {
-        d3.selectAll(".obj.incl")
-          .style("fill", inclusion_color)
-          .attr("opacity", 0.1)
-          .classed("free", true);
-        d3.selectAll(".obj.skip")
-          .style("fill", skipping_color)
-          .attr("opacity", 0.1)
+    //   .lower()
+    //   .on("click", function (d) {
+    //     d3.selectAll(".obj.incl")
+    //       .style("fill", inclusion_color)
+    //       .attr("opacity", 0.1)
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.skip")
+    //       .style("fill", skipping_color)
+    //       .attr("opacity", 0.1)
 
-          .classed("free", true);
-        d3.selectAll(".obj.nt")
-          .style("font-weight", "normal")
-          .classed("free", true);
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.nt")
+    //       .style("font-weight", "normal")
+    //       .classed("free", true);
 
-        var pos = d3.select(this)
-          .attr("class")
-          .slice(9, -4);
-        d3.select(".obj.incl.free." + pos)
-          .style("fill", inclusion_highlight_color)
-          .attr("opacity", 1)
-          .classed("free", false);
-        d3.select(".obj.skip.free." + pos)
-          .style("fill", skipping_highlight_color)
-          .attr("opacity", 1)
+    //     var pos = d3.select(this)
+    //       .attr("class")
+    //       .slice(9, -4);
+    //     d3.select(".obj.incl.free." + pos)
+    //       .style("fill", inclusion_highlight_color)
+    //       .attr("opacity", 1)
+    //       .classed("free", false);
+    //     d3.select(".obj.skip.free." + pos)
+    //       .style("fill", skipping_highlight_color)
+    //       .attr("opacity", 1)
 
-          .classed("free", false);
-        d3.select(".obj.nt." + pos)
-          .style("font-weight", "bold")
-          .classed("free", false);
-        var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
-        console.log(d3.select(this).attr("class").split(" ")[2])
-        getFeaturesForPosition(position, data)
-        nucleotideSort(position, data, margin, 250, 450, colors);
-        nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
-      });
+    //       .classed("free", false);
+    //     d3.select(".obj.nt." + pos)
+    //       .style("font-weight", "bold")
+    //       .classed("free", false);
+    //     var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+    //     console.log(d3.select(this).attr("class").split(" ")[2])
+    //     getFeaturesForPosition(position, data)
+    //     nucleotideSort(position, data, margin, 250, 450, colors);
+    //     nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
+    //   });
   }
 
   const SkipAxis = (color = false) => {
@@ -1204,57 +1173,57 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
       .attr("fill", "none")
       .attr("stroke", lineHighlightColor)
       .style("stroke-width", "2px"); // Add px and !important if necessary
-    // Draw the bars
-    svg_nucl.selectAll("nucleotide-skip-bar")
-      .data(Object.entries(data.skipping))
-      .enter()
-      .append("rect")
-      .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
-      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
-      .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-      .attr("width", x.bandwidth())
-      .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
-      .attr("fill", barColor)
-      .attr("stroke", lineHighlightColor)
-      .style("stroke-width", "2px") // Add px and !important if necessary
-      .attr("opacity", .1) // Adjust opacity as needed
+    // // Draw the bars
+    // svg_nucl.selectAll("nucleotide-skip-bar")
+    //   .data(Object.entries(data.skipping))
+    //   .enter()
+    //   .append("rect")
+    //   .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
+    //   .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+    //   .attr("y", margin.top -15+ (height - margin.top - margin.bottom) / 2 + margin.middle)
+    //   .attr("width", x.bandwidth())
+    //   .attr("height", function (d) { return ySkip(d[1]) - (margin.top  + (height - margin.top - margin.bottom) / 2 + margin.middle); })
+    //   .attr("fill", barColor)
+    //   .attr("stroke", lineHighlightColor)
+    //   .style("stroke-width", "2px") // Add px and !important if necessary
+    //   .attr("opacity", .1) // Adjust opacity as needed
 
-      .lower()
-      .on("click", function (d) {
-        d3.selectAll(".obj.incl")
-          .style("fill", inclusion_color)
-          .attr("opacity", 0.1)
-          .classed("free", true);
-        d3.selectAll(".obj.skip")
-          .style("fill", skipping_color)
-          .attr("opacity", 0.1)
+    //   .lower()
+    //   .on("click", function (d) {
+    //     d3.selectAll(".obj.incl")
+    //       .style("fill", inclusion_color)
+    //       .attr("opacity", 0.1)
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.skip")
+    //       .style("fill", skipping_color)
+    //       .attr("opacity", 0.1)
 
-          .classed("free", true);
-        d3.selectAll(".obj.nt")
-          .style("font-weight", "normal")
-          .classed("free", true);
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.nt")
+    //       .style("font-weight", "normal")
+    //       .classed("free", true);
 
-        var pos = d3.select(this)
-          .attr("class")
-          .slice(9, -4);
-        d3.select(".obj.incl.free." + pos)
-          .style("fill", inclusion_highlight_color)
-          .attr("opacity", 1)
-          .classed("free", false);
-        d3.select(".obj.skip.free." + pos)
-          .style("fill", skipping_highlight_color)
-          .attr("opacity", 1)
+    //     var pos = d3.select(this)
+    //       .attr("class")
+    //       .slice(9, -4);
+    //     d3.select(".obj.incl.free." + pos)
+    //       .style("fill", inclusion_highlight_color)
+    //       .attr("opacity", 1)
+    //       .classed("free", false);
+    //     d3.select(".obj.skip.free." + pos)
+    //       .style("fill", skipping_highlight_color)
+    //       .attr("opacity", 1)
 
-          .classed("free", false);
-        d3.select(".obj.nt." + pos)
-          .style("font-weight", "bold")
-          .classed("free", false);
-        var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
-        console.log(d3.select(this).attr("class").split(" ")[2])
-        getFeaturesForPosition(position, data)
-        nucleotideSort(position, data, margin, 250, 450, colors);
-        nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
-      });
+    //       .classed("free", false);
+    //     d3.select(".obj.nt." + pos)
+    //       .style("font-weight", "bold")
+    //       .classed("free", false);
+    //     var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+    //     console.log(d3.select(this).attr("class").split(" ")[2])
+    //     getFeaturesForPosition(position, data)
+    //     nucleotideSort(position, data, margin, 250, 450, colors);
+    //     nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
+    //   });
   };
 
   if (classSelected === "incl") {

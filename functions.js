@@ -830,19 +830,19 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top -20 + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
+    .attr("transform", "translate(0," + (margin.top  + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
     .call(xInclAxis);
   var gxSkip = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top-20  + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
+    .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
     .call(xSkipAxis);
     gxSkip.selectAll(".tick line")
   .style("display", "none");
   var gxNu = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top-20  + (height - margin.top - margin.bottom) / 2 - 5) + ")")
+    .attr("transform", "translate(0," + (margin.top + (height - margin.top - margin.bottom) / 2 - 5) + ")")
     .call(xNuAxis)
   var colors = [skipping_color, skipping_highlight_color, inclusion_color, inclusion_highlight_color]
   gxNu.call(xNuAxis)
