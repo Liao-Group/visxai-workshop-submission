@@ -25,9 +25,9 @@ function updateInfoContainer(infoId, className) {
   const infoContainer = document.querySelector('.video-section-container #info-container');
   const infoImage = document.querySelector('.video-section-container #info-image');
   const infoImages = {
-    info1: 'resources/psiVideos/psi_options_01.png',
-    info2: 'resources/psiVideos/psi_options_02.png',
-    info3: 'resources/psiVideos/psi_options_03.png'
+    info1: 'resources/psiVideos/psi_options-01.png',
+    info2: 'resources/psiVideos/psi_options-02.png',
+    info3: 'resources/psiVideos/psi_options-03.png'
   };
   infoImage.src = infoImages[infoId];
   infoContainer.className = `info-container ${className}`;
