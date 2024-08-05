@@ -906,7 +906,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
-      .text("Inclusion strength (a.u.)");
+      .text("Strength (a.u.)");
 
     var extendedData = [];
     Object.entries(dataIncl).forEach(function (d, i, arr) {
@@ -1009,7 +1009,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
-      .text("Skipping strength (a.u.)");
+      .text("Strength (a.u.)");
 
 // Create extended data points to mark the left and right edges of each bar
     var extendedSkipData = [];
@@ -1248,7 +1248,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
     .attr("dy", "-2.25em")
     .attr("font-size", `12 px`)
     .attr("transform", "rotate(-90)")
-    .text("Inclusion strength (a.u.)");
+    .text("Strength (a.u.)");
     var yIncl = d3.scaleLinear()
       .domain([0, max_strength])
       .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
@@ -1298,7 +1298,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
     .attr("dy", "-2.25em")
     .attr("font-size", `12px`)
     .attr("transform", "rotate(-90)")
-    .text("Skipping strength (a.u.)");
+    .text("Strength (a.u.)");
 
     var ySkip = d3.scaleLinear()
       .domain([0, max_strength])
@@ -1442,7 +1442,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
     .style("fill", background_color)
-    .text("Inclusion strength (a.u.)");
+    .text("Strength (a.u.)");
 
   const sortSkipYLabel = svg_sort.append("text")
     .attr("class", "y label")
@@ -1453,7 +1453,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
     .style("fill", background_color)
-    .text("Skipping strength (a.u.)");
+    .text("Strength (a.u.)");
 
   // X axis rendering
   sortXInclAxis.tickFormat(() => "");
@@ -1680,7 +1680,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
     .style("fill", background_color)
-    .text("Inclusion strength (a.u.)");
+    .text("Strength (a.u.)");
 
   const zoom_skip_ylabel = svg_zoom.append("text")
     .attr("class", "y label")
@@ -1691,7 +1691,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
     .style("fill", background_color)
-    .text("Skipping strength (a.u.)");
+    .text("Strength (a.u.)");
 
   zoom_incl_ylabel.style("fill", "black");
   zoom_skip_ylabel.style("fill", "black");

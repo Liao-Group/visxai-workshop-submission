@@ -289,7 +289,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
-      .text("Inclusion strength (a.u.)");
+      .text("Strength (a.u.)");
 
     var line = d3.line()
       .x(d => x(parseInt(d[0].slice(4))) + x.bandwidth() / 2)
@@ -353,7 +353,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
-      .text("Skipping strength (a.u.)");
+      .text("Strength (a.u.)");
 
     var line = d3.line()
       .x(d => x(parseInt(d[0].slice(4))) + x.bandwidth() / 2)
@@ -676,7 +676,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
-      .text("Inclusion strength (a.u.)");
+      .text("Strength (a.u.)");
     var extendedData = [];
     Object.entries(dataIncl).forEach(function (d, i, arr) {
       var xValue = parseInt(d[0].slice(4));
@@ -780,7 +780,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "rotate(-90)")
-      .text("Skipping strength (a.u.)");
+      .text("Strength (a.u.)");
 
     // Create extended data points to mark the left and right edges of each bar
     var extendedSkipData = [];
