@@ -162,6 +162,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   var sequence = data.sequence;
   var compSequence = comparison.sequence || [];
   var structs = data.structs;
+  var compStructs = comparison.structs || [];
   var dataIncl = data.inclusion;
   var dataSkip = data.skipping;
 
@@ -205,16 +206,26 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       if (((d - flanking_length) % 10 == 0)) {
         return d - flanking_length;
       } else { return "" };
-      return Array.from(structs)[d - 1];
     });
 
-  var xSkipAxis = d3.axisTop(x)
-    .tickSize(2 * widthRatio)
-    .tickFormat(d => Array.from(structs)[d - 1]);
+  // var xSkipAxis = d3.axisTop(x)
+  //   .tickSize(2 * widthRatio)
+  //   .tickFormat(d => Array.from(structs)[d - 1]);
 
   function comparisonSequence(isMutation = false) {
     const sequenceToChange = isMutation ? compSequence : sequence;
+    const structToChange = isMutation ? compStructs : structs;
     svg_nucl.selectAll(".x.axis.nuc.ticks").remove(); // Remove the existing nucleotide letter ticks
+    svg_nucl.selectAll(".x.axis.struct.ticks").remove();
+    var xSkipAxis = d3.axisTop(x)
+      .tickSize(2 * widthRatio)
+      .tickFormat((d, i) => {
+        if (i < structs.length && i < compStructs.length && structs[i] !== compStructs[i]) {
+          return structToChange[i];
+        }
+        return i < structs.length ? structs[i] : '';
+      });
+    // .tickFormat(d => Array.from(structs)[d - 1]);
 
     var xNuAxis = d3.axisBottom(x)
       .tickSize(0)
@@ -224,6 +235,24 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         }
         return i < sequence.length ? sequence[i] : '';
       });
+
+    var gxSkip = svg_nucl.append("g")
+      .attr("class", "x axis struct ticks")
+      .attr("font-size", `${12 * heightRatio}px`)
+      .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle})`)
+      .call(xSkipAxis);
+    gxSkip.selectAll(".tick line")
+      .style("display", "none");
+
+    gxSkip.selectAll(".tick text")
+      .attr("font-size", `${12 * widthRatio}px`)
+      .attr("fill", (d, i) => {
+        if (i < structs.length && i < compStructs.length && structs[i] !== compStructs[i]) {
+          return "#BF40BF";
+        }
+        return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
+      })
+      .attr("font-weight", (d, i) => (i < structs.length && i < compStructs.length && structs[i] !== compStructs[i]) ? "bold" : "normal")
 
     var gxNu = svg_nucl.append("g")
       .attr("class", "x axis nuc ticks")
@@ -253,13 +282,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle})`)
     .call(xInclAxis);
 
-  var gxSkip = svg_nucl.append("g")
-    .attr("class", "x axis")
-    .attr("font-size", `${12 * heightRatio}px`)
-    .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle})`)
-    .call(xSkipAxis);
-    gxSkip.selectAll(".tick line")
-  .style("display", "none");
+
   var max_incl = d3.max(compIncl ? [...Object.values(dataIncl), ...Object.values(compIncl)] : Object.values(dataIncl));
   var max_skip = d3.max(compSkip ? [...Object.values(dataSkip), ...Object.values(compSkip)] : Object.values(dataSkip));
 
@@ -422,7 +445,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
           .attr("fill", "none")
           .attr("stroke", lineHighlightColor)  // Assuming you have a different color for this line
           .attr("stroke-width", .5);
-        }
+      }
       svg_nucl.append("path")
         .datum(extendedSkipData)
         .attr("class", "line skip original")
@@ -631,7 +654,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
       nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
     });
   gxSkip.selectAll(".tick line")
-  .style("display", "none");
+    .style("display", "none");
   gxNu.selectAll("path")
     .style("stroke-width", 0);
   gxNu.selectAll(".tick")
