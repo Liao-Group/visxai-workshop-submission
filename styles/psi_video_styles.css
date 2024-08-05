@@ -160,8 +160,8 @@ body {
 }
 
 #myVideo3 {
-  width: 840px;
-  height: calc(840px / (16 / 3));
+  width: 900px;
+  height: calc(900px / (16 / 4));
   object-fit: cover;
   margin-right: 20px;
 }

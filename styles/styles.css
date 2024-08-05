@@ -151,3 +151,38 @@ hr {
     margin: 30px 0;
 }
 
+.author {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .author:nth-of-type(1)::after,
+  .author:nth-of-type(2)::after {
+    content: '*';
+    position: relative;
+    top: -0.5em;
+    font-size: 0.75em;
+    color: red;
+    margin-left: 2px;
+  }
+  
+  .tooltip {
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    white-space: nowrap;
+    z-index: 1000;
+    border: none;
+  }
+  
+  .author:hover .tooltip {
+    display: block;
+  }
