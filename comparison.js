@@ -258,7 +258,8 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle})`)
     .call(xSkipAxis);
-
+    gxSkip.selectAll(".tick line")
+  .style("display", "none");
   var max_incl = d3.max(compIncl ? [...Object.values(dataIncl), ...Object.values(compIncl)] : Object.values(dataIncl));
   var max_skip = d3.max(compSkip ? [...Object.values(dataSkip), ...Object.values(compSkip)] : Object.values(dataSkip));
 
@@ -629,7 +630,8 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
       nucleotideSort(position, data, margin, 250, 450, colors);
       nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
     });
-
+  gxSkip.selectAll(".tick line")
+  .style("display", "none");
   gxNu.selectAll("path")
     .style("stroke-width", 0);
   gxNu.selectAll(".tick")
