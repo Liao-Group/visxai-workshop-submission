@@ -46,7 +46,7 @@
   width: 50%;
   padding: 10px;
   box-sizing: border-box;
-  background-color: #f8f9fa;
+  background-color: none;
   border-radius: 8px;
 }
 
@@ -60,8 +60,8 @@
 .feature-legend-title {
   text-align: center;
   font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  /* font-weight: 600; */
+  /* margin-bottom: 0.5rem; */
 }
 
 .legend {
@@ -90,12 +90,20 @@
   display: grid;
   flex-direction: row;
   gap: 0.2rem;
-  width:50%;
-  margin-left: auto; /* This will push the grid to the right */
+  width: 48%;
+  margin-left: auto;
 
 } 
 
-.feature-svg,
+.feature-svg {
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: white;
+}
+
 .feature-long-svg {
   border: 1px solid #ccc;
   width: 100%;
@@ -103,6 +111,7 @@
   box-sizing: border-box;
   border-radius: 4px;
   background-color: white;
+  margin-bottom: 5px;
 }
 
 .psi-bar-chart {

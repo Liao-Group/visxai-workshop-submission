@@ -156,11 +156,11 @@ function featureSelection(featureName = null, className = null, features = []) {
     .append('svg').attr('width', width)
 
   // Initialize legend
-  const legendItemWidth = 110 * widthRatio;
-  const legendItemHeight = 25 * widthRatio;
-  const legendSpacing = 85;
-  const xOffset = ((width - widthRatio) - (2 * legendItemWidth + legendSpacing)) / 2; // Adjust the x-offset to position the legend within visible range
-  const yOffset = 13; // Start drawing from top with a small margin
+  const legendItemWidth = 100 * widthRatio;
+  const legendItemHeight = 30 * widthRatio;
+  const legendSpacing = 130;
+  const xOffset = ((width - widthRatio) - (2 * legendItemWidth + legendSpacing)) / 2;
+  const yOffset = 10;
 
   const legend = svg.selectAll('.legendItem')
     .data(legendInfo)
@@ -367,5 +367,29 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr('opacity', 0);
 
       selectedFeatureBar = null;
+  });
+});
+
+
+// Author details
+document.addEventListener('DOMContentLoaded', () => {
+  const authors = document.querySelectorAll('.author');
+
+  authors.forEach((author, index) => {
+    if (index < 2) {
+      const tooltipText = author.getAttribute('data-tooltip');
+      const tooltip = document.createElement('div');
+      tooltip.classList.add('tooltip');
+      tooltip.textContent = tooltipText;
+      author.appendChild(tooltip);
+
+      author.addEventListener('mouseover', () => {
+        tooltip.style.display = 'block';
+      });
+
+      author.addEventListener('mouseout', () => {
+        tooltip.style.display = 'none';
+      });
+    }
   });
 });
