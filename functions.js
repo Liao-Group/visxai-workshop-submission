@@ -15,7 +15,6 @@ var positionsParent = []
 var positionsChildren = []
 var use_new_grouping = false
 var exon_length;
-var flanking_length = 10;
 var widthRatio
 let selectedBar = null;
 let selectedFeatureBar = null;

@@ -1,5 +1,7 @@
 let comp = [];
-
+var flanking_length = 10;
+var brca2_length = 15;
+var cfrt_lentgth = 15;
 function callFunctions() {
   document.addEventListener("DOMContentLoaded", function () {
     Promise.all([
@@ -560,6 +562,13 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
 }
 
 function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
+  if(svg_name === "#nucleotide-view-exon1" || svg_name === "#nucleotide-view-exon-comp"){ 
+    flanking_length = 10
+
+  }else{  
+    flanking_length= 15
+  } 
+  var exon_length = data.sequence.length - flanking_length * 2;
   var sequence = data.sequence;
   var structs = data.structs;
   var dataIncl = data.inclusion;
