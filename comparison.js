@@ -554,7 +554,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   }
   drawInclusionAxis(true);
   drawSkipAxis(true);
-  createToggleButton(svg_nucl, 60, 30);
+  createToggleButton(svg_nucl, 70, 40);
 
   return svg_nucl;
 }

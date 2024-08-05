@@ -839,6 +839,11 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .call(xSkipAxis);
     gxSkip.selectAll(".tick line")
   .style("display", "none");
+  // gxSkip.selectAll(".tick")
+  // .on("click", function (event, d) {
+  //   console.log("Clicked on nucleotide:", d);
+  // });
+  
   var gxNu = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -854,13 +859,29 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
 
       // Reset all nucleotides to normal font weight
       gxNu.selectAll('.tick text').style("font-weight", "normal");
-
+      
       // Make the clicked nucleotide bold
       d3.select(this).select('text').style("font-weight", "bold");
 
       var letter = Array.from(sequence)[d - 1];
       var position = String(d);
       var pos = "pos_" + String(d);
+      gxSkip.selectAll(".tick")
+      .each(function (d) {
+        d3.select(this).select("text")
+        .attr("font-size", `${10}px`)
+        .style("font-weight", "normal");
+      });
+      gxSkip.selectAll(".tick")
+        .each(function (d) {
+          var tickPosition = String(d)
+          console.log(tickPosition, position)
+          if (tickPosition === position) {
+            d3.select(this).select("text").style("font-weight", "bold")
+            .attr("font-size", `${11}px`);
+
+          }
+        });
 
       // Highlight the clicked bars
       svg_nucl.select(`.obj.incl.${pos}`)
@@ -869,9 +890,9 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       svg_nucl.select(`.obj.skip.${pos}`)
         .style("fill", skipping_highlight_color)
         .attr("opacity", 1);
-      getFeaturesForPosition(position,data)
-      nucleotideSort(position,data, margin, 230, 450, colors);
-      nucleotideZoom(data,sequence, structs, position, margin, 230, 450, colors);
+      getFeaturesForPosition(position, data);
+      nucleotideSort(position, data, margin, 230, 450, colors);
+      nucleotideZoom(data, sequence, structs, position, margin, 230, 450, colors);
     });
 
   gxNu.selectAll("path")
@@ -884,6 +905,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .attr("font-size", `${12 * widthRatio}px`)
         .attr("fill", (d <= flanking_length || d > flanking_length + exon_length) ? line_color : nucleotide_color)
     });
+
 
 
   const InclusionAxis = (color = false) => {
@@ -982,6 +1004,19 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         .classed("free", false);
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
         console.log(d3.select(this).attr("class").split(" ")[2])
+        gxSkip.selectAll(".tick")
+        .each(function (d) {
+          d3.select(this).select("text").style("font-weight", "normal");
+        });
+        gxSkip.selectAll(".tick")
+          .each(function (d) {
+            var tickPosition = String(d)
+            console.log(tickPosition, position)
+            if (tickPosition === position) {
+              d3.select(this).select("text").style("font-weight", "bold");
+            }
+          });
+
         getFeaturesForPosition(position,data)
         nucleotideSort(position,data, margin, 230, 450, colors);
         nucleotideZoom(data,sequence, structs, position, margin, 230, 450, colors);
@@ -1086,6 +1121,19 @@ svg_nucl.selectAll("nucleotide-skip-bar")
         .style("font-weight", "bold")
         .classed("free", false);
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+
+        gxSkip.selectAll(".tick")
+        .each(function (d) {
+          d3.select(this).select("text").style("font-weight", "normal");
+        });
+        gxSkip.selectAll(".tick")
+          .each(function (d) {
+            var tickPosition = String(d)
+            console.log(tickPosition, position)
+            if (tickPosition === position) {
+              d3.select(this).select("text").style("font-weight", "bold");
+            }
+          });
         console.log(d3.select(this).attr("class").split(" ")[2])
         getFeaturesForPosition(position,data)
         nucleotideSort(position,data, margin, 230, 450, colors);
