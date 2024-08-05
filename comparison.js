@@ -941,15 +941,9 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
   const heightRatio = height / 400;
   const widthRatio = width / 1000;
 
-  var margin = { top: 50, right: 10, bottom: 20, left: 20, middle: 22 };
+  var margin = { top: 10, right: 10, bottom: 10, left: 20, middle: 22 };
   var svg_nucl = d3.select(svg_name);
   // Title
-  svg_nucl.append("text")
-    .attr("x", width / 2)
-    .attr("y", margin.top / 2 + 5)
-    .attr("text-anchor", "middle")
-    .style('font-size', `${14 * widthRatio}px`)
-    .text("Exon View");
 
   // Add X axis
   var positions = Array.from(new Array(sequence.length + 1), (x, i) => i + 1);
@@ -979,13 +973,15 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
   var gxIncl = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${10 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top + 15 + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
+    .attr("opacity", 0)
+    .attr("transform", "translate(0," + (margin.top + 21 + (height - margin.top - margin.bottom) / 2 - margin.middle) + ")")
     .call(xInclAxis);
 
   var gxSkip = svg_nucl.append("g")
     .attr("class", "x axis")
     .attr("font-size", `${10 * heightRatio}px`)
-    .attr("transform", "translate(0," + (margin.top - 15 + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
+    // .attr("opacity", 0)
+    .attr("transform", "translate(0," + (margin.top - 20 + (height - margin.top - margin.bottom) / 2 + margin.middle) + ")")
     .call(xSkipAxis);
 
   var gxNu = svg_nucl.append("g")
@@ -1018,10 +1014,10 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
 
   var yIncl = d3.scaleLinear()
     .domain([0, max_strength])
-    .range([margin.top + 15 + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
+    .range([margin.top + 21 + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
   var ySkip = d3.scaleLinear()
     .domain([0, max_strength])
-    .range([margin.top - 15 + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
+    .range([margin.top - 18 + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
 
 
 
