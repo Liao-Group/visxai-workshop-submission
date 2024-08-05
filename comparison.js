@@ -670,8 +670,12 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
   console.log("Max inclusion strength:", max_incl);
   console.log("Max skipping strength:", max_skip);
 
-  var max_strength = d3.max([max_incl, max_skip]);
+  if (svg_name === "#nucleotide-view-exon1" || svg_name === "#nucleotide-view-exon-comp") {
+    var max_strength = 4.5;
+  }else{
+      var max_strength = d3.max([max_incl, max_skip]);
 
+  }
   var yIncl = d3.scaleLinear()
     .domain([0, max_strength])
     .range([margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle, margin.top]);
