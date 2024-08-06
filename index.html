@@ -113,7 +113,7 @@
           <button id="replayButton2"><i class="fas fa-redo"></i></button>
         </div>
 
-        <h3><b>Dataset for Model Training</b></h3>
+        <h3><b>Dataset for model training</b></h3>
         <p>
           Our interpretable model was trained on a splicing dataset of over 300,000 random exons, 
           all within a fixed sequence background. This controlled dataset structure enables the 
@@ -162,7 +162,7 @@
         <!-- PSI Video Section -->
         <div class="video-section-container">
           <section id="video-section">
-            <h3>Input</h3>
+            <h3><b>Input</b></h3>
             <div class="video-buttons">
               <button class="styled-button one" onclick="selectVideo('video1', 'info1', 'one')">Exon 1</button>
               <button class="styled-button two" onclick="selectVideo('video2', 'info2', 'two')">Exon 2</button>
@@ -171,7 +171,7 @@
             <div id="info-container" class="info-container">
               <img src="" alt="Info Image" id="info-image">
             </div>
-            <h3>Output</h3>
+            <h3><b> Output</b></h3>
             <div class="video-container">
               <video id="video1" autoplay muted>
                 <source src="resources/psiVideos/PSI_New_1.m4v" type="video/mp4"> Your browser does not support the
@@ -193,7 +193,7 @@
         <hr> <!-- horizontal line -->
         
         <h2><b> Visualizing network interpretability</b></h2>
-        <h3><b>Globally Interpretable Model Architecture</b></h3>
+        <h3><b>Globally interpretable model architecture</b></h3>
         <div class="ps-container">
             <div class="ps">
                 <span class="inline-image">
@@ -251,8 +251,20 @@
           In the final stage of the network, the network uses a learned non-linear function to convert the difference 
           between inclusion and skipping strengths into a predicted PSI.
         </p>
+        <div class="ps-container">
+          <div class="ps">
+              <span class="inline-image">
+                  <img src="resources/Cursors.002.jpeg" alt="Description of image">
+              </span>
+              Click on points along the function to illustrate the non-linear relationship between delta Strength and predicted PSI.
+          </div>
+      </div>
+      <div class="chart-container">
+        <div id="non-linear-chart" class="non-linear-chart"></div>
+        <div id="psi-bar-chart" class="psi-bar-chart"></div>
+      </div>
 
-        <h3><b>Local Interpretability of Predictions</b></h3>
+        <h3><b>Local interpretability of predictions</b></h3>
         <p>
           Using this framework, we can also examine the local interpretability of the network on an individual exon.
         </p>
@@ -308,22 +320,7 @@
           We further introduce interactive exon view that plot the strength contributions along the length of the exon. These visualizations
           highlight how an individual nucleotide can contribute to multiple splicing features. 
         </p>
-        <div class="ps-container">
-            <div class="ps">
-                <span class="inline-image">
-                    <img src="resources/Cursors.002.jpeg" alt="Description of image">
-                </span>
-                Click on points along the function to illustrate the non-linear relationship between delta Strength and predicted PSI.
-            </div>
-        </div>
 
-        <!-- <div class="psi-view" id="psi-view">
-          <svg class="psi-view" preserveAspectRatio="xMidYMid meet"></svg>
-        </div> -->
-        <div class="chart-container">
-          <div id="non-linear-chart" class="non-linear-chart"></div>
-          <div id="psi-bar-chart" class="psi-bar-chart"></div>
-        </div>
 
         <div class="ps-container">
           <div class="ps">
@@ -480,12 +477,11 @@
            breast and ovarian cancer) and CFTR (causes cystic fibrosis).
         </p>
 
-      <!-- todo  -->
-      <p>BRCA2</p>
+      <!-- <p>BRCA2</p> -->
       <div class="chart-container">
         <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
       </div>
-        <p>CFRT</p>
+        <!-- <p>CFRT</p> -->
         <div class="chart-container">
           <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
       </div>
@@ -537,21 +533,9 @@
         <section>
           <h3>Further Reading</h3>
           <ul>
-            <li><a href="#">Link to interface</a></li>
-            <li><a href="#">Link to paper?</a></li>
+            <li><a href="https://interpretable-machine-learning-interface-demo.vercel.app" style=" text-decoration: underline;">Interpretable machine learning interface</a></li>
+            <li><a href="https://www.pnas.org/doi/10.1073/pnas.2221165120" style="text-decoration: underline;">Deciphering RNA splicing logic with interpretable machine learning</a></li>
           </ul>
-        </section>
-
-        <section>
-          <h3>References</h3>
-          <ol>
-            <li>formatted references</li>
-          </ol>
-        </section>
-
-        <section>
-          <h3>Appendix</h3>
-          <p>additional resources</p>
         </section>
       </div>
     </footer>

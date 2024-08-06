@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
               return d3.interpolateRgb(skipping_highlight_color, inclusion_highlight_color)(t);
           }).on("click", function(event, d) {
             console.log(d);
-            updatePSIBarChart(d,'#psi-bar-chart','PSI Graph');
+            updatePSIBarChart(d,'#psi-bar-chart','Difference-To-Prediction');
         });
       // Add tooltip
       const tooltip = d3.select("body").append("div")
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //  createNonLinearPSIGraph("#psi-chart-gradient");
 
 
- updatePSIBarChart(data[6],'#psi-bar-chart','PSI Graph'); // Start with middle data point
+ updatePSIBarChart(data[6],'#psi-bar-chart','Difference-To-Prediction'); // Start with middle data point
  
 });
 
