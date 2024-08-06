@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inside of a interpretable-by-desing ML model</title>
+  <title>Inside an interpretable-by-design machine learning model: enabling RNA splicing rational design</title>
   <link rel="stylesheet" href="styles/chart_styles.css">
   <link rel="stylesheet" href="styles/psi_chart_styles.css">
   <link rel="stylesheet" href="styles/footer.css">
@@ -55,45 +55,39 @@
         <section>
           <h2>Introduction</h2>
           <p>
-            A major question in molecular biology and genetics that has attracted significant interest 
-            from the machine learning community is RNA splicing. RNA splicing is crucial for the proper 
-            function of the human genome. Splicing involves removing regions from the RNA transcript and 
-            joining the remaining segments together. Alternative RNA splicing enables a single gene to 
-            generate multiple RNA transcripts through different splicing patterns. The most common form 
-            of alternative splicing is exon skipping, which can lead to two distinct outcomes: exon 
-            inclusion or exon skipping. Before splicing, RNA transcripts are composed of exons interrupted
-            by introns. In exon inclusion, all introns are removed and all exons are joined together 
-            in the final transcript. Conversely, in exon skipping, an internal exon is removed and 
-            excluded from the final product. <br><br>
-            Understanding the specific features of RNA that determine whether an exon will be included or 
-            skipped remains a significant challenge. Several convolutional neural networks have been 
-            developed to predict splicing outcomes, but many of these networks are opaque and cannot 
-            explain the reasoning that leads to their prediction. We previously introduced an 
-            "interpretable-by-design" neural network to examine splicing logic. In contrast to these 
-            earlier models, our model is both globally and locally interpretable, following a unified 
-            logic that can be used to trace the decision-making process for each data point. <br><br>
+            RNA splicing, a key process in human genetics, has garnered considerable interest from the 
+            machine learning community. Splicing involves removing regions from RNA transcripts and 
+            joining the remaining segments together. Alternative splicing enables a single gene to 
+            generate multiple output transcripts. <br><br>
+
+            Understanding how specific RNA features dictate splicing outcomes remains a major challenge 
+            in computational biology. Several convolutional neural networks have been developed to 
+            predict splicing outcomes, but many of these networks are opaque and cannot explain the 
+            reasoning that leads to their prediction. We previously introduced an "interpretable-by-design" 
+            neural network to examine splicing logic. In contrast to these earlier models, our model is 
+            both globally and locally interpretable, following a unified logic that can be used to trace 
+            the decision-making process for each data point. <br><br>
             Here, we introduce a series of interactive visualizations that trace the model's reasoning 
             from input to output. This ability to visually dissect the model’s reasoning is particularly 
-            valuable for the rational design of exons with targeted splicing results. It facilitates 
-            more accurate manipulation of genetic sequences, allowing for the achievement of desired 
-            biological effects with greater precision. Our goal with these visualizations is to provide 
-            a richer insight into the mechanisms of splicing, thereby enhancing our capacity to predict 
-            and control splicing outcomes. 
+            valuable for the rational design of exons with targeted splicing results. It facilitates more 
+            accurate manipulation of genetic sequences, allowing for the achievement of desired biological 
+            effects with greater precision. Our goal with these visualizations is to provide a richer insight 
+            into the mechanisms of splicing, thereby empowering researchers to predict and control splicing outcomes.
           </p>
         </section>
-        
+        <hr> <!-- horizontal line -->
+
         <h2>Background</h2>
 
         <h3><b>RNA Splicing</b></h3>
-        <p>Genetic information stored in the human genome in DNA is used as a template for RNA. For many 
-          genes in the human genome, different RNA products can be produced from the same DNA.The process 
-          of generating these different RNA products is termed alternative RNA splicing. The most common 
-          form of alternative splicing involves the joining of differential RNA exon sequences.
+        <p>The most common form of alternative splicing is exon skipping, 
+          which can lead to two distinct outcomes: exon inclusion or exon skipping. 
+          Before splicing, RNA transcripts are composed of exons interrupted by introns. 
         </p>
 
-        <h3><b>Exon Inclusion</b></h3>
+        <!-- <h3><b>Exon Inclusion</b></h3> -->
         <p>
-          In the case of exon inclusion, an exon is included in the spliced product.
+          In exon inclusion, all introns are removed and all exons are joined together in the final transcript.
         </p>
         <div class="container">
           <img id="previewImage" src="resources/RNA_Splicing.001.jpeg" alt="Preview Image">
@@ -105,9 +99,9 @@
           <button id="replayButton"><i class="fas fa-redo"></i></button>
         </div>
 
-        <h3><b>Exon Skipping</b></h3>
+        <!-- <h3><b>Exon Skipping</b></h3> -->
         <p>
-          In the case of exon skipping, an exon is removed from the spliced product.
+          Conversely, in exon skipping, an internal exon is removed and excluded from the final product.
         </p>
         <div class="container">
           <img id="previewImage" src="resources/RNA_Splicing.001.jpeg" alt="Preview Image">
@@ -195,7 +189,10 @@
           </section>
         </div>
         <script src="psiVideos.js"></script>
-
+        
+        <hr> <!-- horizontal line -->
+        
+        <h2><b> Visualizing network interpretability</b></h2>
         <h3><b>Globally Interpretable Model Architecture</b></h3>
         <div class="ps-container">
             <div class="ps">
@@ -365,7 +362,7 @@
 
         <hr>
 
-        <h2>Applications</h2>
+        <h2> Rational design applications</h2>
 
         <p>One key aspect of interpretability is comparing the network’s reasoning process across multiple inputs. 
           At the local level, this involves examining how the network’s complex reasoning differs across input 
@@ -380,42 +377,29 @@
           (3) Generalizing to exons from other datasets.
         </p>
 
-        <h3>(1) Comparing different exon inputs with the same output prediction</h3>
-        <div class="ps-container">
-          <div class="ps">
-              <span class="inline-image">
-                  <img src="resources/Cursors.002.jpeg" alt="Description of image">
-              </span>
-              Click on the exon labels to explore how a single mutation changes inclusion and skipping strengths.
-          </div>
-      </div>
-
-        <div class="chart-container">
-          <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
-        </div>
-
-        <div class="chart-container">
-            <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
-        </div>
-        <br>
-        <div class="chart-container">
-            <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
-        </div>
-
-        <!-- todo  -->
-        <p>BRCA2</p>
-        <div class="chart-container">
-          <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
-        </div>
-          <p>CFRT</p>
-          <div class="chart-container">
-            <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
-        </div>
+        <h3><b>Comparing different exon inputs with the same output prediction </b></h3>
 
         <p>
-          Our visualizations allow us to trace how different nucleotides and features are scored in different
-          exons. For instance, two different exonic sequences may have dramatically different inclusion an
-          d skipping landscapes, but still produce the same final prediction. 
+          One key aspect of interpretability is examining the network’s reasoning across different inputs. 
+          At the local level, this involves examining how the network’s complex reasoning differs across input instances,
+           specifically examining how the network identifies different features across inputs yet follows the same reasoning 
+           process to arrive at similar predictions. 
+        </p>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
+      </div>
+      <br>
+      <div class="chart-container">
+          <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
+      </div>
+
+        <p>
+          Our first use case for rational design demonstrates how different exons can result in the same predicted PSI. 
+          We examined two exons from our dataset that had dramatically different inclusion and skipping profiles. 
+          While the profiles of these exons were different, the calculated Δ Strength of both exons was -13.9, 
+          leading to a predicted PSI output of 0.15.
+<br><br>
+          We can further extend our analysis to observe multiple exons with the same PSI output.
         </p>
 
         <!-- 3x3 grid of graphs -->
@@ -448,8 +432,7 @@
             <svg id="nucleotide-view-exon-s1-9" class="nucleotide-view-exon-grid"></svg>
           </div> -->
         </div>
-
-        <h3>(2) Examining effects of mutations on splicing outcomes</h3>
+        <h3><b>Examining effects of mutations on splicing outcomes </b></h3>
         <p>
           A common benchmark for the performance of computational models is to experimentally 
           validate predictions. One common approach is to perform single nucleotide mutagenesis 
@@ -465,19 +448,46 @@
           exon view visualizations for a single mutation. Each visualization elucidates important 
           facets of the network's local reasoning process. 
         </p>
+                <div class="ps-container">
+          <div class="ps">
+              <span class="inline-image">
+                  <img src="resources/Cursors.002.jpeg" alt="Description of image">
+              </span>
+              Click on the exon labels to explore how a single mutation changes inclusion and skipping strengths.
+          </div>
+      </div>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
+        </div>
 
-        <h3>(3) Generalizing to exons from other datasets</h3>
+        <h3><b>Generalizing to exons with disease relevance</b></h3>
         <p>
-          Finally, we demonstrate that our visualizations can also be applied to other 
-          datasets. While our network was trained on random RNA sequences, the model also 
-          accurately predicts splicing outcomes for exons from the human genome. After adjusting 
-          feature strengths across the different contexts, the strengths of inclusion and 
-          skipping features can be plotted along the exons for BRCA2 and CFTR. These visualizations 
-          will enable researchers to explore how individual mutations to exons affect splicing 
-          exons in disease contexts.
+          Exonic mutations that influence PSI outcomes are frequently linked to diseases. 
+          Therefore, accurately predicting how an exonic mutation affects PSI outcomes is 
+          crucial. Such predictions can provide valuable insights into the molecular 
+          mechanisms underlying disease, help identify potential biomarkers, and guide the 
+          development of targeted therapies. Although our network was trained on random RNA 
+          sequences, we previously demonstrated that it also performs well on exons from the 
+          human genome with disease relevance. 
+<br><br>
+          Here, we show that our interactive visualizations can be applied to explore the 
+          inclusion and skipping features learned by the model for exons associated with diseases.
+           Here we visualize inclusion and skipping features for exons in BRCA2 (implicated in 
+           breast and ovarian cancer) and CFTR (causes cystic fibrosis).
         </p>
-        
 
+      <!-- todo  -->
+      <p>BRCA2</p>
+      <div class="chart-container">
+        <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
+      </div>
+        <p>CFRT</p>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
+      </div>
+<!--         
+      <h3><b> User-designed exons</b></h3>
+      <p>to-do</p> -->
         <h2>Conclusion</h2>
         <p>
           In this interactive article, we present a series of visualizations designed to 
@@ -515,10 +525,10 @@
             Undergraduate Research Fund.</p>
         </section>
 
-        <section>
+        <!-- <section>
           <h3>Discussion and Review</h3>
           <p>if there are any discussions</p>
-        </section>
+        </section> -->
 
         <section>
           <h3>Further Reading</h3>

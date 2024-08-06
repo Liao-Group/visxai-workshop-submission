@@ -196,7 +196,8 @@ document.addEventListener('DOMContentLoaded', function() {
               const t = Math.pow((d.deltaForce + 110) / 200, 1.5); // Use square for more variance
               return d3.interpolateRgb(skipping_highlight_color, inclusion_highlight_color)(t);
           }).on("click", function(event, d) {
-            updatePSIBarChart(d);
+            console.log(d);
+            updatePSIBarChart(d,'#psi-bar-chart','PSI Graph');
         });
       // Add tooltip
       const tooltip = d3.select("body").append("div")
