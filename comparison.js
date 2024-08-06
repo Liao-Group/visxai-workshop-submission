@@ -305,7 +305,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     svg_nucl.append("text")
       .attr("class", "ylabel_inclusion")
       .attr("text-anchor", "middle")
-      .attr("x", -(margin.top + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
+      .attr("x", -(margin.top +120+ (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
       .attr("y", margin.left)
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
@@ -366,15 +366,15 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("transform", `translate(${margin.left},0)`);
     gySkip.call(d3.axisLeft(ySkip).ticks(4));
 
-    svg_nucl.append("text")
-      .attr("class", "ylabel_skip")
-      .attr("text-anchor", "middle")
-      .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
-      .attr("y", margin.left)
-      .attr("dy", "-2.25em")
-      .attr("font-size", `${12 * heightRatio}px`)
-      .attr("transform", "rotate(-90)")
-      .text("Strength (a.u.)");
+    // svg_nucl.append("text")
+    //   .attr("class", "ylabel_skip")
+    //   .attr("text-anchor", "middle")
+    //   .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
+    //   .attr("y", margin.left)
+    //   .attr("dy", "-2.25em")
+    //   .attr("font-size", `${12 * heightRatio}px`)
+    //   .attr("transform", "rotate(-90)")
+    //   .text("Strength (a.u.)");
 
     var line = d3.line()
       .x(d => x(parseInt(d[0].slice(4))) + x.bandwidth() / 2)
@@ -712,7 +712,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
     svg_nucl.append("text")
       .attr("class", "ylabel_inclusion")
       .attr("text-anchor", "middle")
-      .attr("x", -(margin.top + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
+      .attr("x", -(margin.top +120 + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
       .attr("y", margin.left)
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
@@ -813,15 +813,15 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
       .attr("transform", "translate(" + margin.left + ",0)");
     gySkip.call(d3.axisLeft(ySkip).ticks(4));
 
-    svg_nucl.append("text")
-      .attr("class", "ylabel_skip")
-      .attr("text-anchor", "middle")
-      .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
-      .attr("y", margin.left)
-      .attr("dy", "-2.25em")
-      .attr("font-size", `${12 * heightRatio}px`)
-      .attr("transform", "rotate(-90)")
-      .text("Strength (a.u.)");
+    // svg_nucl.append("text")
+    //   .attr("class", "ylabel_skip")
+    //   .attr("text-anchor", "middle")
+    //   .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
+    //   .attr("y", margin.left)
+    //   .attr("dy", "-2.25em")
+    //   .attr("font-size", `${12 * heightRatio}px`)
+    //   .attr("transform", "rotate(-90)")
+    //   .text("Strength (a.u.)");
 
     // Create extended data points to mark the left and right edges of each bar
     var extendedSkipData = [];
