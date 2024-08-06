@@ -355,29 +355,7 @@
           (3) Generalizing to exons from other datasets.
         </p>
 
-        <h3>(1) Comparing different exon inputs with the same output prediction</h3>
-
-        <div class="chart-container">
-          <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
-        </div>
-
-        <div class="chart-container">
-            <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
-        </div>
-        <br>
-        <div class="chart-container">
-            <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
-        </div>
-
-        <!-- todo  -->
-        <p>BRCA2</p>
-        <div class="chart-container">
-          <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
-        </div>
-          <p>CFRT</p>
-          <div class="chart-container">
-            <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
-        </div>
+        <h3><b>Comparing different exon inputs with the same output prediction </b></h3>
 
         <p>
           Our visualizations allow us to trace how different nucleotides and features are scored in different
@@ -415,8 +393,14 @@
             <svg id="nucleotide-view-exon-s1-9" class="nucleotide-view-exon-grid"></svg>
           </div> -->
         </div>
-
-        <h3>(2) Examining effects of mutations on splicing outcomes</h3>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
+      </div>
+      <br>
+      <div class="chart-container">
+          <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
+      </div>
+        <h3><b>Examining effects of mutations on splicing outcomes </b></h3>
         <p>
           A common benchmark for the performance of computational models is to experimentally 
           validate predictions. One common approach is to perform single nucleotide mutagenesis 
@@ -432,8 +416,11 @@
           exon view visualizations for a single mutation. Each visualization elucidates important 
           facets of the network's local reasoning process. 
         </p>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
+        </div>
 
-        <h3>(3) Generalizing to exons from other datasets</h3>
+        <h3><b>Generalizing to exons with disease relevance</b></h3>
         <p>
           Finally, we demonstrate that our visualizations can also be applied to other 
           datasets. While our network was trained on random RNA sequences, the model also 
@@ -443,8 +430,19 @@
           will enable researchers to explore how individual mutations to exons affect splicing 
           exons in disease contexts.
         </p>
-        
 
+      <!-- todo  -->
+      <p>BRCA2</p>
+      <div class="chart-container">
+        <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
+      </div>
+        <p>CFRT</p>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
+      </div>
+        
+      <h3><b> User-designed exons</b></h3>
+      <p>to-do</p>
         <h2>Conclusion</h2>
         <p>
           In this interactive article, we present a series of visualizations designed to 
