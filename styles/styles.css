@@ -188,12 +188,25 @@ hr {
     display: block;
   }
 
-  .inline-image {
+  /* Existing CSS */
+.inline-image {
     float: left;
-    margin: -5px 0 0 0;
-  }
-  
-  .inline-image img {
+    margin: 5px 0 0 0; /* Adjust the right margin to add space between image and text */
+}
+
+.inline-image img {
     width: 30px;
     height: 30px;
-  }
+}
+
+.ps-container {
+    display: inline-block; /* Ensures the border only covers the content */
+    margin: 10px 0;
+}
+
+.ps {
+    border: 2px solid #000; /* Adjust the border size and color as needed */
+    padding: 10px; /* Adds space between the text and the border */
+    display: flex;
+    align-items: center; /* Centers items vertically */
+}
