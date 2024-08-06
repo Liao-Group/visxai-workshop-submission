@@ -121,12 +121,17 @@
           Since single-stranded RNA can often adopt secondary structures, the network used two inputs for 
           each exon - the 70-nucleotide sequence and a predicted secondary structure. We represent 
           secondary structure using standard dot-parenthesis notation, where matching parantheses 
-          indicate base-pairing and dots represent unpaired bases. <br><br>
-          <span class="inline-image">
-            <img src="resources/Cursors.002.jpeg" alt="Description of image">
-          </span>
-            Click on the dot-parantheneses notation to view the RNA structure. <br><br>
+          indicate base-pairing and dots represent unpaired bases. 
         </p>
+
+        <div class="ps-container">
+            <div class="ps">
+                <span class="inline-image">
+                    <img src="resources/Cursors.002.jpeg" alt="Description of image">
+                </span>
+                Click on the dot-parantheneses notation to view the RNA structure.
+            </div>
+        </div>
 
         <!-- secondary structure -->
         <div class="container">
@@ -142,12 +147,17 @@
           <br><br>
           The dataset was fully-labelled, with each exon matched to experimentally measured 
           splicing outputs. The output is reported as percent spliced in (PSI) index, 
-          the ratio of included exon products over all total post-splicing products. <br><br>
-          <span class="inline-image">
-            <img src="resources/Cursors.002.jpeg" alt="Description of image">
-          </span>
-          Click on Exon 1, Exon 2, or Exon 3 to explore different inputs and outputs. 
+          the ratio of included exon products over all total post-splicing products. 
         </p>
+
+        <div class="ps-container">
+          <div class="ps">
+              <span class="inline-image">
+                  <img src="resources/Cursors.002.jpeg" alt="Description of image">
+              </span>
+              Click on Exon 1, Exon 2, or Exon 3 to explore different inputs and outputs.
+          </div>
+      </div>
 
         <!-- PSI Video Section -->
         <div class="video-section-container">
@@ -184,12 +194,14 @@
         
         <h2><b> Visualizing network interpretability</b></h2>
         <h3><b>Globally Interpretable Model Architecture</b></h3>
-        <p>
-          <span class="inline-image">
-            <img src="resources/Cursors.002.jpeg" alt="Description of image">
-          </span>
-          Click on each step to learn more about the network logic.
-        </p>
+        <div class="ps-container">
+            <div class="ps">
+                <span class="inline-image">
+                    <img src="resources/Cursors.002.jpeg" alt="Description of image">
+                </span>
+                Click on each step to learn more about the network logic.
+            </div>
+        </div>
         <!-- Network Video Section -->
         <div class="network-video-section-container" id="network-section-1">
           <section id="network-video-section-1">
@@ -240,12 +252,16 @@
 
         <h3><b>Local Interpretability of Predictions</b></h3>
         <p>
-          Using this framework, we can also examine the local interpretability of the network on an individual exon. <br><br>
-          <span class="inline-image">
-            <img src="resources/Cursors.002.jpeg" alt="Description of image">
-          </span>
-          Click on each step to learn more about the network logic.
+          Using this framework, we can also examine the local interpretability of the network on an individual exon.
         </p>
+        <div class="ps-container">
+            <div class="ps">
+                <span class="inline-image">
+                    <img src="resources/Cursors.002.jpeg" alt="Description of image">
+                </span>
+                Click on each step of to explore network logic on a specific input exon.
+            </div>
+        </div>
 
         <!-- Local Network Video Section -->
         <div class="network-video-section-container" id="network-section-2">
@@ -286,12 +302,16 @@
 
         <p>
           We further introduce interactive exon view that plot the strength contributions along the length of the exon. These visualizations
-          highlight how an individual nucleotide can contribute to multiple splicing features. <br><br>
-          <span class="inline-image">
-            <img src="resources/Cursors.002.jpeg" alt="Description of image">
-          </span>
-          Click on points along the function to illustrate the non-linear relationship between delta Strength and predicted PSI.
+          highlight how an individual nucleotide can contribute to multiple splicing features. 
         </p>
+        <div class="ps-container">
+            <div class="ps">
+                <span class="inline-image">
+                    <img src="resources/Cursors.002.jpeg" alt="Description of image">
+                </span>
+                Click on points along the function to illustrate the non-linear relationship between delta Strength and predicted PSI.
+            </div>
+        </div>
 
         <!-- <div class="psi-view" id="psi-view">
           <svg class="psi-view" preserveAspectRatio="xMidYMid meet"></svg>
@@ -301,12 +321,14 @@
           <div id="psi-bar-chart" class="psi-bar-chart"></div>
         </div>
 
-        <p>
-          <span class="inline-image">
-            <img src="resources/Cursors.002.jpeg" alt="Description of image">
-          </span>
-          Click on an individual nucleotide along the exon to highlight specific features that map to that nucleotide.
-        </p>
+        <div class="ps-container">
+          <div class="ps">
+              <span class="inline-image">
+                  <img src="resources/Cursors.002.jpeg" alt="Description of image">
+              </span>
+              Click on an individual nucleotide along the exon to highlight specific features that map to that nucleotide.
+          </div>
+      </div>
 
         <div class="feature-nucleotide">
           <!-- <button id="switch-dataset-button">Switch Dataset</button> -->
@@ -358,9 +380,26 @@
         <h3><b>Comparing different exon inputs with the same output prediction </b></h3>
 
         <p>
-          Our visualizations allow us to trace how different nucleotides and features are scored in different
-          exons. For instance, two different exonic sequences may have dramatically different inclusion an
-          d skipping landscapes, but still produce the same final prediction. 
+          One key aspect of interpretability is examining the network’s reasoning across different inputs. 
+          At the local level, this involves examining how the network’s complex reasoning differs across input instances,
+           specifically examining how the network identifies different features across inputs yet follows the same reasoning 
+           process to arrive at similar predictions. 
+        </p>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
+      </div>
+      <br>
+      <div class="chart-container">
+          <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
+      </div>
+
+        <p>
+          Our first use case for rational design demonstrates how different exons can result in the same predicted PSI. 
+          We examined two exons from our dataset that had dramatically different inclusion and skipping profiles. 
+          While the profiles of these exons were different, the calculated Δ Strength of both exons was -13.9, 
+          leading to a predicted PSI output of 0.15.
+<br><br>
+          We can further extend our analysis to observe multiple exons with the same PSI output.
         </p>
 
         <!-- 3x3 grid of graphs -->
@@ -393,13 +432,6 @@
             <svg id="nucleotide-view-exon-s1-9" class="nucleotide-view-exon-grid"></svg>
           </div> -->
         </div>
-        <div class="chart-container">
-          <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
-      </div>
-      <br>
-      <div class="chart-container">
-          <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
-      </div>
         <h3><b>Examining effects of mutations on splicing outcomes </b></h3>
         <p>
           A common benchmark for the performance of computational models is to experimentally 
@@ -416,6 +448,14 @@
           exon view visualizations for a single mutation. Each visualization elucidates important 
           facets of the network's local reasoning process. 
         </p>
+                <div class="ps-container">
+          <div class="ps">
+              <span class="inline-image">
+                  <img src="resources/Cursors.002.jpeg" alt="Description of image">
+              </span>
+              Click on the exon labels to explore how a single mutation changes inclusion and skipping strengths.
+          </div>
+      </div>
         <div class="chart-container">
           <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
         </div>
