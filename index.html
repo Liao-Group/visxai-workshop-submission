@@ -55,45 +55,38 @@
         <section>
           <h2>Introduction</h2>
           <p>
-            A major question in molecular biology and genetics that has attracted significant interest 
-            from the machine learning community is RNA splicing. RNA splicing is crucial for the proper 
-            function of the human genome. Splicing involves removing regions from the RNA transcript and 
-            joining the remaining segments together. Alternative RNA splicing enables a single gene to 
-            generate multiple RNA transcripts through different splicing patterns. The most common form 
-            of alternative splicing is exon skipping, which can lead to two distinct outcomes: exon 
-            inclusion or exon skipping. Before splicing, RNA transcripts are composed of exons interrupted
-            by introns. In exon inclusion, all introns are removed and all exons are joined together 
-            in the final transcript. Conversely, in exon skipping, an internal exon is removed and 
-            excluded from the final product. <br><br>
-            Understanding the specific features of RNA that determine whether an exon will be included or 
-            skipped remains a significant challenge. Several convolutional neural networks have been 
-            developed to predict splicing outcomes, but many of these networks are opaque and cannot 
-            explain the reasoning that leads to their prediction. We previously introduced an 
-            "interpretable-by-design" neural network to examine splicing logic. In contrast to these 
-            earlier models, our model is both globally and locally interpretable, following a unified 
-            logic that can be used to trace the decision-making process for each data point. <br><br>
+            RNA splicing, a key process in human genetics, has garnered considerable interest from the 
+            machine learning community. Splicing involves removing regions from RNA transcripts and 
+            joining the remaining segments together. Alternative splicing enables a single gene to 
+            generate multiple output transcripts. <br><br>
+
+            Understanding how specific RNA features dictate splicing outcomes remains a major challenge 
+            in computational biology. Several convolutional neural networks have been developed to 
+            predict splicing outcomes, but many of these networks are opaque and cannot explain the 
+            reasoning that leads to their prediction. We previously introduced an "interpretable-by-design" 
+            neural network to examine splicing logic. In contrast to these earlier models, our model is 
+            both globally and locally interpretable, following a unified logic that can be used to trace 
+            the decision-making process for each data point. <br><br>
             Here, we introduce a series of interactive visualizations that trace the model's reasoning 
             from input to output. This ability to visually dissect the model’s reasoning is particularly 
-            valuable for the rational design of exons with targeted splicing results. It facilitates 
-            more accurate manipulation of genetic sequences, allowing for the achievement of desired 
-            biological effects with greater precision. Our goal with these visualizations is to provide 
-            a richer insight into the mechanisms of splicing, thereby enhancing our capacity to predict 
-            and control splicing outcomes. 
+            valuable for the rational design of exons with targeted splicing results. It facilitates more 
+            accurate manipulation of genetic sequences, allowing for the achievement of desired biological 
+            effects with greater precision. Our goal with these visualizations is to provide a richer insight 
+            into the mechanisms of splicing, thereby empowering researchers to predict and control splicing outcomes.
           </p>
         </section>
         
         <h2>Background</h2>
 
         <h3><b>RNA Splicing</b></h3>
-        <p>Genetic information stored in the human genome in DNA is used as a template for RNA. For many 
-          genes in the human genome, different RNA products can be produced from the same DNA.The process 
-          of generating these different RNA products is termed alternative RNA splicing. The most common 
-          form of alternative splicing involves the joining of differential RNA exon sequences.
+        <p>The most common form of alternative splicing is exon skipping, 
+          which can lead to two distinct outcomes: exon inclusion or exon skipping. 
+          Before splicing, RNA transcripts are composed of exons interrupted by introns. 
         </p>
 
-        <h3><b>Exon Inclusion</b></h3>
+        <!-- <h3><b>Exon Inclusion</b></h3> -->
         <p>
-          In the case of exon inclusion, an exon is included in the spliced product.
+          In exon inclusion, all introns are removed and all exons are joined together in the final transcript.
         </p>
         <div class="container">
           <img id="previewImage" src="resources/RNA_Splicing.001.jpeg" alt="Preview Image">
@@ -105,9 +98,9 @@
           <button id="replayButton"><i class="fas fa-redo"></i></button>
         </div>
 
-        <h3><b>Exon Skipping</b></h3>
+        <!-- <h3><b>Exon Skipping</b></h3> -->
         <p>
-          In the case of exon skipping, an exon is removed from the spliced product.
+          Conversely, in exon skipping, an internal exon is removed and excluded from the final product.
         </p>
         <div class="container">
           <img id="previewImage" src="resources/RNA_Splicing.001.jpeg" alt="Preview Image">
