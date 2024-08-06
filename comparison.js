@@ -606,7 +606,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
   var xInclAxis = d3.axisBottom(x)
     .tickSize(2 * widthRatio)
     .tickFormat(function (d) {
-      if (((d - flanking_length) % 10 == 0)) {
+      if (((d - flanking_length) % 10 == 0 && (d - flanking_length)>=0 && (d - flanking_length) < exon_length || d == exon_length + flanking_length)) {
         return d - flanking_length;
       } else { return "" };
       return Array.from(structs)[d - 1];
