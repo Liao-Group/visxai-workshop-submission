@@ -486,7 +486,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("transform", `translate(${x}, ${y})`);
 
     button.append("rect")
-      .attr("width", 70)
+      .attr("width", 75)
       .attr("height", 30)
       .attr("rx", 5)
       .attr("ry", 5)
@@ -494,8 +494,8 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("fill", "white");
 
     const buttonText = button.append("text")
-      .attr("x", 10 * `${widthRatio}`)
-      .attr("y", 20 * `${heightRatio}`)
+      .attr("x", 10)
+      .attr("y", 20)
       .style('font-size', `${16 * widthRatio}px`)
       .style('font-weight', "bold")
       .attr("text-anchor", "center")
@@ -518,7 +518,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     const buttonText2 = button2.append("text")
       .attr("x", 10)
       .attr("y", 20)
-      .style('font-size', `${12 * widthRatio}px`)
+      .style('font-size', `${16 * widthRatio}px`)
       .attr("text-anchor", "center")
       .attr("fill", "black")
       .text("31C>A");
