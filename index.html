@@ -422,13 +422,18 @@
 
         <h3><b>Generalizing to exons with disease relevance</b></h3>
         <p>
-          Finally, we demonstrate that our visualizations can also be applied to other 
-          datasets. While our network was trained on random RNA sequences, the model also 
-          accurately predicts splicing outcomes for exons from the human genome. After adjusting 
-          feature strengths across the different contexts, the strengths of inclusion and 
-          skipping features can be plotted along the exons for BRCA2 and CFTR. These visualizations 
-          will enable researchers to explore how individual mutations to exons affect splicing 
-          exons in disease contexts.
+          Exonic mutations that influence PSI outcomes are frequently linked to diseases. 
+          Therefore, accurately predicting how an exonic mutation affects PSI outcomes is 
+          crucial. Such predictions can provide valuable insights into the molecular 
+          mechanisms underlying disease, help identify potential biomarkers, and guide the 
+          development of targeted therapies. Although our network was trained on random RNA 
+          sequences, we previously demonstrated that it also performs well on exons from the 
+          human genome with disease relevance. 
+<br><br>
+          Here, we show that our interactive visualizations can be applied to explore the 
+          inclusion and skipping features learned by the model for exons associated with diseases.
+           Here we visualize inclusion and skipping features for exons in BRCA2 (implicated in 
+           breast and ovarian cancer) and CFTR (causes cystic fibrosis).
         </p>
 
       <!-- todo  -->
@@ -440,9 +445,9 @@
         <div class="chart-container">
           <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
       </div>
-        
+<!--         
       <h3><b> User-designed exons</b></h3>
-      <p>to-do</p>
+      <p>to-do</p> -->
         <h2>Conclusion</h2>
         <p>
           In this interactive article, we present a series of visualizations designed to 
@@ -480,10 +485,10 @@
             Undergraduate Research Fund.</p>
         </section>
 
-        <section>
+        <!-- <section>
           <h3>Discussion and Review</h3>
           <p>if there are any discussions</p>
-        </section>
+        </section> -->
 
         <section>
           <h3>Further Reading</h3>
