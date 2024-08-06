@@ -127,7 +127,11 @@
           Since single-stranded RNA can often adopt secondary structures, the network used two inputs for 
           each exon - the 70-nucleotide sequence and a predicted secondary structure. We represent 
           secondary structure using standard dot-parenthesis notation, where matching parantheses 
-          indicate base-pairing and dots represent unpaired bases.
+          indicate base-pairing and dots represent unpaired bases. <br><br>
+          <span class="inline-image">
+            <img src="resources/Cursors.002.jpeg" alt="Description of image">
+          </span>
+            Click on the dot-parantheneses notation to view the RNA structure. <br><br>
         </p>
 
         <!-- secondary structure -->
@@ -141,9 +145,14 @@
         </div>
 
         <p>
+          <br><br>
           The dataset was fully-labelled, with each exon matched to experimentally measured 
           splicing outputs. The output is reported as percent spliced in (PSI) index, 
-          the ratio of included exon products over all total post-splicing products.
+          the ratio of included exon products over all total post-splicing products. <br><br>
+          <span class="inline-image">
+            <img src="resources/Cursors.002.jpeg" alt="Description of image">
+          </span>
+          Click on Exon 1, Exon 2, or Exon 3 to explore different inputs and outputs. 
         </p>
 
         <!-- PSI Video Section -->
@@ -178,6 +187,12 @@
         <script src="psiVideos.js"></script>
 
         <h3><b>Globally Interpretable Model Architecture</b></h3>
+        <p>
+          <span class="inline-image">
+            <img src="resources/Cursors.002.jpeg" alt="Description of image">
+          </span>
+          Click on each step to learn more about the network logic.
+        </p>
         <!-- Network Video Section -->
         <div class="network-video-section-container" id="network-section-1">
           <section id="network-video-section-1">
@@ -228,7 +243,11 @@
 
         <h3><b>Local Interpretability of Predictions</b></h3>
         <p>
-          Using this framework, we can also examine the local interpretability of the network on an individual exon.
+          Using this framework, we can also examine the local interpretability of the network on an individual exon. <br><br>
+          <span class="inline-image">
+            <img src="resources/Cursors.002.jpeg" alt="Description of image">
+          </span>
+          Click on each step to learn more about the network logic.
         </p>
 
         <!-- Local Network Video Section -->
@@ -270,7 +289,11 @@
 
         <p>
           We further introduce interactive exon view that plot the strength contributions along the length of the exon. These visualizations
-          highlight how an individual nucleotide can contribute to multiple splicing features.
+          highlight how an individual nucleotide can contribute to multiple splicing features. <br><br>
+          <span class="inline-image">
+            <img src="resources/Cursors.002.jpeg" alt="Description of image">
+          </span>
+          Click on points along the function to illustrate the non-linear relationship between delta Strength and predicted PSI.
         </p>
 
         <!-- <div class="psi-view" id="psi-view">
@@ -280,6 +303,13 @@
           <div id="non-linear-chart" class="non-linear-chart"></div>
           <div id="psi-bar-chart" class="psi-bar-chart"></div>
         </div>
+
+        <p>
+          <span class="inline-image">
+            <img src="resources/Cursors.002.jpeg" alt="Description of image">
+          </span>
+          Click on an individual nucleotide along the exon to highlight specific features that map to that nucleotide.
+        </p>
 
         <div class="feature-nucleotide">
           <!-- <button id="switch-dataset-button">Switch Dataset</button> -->
@@ -315,168 +345,144 @@
 
         <h2>Applications</h2>
 
-
-        <h3>Mutations</h3>
-
-        <p>A common task to probe interpretability is to examine how the network predicts an outcome when an input is
-          edited.
-          Tracing the consequences of input editing is often highly domain-specific; for example, natural language
-          processing
-          researchers examine how altering a single character can affect meaning (e.g. adding ``s'' to the word ``cat'')
-          and
-          vision researchers examine how altering a set of pixels can affect classification. Thus, a common experimental
-          approach
-          in molecular biology is to perform single nucleotide mutagenesis - substituting one nucleotide for another
-          (e.g. replacing
-          A with G at a specific position in an exon). For machine learning researchers, mutagenesis provides an
-          approach to probe whether
-          the local interpretability of a neural network generalizes beyond the training and testing datasets
-          \cite{whatiftool}. For domain
-          experts in molecular biology, whether \textit{in silico} mutagenesis predictions match results from laboratory
-          mutagenesis experiments
-          often serves as a litmus test for whether a neural network captures the ground truth. Furthermore, mutagenesis
-          experiments are often used to
-          model real-world disease mutations as single nucleotide splicing mutations have been directly implicated in
-          several diseases \cite{lorson1999single,ezquerra2017high,ars2000mutations, teraoka1999splicing},
-          and are estimated to contribute to up to 30\% of rare genetic disorders \cite{lim2011using}.
-        </p>
-        <p>
-          To illustrate how our visualizations can be useful for mutagenesis modeling,
-          we generate exon view visualizations for a single mutation from Liao, Sudarshan,
-          and Regev's original paper (\cref{fig:mutation}). Each visualization elucidates
-          important facets of the network's local reasoning process. Comparing class strengths
-          charts between the original input and the single mutation reveals that the single mutation
-          shifted the dominant feature class from skipping to inclusion (\cref{fig:mutation}, left panels).
-          Examining the feature-focused charts reveals that the mutation resulted in a two-fold decrease in a
-          skipping feature (\cref{fig:mutation}, middle panels). Finally, comparing exon visualizations
-          illustrates the consequences of the single nucleotide mutation at position 34. Examining the RNAfold
-          on \textit{both} inclusion and skipping features at position 34.
-
-          We further demonstrate that our visualizations can also extend to a double mutation scenario
-          (Supplemental Fig.~S5).
-        </p>
-        <p>
-          As reflected in the class strengths chart, the additional mutation at position 46 results in an
-          increase in skipping class strengths. Examining the feature-focused chart reveals that the second
-          mutation increased the strength of the secondary structure feature. Analysis of structure in exon
-          view reveals that the second mutation at position 46 re-establishes base pairing with the first mutation
-          at position 34, restoring the strong skipping feature.
+        <p>One key aspect of interpretability is comparing the network’s reasoning process across multiple inputs. 
+          At the local level, this involves examining how the network’s complex reasoning differs across input 
+          instances, specifically examining how the network identifies different features across inputs yet follows 
+          the same reasoning process to arrive at similar predictions. By analyzing reasoning across multiple input 
+          instances, researchers can also gain insights into the global reasoning processing within a network. 
+          The visualizations mapping inclusion and skipping features along the length of the exon demonstrate the 
+          local interpretability of our model. These visualizations can be applied to a range of different questions 
+          regarding rational design. Here, we focus on three specific applications: <br><br>
+          (1) Comparing different exon inputs with the same output prediction <br>
+          (2) Examining effects of mutations on splicing outcomes, and <br>
+          (3) Generalizing to exons from other datasets.
         </p>
 
-        <p>
-          By comparing visualizations across the original input, single mutation, and double mutation, scenarios,
-          we illuminate the local reasoning processes of the neural network. These visualizations not only provide
-          a means to assess the generalization of interpretability beyond training and testing datasets but also
-          serve as a bridge between \textit{in silico} predictions and real-world mutagenesis experiments.
-          This alignment with real-world molecular biology scenarios, such as disease mutations implicated in
-          genetic disorders, underscores the utility and relevance of our visualizations in enhancing the
-          interpretability
-          and applicability of this neural network model in advancing molecular biology research.</p>
+        <h3>(1) Comparing different exon inputs with the same output prediction</h3>
 
-        <!-- <button id="s1-exon">S1 Exon</button>
-        <button id="s1-mutation">S1 Mutation</button> -->
-        <!-- <div class="chart-container">
-          <svg id="nucleotide-view-exon-s1" class="nucleotide-view-exon-s1"></svg>
-      </div> -->
         <div class="chart-container">
           <svg id="nucleotide-view-exon-s1-mutation" class="nucleotide-view-exon-s1-mutation"></svg>
         </div>
 
-        <h3>Comparisons</h3>
-        <p>One key aspect of interpretability is comparing the network’s reasoning
-          process across multiple inputs. At the local level, this involves examin-
-          ing how the network’s complex reasoning differs across input instances,
-          specifically examining how the network identifies different features
-          across inputs yet follows the same reasoning process to arrive at similar
-          predictions. By analyzing reasoning across multiple input instances,
-          researchers can also gain insights into the global reasoning processing
-          within a network. </p>
-        <p>
-          Our first use case demonstrates how these visualizations can be used
-          to examine how the network can arrive at the same output prediction
-          from three different inputs from the original dataset. We
-          generated difference-to-prediction charts, strongest skipping feature
-          charts, and exon view visualizations for all three inputs. While
-          the difference-to-prediction view is the same across the two inputs and
-          the feature class view appears very similar, closer inspection reveals that
-          the specific inclusion and skipping values vary for each input. Drilling
-          down into the hierarchical feature-focused charts for each sequence also
-          reveals different specific skipping features. Furthermore, a comparison
-          of exon views reveals differences in the distribution of feature strengths
-          across the three inputs.
-        </p>
-          <div class="chart-container">
-              <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
-          </div>
-          <br>
-          <div class="chart-container">
-              <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
-          </div>
-
-          <!-- todo  -->
-          <p>BRCA2</p>
-          <div class="chart-container">
-            <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
-        </div>
-        <p>CFRT</p>
         <div class="chart-container">
-          <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
-      </div>
+            <svg id="nucleotide-view-exon1" class="nucleotide-view-exon1"></svg>
+        </div>
+        <br>
+        <div class="chart-container">
+            <svg id="nucleotide-view-exon-comp" class="nucleotide-view-exon-comp"></svg>
+        </div>
 
-      <h3>3x3 table with same psi</h3>
+        <!-- todo  -->
+        <p>BRCA2</p>
+        <div class="chart-container">
+          <svg id="nucleotide-view-exon-brca2" class="nucleotide-view-exon-brca2"></svg>
+        </div>
+          <p>CFRT</p>
+          <div class="chart-container">
+            <svg id="nucleotide-view-exon-cfrt" class="nucleotide-view-exon-cfrt"></svg>
+        </div>
 
-<!-- 3x3 grid of graphs -->
-  <div class="grid-container">
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-1" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-2" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-3" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-4" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-5" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-6" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-7" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-8" class="nucleotide-view-exon-grid"></svg>
-    </div>
-    <!-- <div class="grid-item">
-      <svg id="nucleotide-view-exon-s1-9" class="nucleotide-view-exon-grid"></svg>
-    </div> -->
-  </div>
+        <p>
+          Our visualizations allow us to trace how different nucleotides and features are scored in different
+          exons. For instance, two different exonic sequences may have dramatically different inclusion an
+          d skipping landscapes, but still produce the same final prediction. 
+        </p>
 
-        <h2>Summary</h2>
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
-          tortor
-          quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
-        <div class="collapsible-section">
+        <!-- 3x3 grid of graphs -->
+        <div class="grid-container">
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-1" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-2" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-3" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-4" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-5" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-6" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-7" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-8" class="nucleotide-view-exon-grid"></svg>
+          </div>
+          <!-- <div class="grid-item">
+            <svg id="nucleotide-view-exon-s1-9" class="nucleotide-view-exon-grid"></svg>
+          </div> -->
+        </div>
+
+        <h3>(2) Examining effects of mutations on splicing outcomes</h3>
+        <p>
+          A common benchmark for the performance of computational models is to experimentally 
+          validate predictions. One common approach is to perform single nucleotide mutagenesis 
+          - substituting one nucleotide for another (e.g. replacing A with G at a specific position 
+          in an exon). For machine learning researchers, mutagenesis provides an approach to 
+          probe whether the local interpretability of a neural network generalizes beyond the 
+          training and testing datasets. For domain experts in molecular biology, whether in silico 
+          mutagenesis predictions match results from laboratory mutagenesis experiments often serves 
+          as a litmus test for whether a neural network captures the ground truth. Furthermore, 
+          mutagenesis experiments are often used to model real-world disease mutations as single 
+          nucleotide splicing mutations have been directly implicated in several diseases. To 
+          illustrate how our visualizations can be useful for mutagenesis modeling, we generate 
+          exon view visualizations for a single mutation. Each visualization elucidates important 
+          facets of the network's local reasoning process. 
+        </p>
+
+        <h3>(3) Generalizing to exons from other datasets</h3>
+        <p>
+          Finally, we demonstrate that our visualizations can also be applied to other 
+          datasets. While our network was trained on random RNA sequences, the model also 
+          accurately predicts splicing outcomes for exons from the human genome. After adjusting 
+          feature strengths across the different contexts, the strengths of inclusion and 
+          skipping features can be plotted along the exons for BRCA2 and CFTR. These visualizations 
+          will enable researchers to explore how individual mutations to exons affect splicing 
+          exons in disease contexts.
+        </p>
+        
+
+        <h2>Conclusion</h2>
+        <p>
+          In this interactive article, we present a series of visualizations designed to 
+          enhance our understanding of an interpretable machine learning model. These novel 
+          visualizations offer a detailed and intuitive way to map the features learned by the 
+          model onto specific input sequences. By providing a clear visual representation of how 
+          the model interprets and processes different splicing events, these tools allow researchers 
+          to see exactly how various features dictate splicing outcomes. This capability is 
+          particularly valuable for designing and engineering specific exons with targeted 
+          splicing results, facilitating more precise manipulation of genetic sequences to achieve 
+          desired biological effects. Through these visualizations, we aim to provide a deeper 
+          insight into the mechanisms of splicing and improve our ability to predict and control 
+          splicing outcomes in genetic research and applications.
+        </p>
+        <!-- <div class="collapsible-section">
           <button class="collapsible button">Learn More(example of a foldable section)</button>
           <div class="content">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
               dolore
               magna aliqua.</p>
           </div>
-        </div>
+        </div> -->
 
-        <!-- Rest of your content goes here -->
+
       </article>
     </main>
     <footer class="article-footer">
       <div class="footer-content">
         <section>
           <h3>Acknowledgment</h3>
-          <p>Acknowledgments here</p>
+          <p>We thank Oded Regev (NYU) and Gloria M. Sheynkman (UVA) for thoughtful comments 
+            and suggestions on visualizations. SEL is supported by an NSF Collaborative Research Grant 
+            on Innovative Machine Learning Methods for Research on Biomacromolecular Systems (2226731) 
+            and an Additional Ventures Career Development Award. SZ is supported by the NYU Dean's 
+            Undergraduate Research Fund.</p>
         </section>
 
         <section>

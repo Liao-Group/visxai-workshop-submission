@@ -187,3 +187,13 @@ hr {
   .author:hover .tooltip {
     display: block;
   }
+
+  .inline-image {
+    float: left;
+    margin: -5px 0 0 0;
+  }
+  
+  .inline-image img {
+    width: 30px;
+    height: 30px;
+  }
