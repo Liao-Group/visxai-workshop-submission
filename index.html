@@ -40,7 +40,7 @@
             <span class="author" data-tooltip="M.S. and S.Z. contributed equally to this work.">Shiwen Zhu</span>, 
             <span class="author">Nhi Nguyen</span>, 
             <span class="author">Alejandro Garcia</span>, 
-            <span class="author">Susan Liao</span>
+            <span class="author">Susan E. Liao</span>
           </p>
 
           <p class="affiliation">Department of Computer Science, New York University</p>
@@ -53,32 +53,42 @@
       <article>
 
         <section>
-          <h2>Abstract</h2>
-          <p>Deciphering the regulatory logic of RNA splicing, a critical process in genome function, 
-            remains a major challenge in modern biology. While various machine learning models have 
-            been proposed to address this issue, many of them fall short in terms of interpretability, 
-            unable to articulate how they arrive at their predictions. We recently introduced an 
-            interpretable machine learning model that predicts splicing outcomes based on input 
-            sequence and structure. Here, we present a series of interactive data visualization tools 
-            to illuminate the process behind the network's predictions. Specifically, we introduce 
-            visualizations that emphasize both the global and local interpretability of our model. 
-            These visualizations emphasize the clear intermediate reasoning stages of our model that 
-            trace how specific RNA features contribute to the final splicing prediction. We highlight 
-            how these visualizations can be used to explain the network’s performance on prior 
-            training and validation datasets. Finally, we explore how these interactive visualizations 
-            can be harnessed to facilitate domain-specific applications, such as rational design of 
-            RNA sequences with desired splicing outcomes. Together, these visualizations highlight 
-            the role of data visualization and interactivity in enhancing machine learning 
-            interpretability and model adoption.</p>
+          <h2>Introduction</h2>
+          <p>
+            A major question in molecular biology and genetics that has attracted significant interest 
+            from the machine learning community is RNA splicing. RNA splicing is crucial for the proper 
+            function of the human genome. Splicing involves removing regions from the RNA transcript and 
+            joining the remaining segments together. Alternative RNA splicing enables a single gene to 
+            generate multiple RNA transcripts through different splicing patterns. The most common form 
+            of alternative splicing is exon skipping, which can lead to two distinct outcomes: exon 
+            inclusion or exon skipping. Before splicing, RNA transcripts are composed of exons interrupted
+            by introns. In exon inclusion, all introns are removed and all exons are joined together 
+            in the final transcript. Conversely, in exon skipping, an internal exon is removed and 
+            excluded from the final product. <br><br>
+            Understanding the specific features of RNA that determine whether an exon will be included or 
+            skipped remains a significant challenge. Several convolutional neural networks have been 
+            developed to predict splicing outcomes, but many of these networks are opaque and cannot 
+            explain the reasoning that leads to their prediction. We previously introduced an 
+            "interpretable-by-design" neural network to examine splicing logic. In contrast to these 
+            earlier models, our model is both globally and locally interpretable, following a unified 
+            logic that can be used to trace the decision-making process for each data point. <br><br>
+            Here, we introduce a series of interactive visualizations that trace the model's reasoning 
+            from input to output. This ability to visually dissect the model’s reasoning is particularly 
+            valuable for the rational design of exons with targeted splicing results. It facilitates 
+            more accurate manipulation of genetic sequences, allowing for the achievement of desired 
+            biological effects with greater precision. Our goal with these visualizations is to provide 
+            a richer insight into the mechanisms of splicing, thereby enhancing our capacity to predict 
+            and control splicing outcomes. 
+          </p>
         </section>
         
         <h2>Background</h2>
 
         <h3><b>RNA Splicing</b></h3>
-        <p>Genetic information stored in the human genome in DNA is used as a template for RNA. <br><br>
-          For many genes in the human genome, different RNA products can be produced from the same DNA. <br><br>
-          The process of generating these different RNA products is termed alternative RNA splicing.<br><br>
-          The most common form of alternative splicing involves the joining of differential RNA exon sequences.
+        <p>Genetic information stored in the human genome in DNA is used as a template for RNA. For many 
+          genes in the human genome, different RNA products can be produced from the same DNA.The process 
+          of generating these different RNA products is termed alternative RNA splicing. The most common 
+          form of alternative splicing involves the joining of differential RNA exon sequences.
         </p>
 
         <h3><b>Exon Inclusion</b></h3>
@@ -109,21 +119,31 @@
           <button id="replayButton2"><i class="fas fa-redo"></i></button>
         </div>
 
-        <h3><b>Secondary Structure</b></h3>
+        <h3><b>Dataset for Model Training</b></h3>
+        <p>
+          Our interpretable model was trained on a splicing dataset of over 300,000 random exons, 
+          all within a fixed sequence background. This controlled dataset structure enables the 
+          neural network to learn features associated with exon skipping or inclusion in an unbiased manner. <br><br>
+          Since single-stranded RNA can often adopt secondary structures, the network used two inputs for 
+          each exon - the 70-nucleotide sequence and a predicted secondary structure. We represent 
+          secondary structure using standard dot-parenthesis notation, where matching parantheses 
+          indicate base-pairing and dots represent unpaired bases.
+        </p>
+
+        <!-- secondary structure -->
         <div class="container">
+          <img id="previewImage3" src="resources/Secondary_structure.001.jpeg" alt="Preview" onclick="showVideo3()">
           <video id="myVideo3" autoplay muted>
-            <source src="resources/networkVideos/Secondary_structure.m4v" type="video/mp4">
+            <source src="resources/Secondary_structure.m4v" type="video/mp4">
             Your browser does not support the video tag.
           </video>
           <button id="replayButton3"><i class="fas fa-redo"></i></button>
         </div>
-        
 
-        <h3><b>Percent Spliced In (PSI)</b></h3>
         <p>
-          When information is read out from the genome (transcribed), multiple RNAs are produced for each gene.
-          These RNAs are then alternatively spliced, often generating both inclusion and skipping products.
-          For example, a hundred RNAs can be transcribed from the same DNA sequence.
+          The dataset was fully-labelled, with each exon matched to experimentally measured 
+          splicing outputs. The output is reported as percent spliced in (PSI) index, 
+          the ratio of included exon products over all total post-splicing products.
         </p>
 
         <!-- PSI Video Section -->
@@ -157,32 +177,7 @@
         </div>
         <script src="psiVideos.js"></script>
 
-        <h3><b>Splicing Logic</b></h3>
-        <p>
-          One of the major challenges in modern genomics research is understanding the logic underlying RNA splicing,
-          specifically understanding which RNA-encoded features lead to a specific PSI.
-          While RNAs encode two-dimensional information (sequence),
-          they can also form more complex three-dimensional structures (structures).
-          <br><br>
-          <br><br>
-          <br><br>
-        </p>
-
-        <!-- <div class="chart-container">
-          <div class="psi-chart-gradient" id="psi-chart-gradient"></div>
-        </div> -->
-
-        <h3>Input</h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-        <h3>Output</h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-        <p>3.PSI definition (interactive?)</p>
+        <h3><b>Globally Interpretable Model Architecture</b></h3>
 
         <hr>
         <h2>Interpretable-by-design network</h2>
@@ -228,21 +223,15 @@
         </div>
         <script src="networkVideos.js"></script>
 
-        <h3>Learned features </h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
-
-        <p>6.Non-linear relationship between a.u. and PSI (interactive)
-          Click along line to generate difference to prediction plot
+        <p>
+          In the final stage of the network, the network uses a learned non-linear function to convert the difference 
+          between inclusion and skipping strengths into a predicted PSI.
         </p>
 
-        <h3>Local Network</h3>
-        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique
-          cursus.
-          Nam
-          nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
+        <h3><b>Local Interpretability of Predictions</b></h3>
+        <p>
+          Using this framework, we can also examine the local interpretability of the network on an individual exon.
+        </p>
 
         <!-- Local Network Video Section -->
         <div class="network-video-section-container" id="network-section-2">
@@ -280,6 +269,11 @@
             </div>
           </section>
         </div>
+
+        <p>
+          We further introduce interactive exon view that plot the strength contributions along the length of the exon. These visualizations
+          highlight how an individual nucleotide can contribute to multiple splicing features.
+        </p>
 
         <!-- <div class="psi-view" id="psi-view">
           <svg class="psi-view" preserveAspectRatio="xMidYMid meet"></svg>

@@ -159,9 +159,13 @@ body {
   margin: 0 10px;
 }
 
-#myVideo3 {
+#previewImage3, #myVideo3 {
   width: 900px;
   height: calc(900px / (16 / 4));
   object-fit: cover;
   margin-right: 20px;
+}
+
+#myVideo3 {
+  display: none;
 }

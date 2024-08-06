@@ -162,7 +162,7 @@ hr {
     position: relative;
     top: -0.5em;
     font-size: 0.75em;
-    color: red;
+    color: black;
     margin-left: 2px;
   }
   
@@ -173,7 +173,7 @@ hr {
     color: black;
     text-align: center;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
@@ -181,6 +181,7 @@ hr {
     white-space: nowrap;
     z-index: 1000;
     border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
   .author:hover .tooltip {

@@ -62,11 +62,20 @@ document.getElementById('replayButton2').addEventListener('click', function() {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
+  var video3 = document.getElementById("myVideo3");
+  var previewImage3 = document.getElementById("previewImage3");
   var replayButton3 = document.getElementById("replayButton3");
 
   replayButton3.addEventListener("click", function() {
-      var video = document.getElementById("myVideo3");
-      video.currentTime = 0;
-      video.play();
+    video3.pause();
+    video3.currentTime = 0;
+    video3.style.display = 'none';
+    previewImage3.style.display = 'block';
   });
 });
+
+function showVideo3() {
+  document.getElementById('previewImage3').style.display = 'none';
+  document.getElementById('myVideo3').style.display = 'block';
+  document.getElementById('myVideo3').play();
+}
