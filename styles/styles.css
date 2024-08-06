@@ -200,13 +200,17 @@ hr {
 }
 
 .ps-container {
-    display: inline-block; /* Ensures the border only covers the content */
+    display: flex; /* Change from inline-block to flex */
+    justify-content: center; /* Center horizontally */
     margin: 10px 0;
-}
-
-.ps {
-    border: 2px solid #ccc; /* Adjust the border size and color as needed */
-    padding: 10px; /* Adds space between the text and the border */
+    width: 100%; /* Ensure the container takes full width of its parent */
+  }
+  
+  .ps {
+    border: 2px solid #ccc;
+    padding: 10px;
     display: flex;
-    align-items: center; /* Centers items vertically */
-}
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
