@@ -203,45 +203,47 @@
             </div>
         </div>
         <!-- Network Video Section -->
-        <div class="network-video-section-container" id="network-section-1">
-          <section id="network-video-section-1">
-            <div class="network-buttons">
-              <div class="selector"></div>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-1', 'networkVideo1', 0)">Step 1<br>Input Exon</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-1', 'networkVideo2', 1)">Step 2<br>Learned Features</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-1', 'networkVideo3', 2)">Step 3<br>Class Strength</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-1', 'networkVideo4', 3)">Step 4<br>Difference-to-Prediction</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-1', 'networkVideo5', 4)">Step 5<br>Output Prediction</button>
-            </div>
-            <div class="network-video-container">
-              <video id="networkVideo1" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the video
-                tag.
-              </video>
-              <video id="networkVideo2" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_2.m4v" type="video/mp4"> Your browser does not support the video
-                tag.
-              </video>
-              <video id="networkVideo3" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_3.m4v" type="video/mp4"> Your browser does not support the video
-                tag.
-              </video>
-              <video id="networkVideo4" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_4.m4v" type="video/mp4"> Your browser does not support the video
-                tag.
-              </video>
-              <video id="networkVideo5" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_5.m4v" type="video/mp4"> Your browser does not support the video
-                tag.
-              </video>
-            </div>
-            <p id="network-description-1">Step 1: The network uses two inputs for each exon - the 70-nucleotide sequence and a predicted secondary structure. </p>
-          </section>
+        <div class="network-video-wrapper">
+          <div class="network-video-section-container" id="network-section-1">
+            <section id="network-video-section-1">
+              <div class="network-buttons">
+                <div class="selector"></div>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-1', 'networkVideo1', 0)">Step 1<br>Input Exon</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-1', 'networkVideo2', 1)">Step 2<br>Learned Features</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-1', 'networkVideo3', 2)">Step 3<br>Class Strength</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-1', 'networkVideo4', 3)">Step 4<br>Difference-to-Prediction</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-1', 'networkVideo5', 4)">Step 5<br>Output Prediction</button>
+              </div>
+              <div class="network-video-container">
+                <video id="networkVideo1" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the video
+                  tag.
+                </video>
+                <video id="networkVideo2" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Network_2.m4v" type="video/mp4"> Your browser does not support the video
+                  tag.
+                </video>
+                <video id="networkVideo3" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Network_3.m4v" type="video/mp4"> Your browser does not support the video
+                  tag.
+                </video>
+                <video id="networkVideo4" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Network_4.m4v" type="video/mp4"> Your browser does not support the video
+                  tag.
+                </video>
+                <video id="networkVideo5" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Network_5.m4v" type="video/mp4"> Your browser does not support the video
+                  tag.
+                </video>
+              </div>
+              <p id="network-description-1">The network uses two inputs for each exon - the 70-nucleotide sequence and a predicted secondary structure. </p>
+            </section>
+          </div>
         </div>
         <script src="networkVideos.js"></script>
 
@@ -264,40 +266,42 @@
         </div>
 
         <!-- Local Network Video Section -->
-        <div class="network-video-section-container" id="network-section-2">
-          <section id="network-video-section-2">
-            <div class="network-buttons">
-              <div class="selector"></div>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0)">Step 1<br>Input Exon</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo2', 1)">Step 2<br>Learned Features</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo3', 2)">Step 3<br>Class Strength</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo4', 3)">Step 4<br>Difference-to-Prediction</button>
-              <button class="network-styled-button"
-                onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo5', 4)">Step 5<br>Output Prediction</button>
-            </div>
-            <div class="network-video-container">
-              <video id="newNetworkVideo1" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the video tag.
-              </video>
-              <video id="newNetworkVideo2" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_Feature.m4v" type="video/mp4"> Your browser does not support the video tag.
-              </video>
-              <video id="newNetworkVideo3" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_Add.m4v" type="video/mp4"> Your browser does not support the video tag.
-              </video>
-              <video id="newNetworkVideo4" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_Subt.m4v" type="video/mp4"> Your browser does not support the video tag.
-              </video>
-              <video id="newNetworkVideo5" autoplay muted preload="auto">
-                <source src="resources/networkVideos/Local_Network_PSI.m4v" type="video/mp4"> Your browser does not support the video tag.
-              </video>
-            </div>
-            <p id="network-description-2">Description for Local Step 1: Input Exon</p>
-          </section>
+        <div class="local-network-video-wrapper">
+          <div class="network-video-section-container" id="network-section-2">
+            <section id="network-video-section-2">
+              <div class="network-buttons">
+                <div class="selector"></div>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0)">Step 1<br>Input Exon</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo2', 1)">Step 2<br>Learned Features</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo3', 2)">Step 3<br>Class Strength</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo4', 3)">Step 4<br>Difference-to-Prediction</button>
+                <button class="network-styled-button"
+                  onclick="selectNetworkVideo('network-section-2', 'newNetworkVideo5', 4)">Step 5<br>Output Prediction</button>
+              </div>
+              <div class="network-video-container">
+                <video id="newNetworkVideo1" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Network_1.m4v" type="video/mp4"> Your browser does not support the video tag.
+                </video>
+                <video id="newNetworkVideo2" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Local_Network_Feature.m4v" type="video/mp4"> Your browser does not support the video tag.
+                </video>
+                <video id="newNetworkVideo3" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Local_Network_Add.m4v" type="video/mp4"> Your browser does not support the video tag.
+                </video>
+                <video id="newNetworkVideo4" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Local_Network_Subt.m4v" type="video/mp4"> Your browser does not support the video tag.
+                </video>
+                <video id="newNetworkVideo5" autoplay muted preload="auto">
+                  <source src="resources/networkVideos/Local_Network_PSI.m4v" type="video/mp4"> Your browser does not support the video tag.
+                </video>
+              </div>
+              <p id="network-description-2">The network considers the input exon's sequence and structure.</p>
+            </section>
+          </div>
         </div>
 
         <p>

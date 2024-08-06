@@ -68,9 +68,110 @@
 }
 
 /* Description Text */
-/* .network-video-section-container p {
-  text-align: center;
+.network-video-section-container p {
+  text-align: left; /* Aligns text to the left */
   font-size: 16px;
   color: #333;
   margin-top: 20px;
-} */
+  margin-left: 20px; /* Adds a left margin for better alignment */
+  padding: 0; /* Removes padding */
+}
+
+/* Wrapper for the entire section */
+.network-video-wrapper {
+  border: 3px solid #000; /* Adjust the border size and color as needed */
+  padding: 20px; /* Adds space between the content and the border */
+  border-radius: 15px; /* Optional: Adds rounded corners to the border */
+  background-color: #fff; /* Optional: Adds a background color */
+  margin: 20px auto; /* Centers the wrapper */
+  width: fit-content; /* Ensures the width fits the content */
+}
+
+/* Local Network Video Section Styles */
+.local-network-video-wrapper {
+  border: 3px solid #000; /* Adjust the border size and color as needed */
+  padding: 20px; /* Adds space between the content and the border */
+  border-radius: 15px; /* Optional: Adds rounded corners to the border */
+  background-color: #fff; /* Optional: Adds a background color */
+  margin: 20px auto; /* Centers the wrapper */
+  width: fit-content; /* Ensures the width fits the content */
+}
+
+/* Network Video Section Styles */
+.network-video-section-container .network-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  position: relative;
+  padding: 5px;
+  z-index: 2; /* Ensure buttons are on top */
+}
+
+.network-video-section-container .network-styled-button {
+  padding: 10px 0;
+  border: none;
+  background-color: transparent;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  transition: color 0.3s ease;
+  z-index: 3; /* Ensure buttons are on top */
+  position: relative;
+}
+
+.network-video-section-container .network-styled-button.selected {
+  color: black;
+  font-weight: bold;
+}
+
+.network-video-section-container .selector {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  height: calc(100% - 10px);
+  width: 20%;
+  background-color: white;
+  border-radius: 10px;
+  transition: left 0.3s ease, width 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Ensure selector is below buttons */
+}
+
+/* Network Video Container */
+.network-video-section-container .network-video-container {
+  width: 960px;
+  height: 480px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: #f0f0f0;
+}
+
+.network-video-section-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  object-fit: cover;
+  object-position: center;
+}
+
+.network-video-section-container video:first-of-type {
+  display: block;
+}
+
+/* Description Text */
+.network-video-section-container p {
+  text-align: left; /* Aligns text to the left */
+  font-size: 16px;
+  color: #333;
+  margin-top: 20px;
+  margin-left: 20px; /* Adds a left margin for better alignment */
+  padding: 0; /* Removes padding */
+}

@@ -205,7 +205,7 @@ hr {
 }
 
 .ps {
-    border: 2px solid #000; /* Adjust the border size and color as needed */
+    border: 2px solid #ccc; /* Adjust the border size and color as needed */
     padding: 10px; /* Adds space between the text and the border */
     display: flex;
     align-items: center; /* Centers items vertically */
