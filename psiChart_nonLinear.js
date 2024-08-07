@@ -306,7 +306,7 @@ function updatePSIBarChart(data,svg_name,title) {
     .attr('x', (width / 2))
     .attr('y', (margin.top / 2))
     .attr('text-anchor', 'middle')
-    .style('font-size', `${14 * widthRatio}px`)
+    .style('font-size', `${8 * widthRatio}px`)
     .text(title);
 
   // Tooltips
