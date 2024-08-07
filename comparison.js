@@ -192,7 +192,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     .attr("y", margin.top / 2 + 5)
     .attr("text-anchor", "middle")
     .style('font-size', `${14 * widthRatio}px`)
-    .text(compIncl && compSkip ? "Exon View Comparison" : "Exon View");
+    // .text(compIncl && compSkip ? "Exon View Comparison" : "Exon View");
 
   var positions = Object.keys(dataSkip).map(pos => parseInt(pos.slice(4)));
   positions.push(positions[positions.length - 1] + 1);
@@ -305,7 +305,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
     svg_nucl.append("text")
       .attr("class", "ylabel_inclusion")
       .attr("text-anchor", "middle")
-      .attr("x", -(margin.top +120+ (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
+      .attr("x", -(margin.top +120 + (height - margin.top - margin.bottom) / 4 - margin.middle / 2) + 20)
       .attr("y", margin.left)
       .attr("dy", "-2.25em")
       .attr("font-size", `${12 * heightRatio}px`)
@@ -569,7 +569,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
   if (svg_name === "#nucleotide-view-exon-brca2" ||svg_name === "#nucleotide-view-exon-cfrt") {
     var title = svg_name === "#nucleotide-view-exon-brca2" ? "BRCA2 exon 7" : "CFTR exon 13";
   }else{
-    var title = svg_name === "#nucleotide-view-exon1" ? "S1 Exon" : "S1 Exon Comparison";
+    var title = svg_name === "#nucleotide-view-exon1" ? "Comparison 1" : "Comparison 2";
   }
   var exon_length = data.sequence.length - flanking_length * 2;
   var sequence = data.sequence;

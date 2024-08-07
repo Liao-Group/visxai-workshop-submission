@@ -1369,7 +1369,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
 
   // Add title
   svg_sort.append("text")
-    .attr("x", width / 2)
+    .attr("x", width / 2 + 20)
     .attr("y", margin.top / 2 + 5)
     .attr("text-anchor", "middle")
     .style('font-size', `${14 * widthRatio}px`)
@@ -1625,7 +1625,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
 
   // Add title
   svg_zoom.append("text")
-    .attr("x", zoom_width / 2)
+    .attr("x", zoom_width / 2 +20)
     .attr("y", margin.top / 2 + 5)
     .attr("text-anchor", "middle")
 
