@@ -1441,7 +1441,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
   const sortInclYLabel = svg_sort.append("text")
     .attr("class", "y label")
     .attr("text-anchor", "middle")
-    .attr("x", -(margin.top + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
+    .attr("x", -(margin.top +110+ (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
     .attr("y", margin.left - 15)
     .attr("dy", "-2.25em")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -1458,7 +1458,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
     .style("fill", background_color)
-    .text("Strength (a.u.)");
+    // .text("Strength (a.u.)");
 
   // X axis rendering
   sortXInclAxis.tickFormat(() => "");
@@ -1659,6 +1659,16 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
   zoom_gxSkip.call(zoom_xAxis);
   zoom_gxNu.call(zoom_xNuAxis);
 
+  zoom_gxSkip.selectAll(".tick")
+  .each(function (d) {
+    d3.select(this)
+    .select("text")
+    .attr("font-weight", d === 0 ? "bold" : "normal")
+    .attr("fill", d === 0 ? "black" : line_color);
+     
+ });
+ zoom_gxSkip.selectAll(".tick line")
+ .style("display", "none");
   zoom_gxNu.selectAll("path").style("stroke-width", 0);
   zoom_gxNu.selectAll(".tick").each(function (d) {
     d3.select(this)
@@ -1679,7 +1689,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
   const zoom_incl_ylabel = svg_zoom.append("text")
     .attr("class", "y label")
     .attr("text-anchor", "middle")
-    .attr("x", -(margin.top + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
+    .attr("x", -(margin.top +110+ (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
     .attr("y", margin.left - 15)
     .attr("dy", "-3.25em")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -1696,7 +1706,6 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
     .style("fill", background_color)
-    .text("Strength (a.u.)");
 
   zoom_incl_ylabel.style("fill", "black");
   zoom_skip_ylabel.style("fill", "black");
