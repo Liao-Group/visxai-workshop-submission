@@ -1,4 +1,3 @@
-/* Wrapper for the entire section */
 .network-video-wrapper {
   border: 3px solid #000; /* Adjust the border size and color as needed */
   padding: 20px; /* Adds space between the content and the border */
@@ -8,6 +7,8 @@
   width: 100%; /* Ensures the width fits the parent container */
   max-width: 100%; /* Ensures the width does not exceed 100% */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  height: 710px; /* Set a fixed height for the wrapper */
+  overflow: hidden; /* Hides overflow content */
 }
 
 /* Network Video Section Styles */

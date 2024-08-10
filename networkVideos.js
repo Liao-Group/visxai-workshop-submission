@@ -10,7 +10,7 @@ const networkDescriptions = {
   'networkVideo4': 'The network calculates the difference between inclusion class strength and skipping class strength.',
   'networkVideo5': 'The difference between inclusion and exclusion strengths is then converted into an output prediction using a learned non-linear function.',
   'newNetworkVideo1': "The network considers the input exon's sequence and structure.",
-  'newNetworkVideo2': "The contribution strength of each activated inclusion or skipping feature is plotted along the length of the exon.",
+  'newNetworkVideo2': "The contribution strength of each activated inclusion or skipping feature is plotted along the length of the exon.                                                                                           ",
   'newNetworkVideo3': 'The network next calculates the sum of inclusion and skipping strengths.',
   'newNetworkVideo4': 'The network calculates the difference between inclusion class strength and skipping class strength. In this exon, the inclusion strength is greater than skipping strength, leading to a positive Δ strength.',
   'newNetworkVideo5': 'The Δ strength is converted into an output prediction using a learned non-linear function.'
