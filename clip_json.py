@@ -22,7 +22,7 @@ def adjust_positions(positions, clip_length=5):
        
     return positions
 
-filename = 'data/exon_s1_34c>a_strengths'
+filename = 'data/exon_s1_comp_grid9_strengths'
 # Load and parse the JSON data
 with open(filename+'.json', 'r') as file:
     data = json.load(file)

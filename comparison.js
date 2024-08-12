@@ -84,55 +84,55 @@ function callFunctions() {
   });
   document.addEventListener("DOMContentLoaded", function () {
     Promise.all([
-      fetch('data/exon_s1_comp1_strengths.json').then(response => {
+      fetch('data/exon_s1_comp1_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid2_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid2_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid3_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid3_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid4_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid4_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid5_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid5_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid6_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid6_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid7_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid7_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid8_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid8_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid9_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid9_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

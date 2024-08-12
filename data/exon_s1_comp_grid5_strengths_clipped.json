@@ -1,6 +1,6 @@
 {
-  "sequence": "CAUCCAGGUUAUGUUGACCCCUCGUAGUCAAUUAACUUAAUACUUACAAGACCAGCACGGAAUCGUAAUGUACAAGGAUUCAGGUCUGAC",
-  "structs": ".....((((((.((((((........))))))))))))..........(((((......(((((.(........).))))).)))))...",
+  "sequence": "AGGUUAUGUUGACCCCUCGUAGUCAAUUAACUUAAUACUUACAAGACCAGCACGGAAUCGUAAUGUACAAGGAUUCAGGU",
+  "structs": "((((((.((((((........))))))))))))..........(((((......(((((.(........).))))).)))",
   "psi": 0.15015332400798798,
   "delta_strength": -13.922755839059619,
   "inclusion": {
@@ -72,18 +72,9 @@
     "pos_77": 2.5149200264576117,
     "pos_78": 2.5047359945496526,
     "pos_79": 0.1606709218319159,
-    "pos_80": 0.15925781002706485,
-    "pos_81": 0.15925781002706485,
-    "pos_82": 0.15925781002706485,
-    "pos_83": 0.15756876269976297,
-    "pos_84": 0.15756876269976297
+    "pos_80": 0.15925781002706485
   },
   "skipping": {
-    "pos_1": 0.02250014902030673,
-    "pos_2": 0.0034530579578131437,
-    "pos_3": 0.37612083554267883,
-    "pos_4": 0.008869408319391425,
-    "pos_5": 0.03018156625330448,
     "pos_6": 0.004096333868801594,
     "pos_7": 0.008670413350378917,
     "pos_8": 0.3345432299025042,
@@ -158,17 +149,7 @@
     "pos_77": 0.2835314984189061,
     "pos_78": 0.2849746980032707,
     "pos_79": 0.19841160648631395,
-    "pos_80": 0.16085968235788067,
-    "pos_81": 0.12608034814141664,
-    "pos_82": 0.12608034814141664,
-    "pos_83": 0.12570980494321535,
-    "pos_84": 0.0002415703909599921,
-    "pos_85": 0.0002415703909599921,
-    "pos_86": 0.002655059333508087,
-    "pos_87": 0.052631053226321,
-    "pos_88": 0.02101536549423022,
-    "pos_89": 0.16631812931165946,
-    "pos_90": 0.23968995060220027
+    "pos_80": 0.16085968235788067
   },
   "flattened_inclusion": {
     "pos_10": [
@@ -2498,97 +2479,9 @@
         "strength": 0.0016890473273018672,
         "length": 4
       }
-    ],
-    "pos_81": [
-      {
-        "name": "pos_81 incl_2 feature_pos_3",
-        "strength": 0.15756876269976297,
-        "length": 6
-      },
-      {
-        "name": "pos_81 incl_3 feature_pos_3",
-        "strength": 0.0016890473273018672,
-        "length": 4
-      }
-    ],
-    "pos_82": [
-      {
-        "name": "pos_82 incl_2 feature_pos_4",
-        "strength": 0.15756876269976297,
-        "length": 6
-      },
-      {
-        "name": "pos_82 incl_3 feature_pos_4",
-        "strength": 0.0016890473273018672,
-        "length": 4
-      }
-    ],
-    "pos_83": [
-      {
-        "name": "pos_83 incl_2 feature_pos_5",
-        "strength": 0.15756876269976297,
-        "length": 6
-      }
-    ],
-    "pos_84": [
-      {
-        "name": "pos_84 incl_2 feature_pos_6",
-        "strength": 0.15756876269976297,
-        "length": 6
-      }
     ]
   },
   "flattened_skipping": {
-    "pos_1": [
-      {
-        "name": "pos_1 skip_struct_1 feature_pos_1",
-        "strength": 0.01895630732178688,
-        "length": 1
-      },
-      {
-        "name": "pos_1 skip_struct_2 feature_pos_1",
-        "strength": 0.0024221383960321185,
-        "length": 1
-      },
-      {
-        "name": "pos_1 skip_struct_4 feature_pos_1",
-        "strength": 0.001121703302487731,
-        "length": 1
-      }
-    ],
-    "pos_2": [
-      {
-        "name": "pos_2 skip_struct_1 feature_pos_1",
-        "strength": 0.0034530579578131437,
-        "length": 1
-      }
-    ],
-    "pos_3": [
-      {
-        "name": "pos_3 skip_struct_1 feature_pos_1",
-        "strength": 0.37612083554267883,
-        "length": 1
-      }
-    ],
-    "pos_4": [
-      {
-        "name": "pos_4 skip_struct_1 feature_pos_1",
-        "strength": 0.007664239965379238,
-        "length": 1
-      },
-      {
-        "name": "pos_4 skip_struct_2 feature_pos_1",
-        "strength": 0.0012051683540121871,
-        "length": 1
-      }
-    ],
-    "pos_5": [
-      {
-        "name": "pos_5 skip_struct_1 feature_pos_1",
-        "strength": 0.03018156625330448,
-        "length": 1
-      }
-    ],
     "pos_6": [
       {
         "name": "pos_6 skip_struct_1 feature_pos_1",
@@ -13148,121 +13041,11 @@
         "strength": 0.001038214424625039,
         "length": 1
       }
-    ],
-    "pos_81": [
-      {
-        "name": "pos_81 skip_1 feature_pos_4",
-        "strength": 0.00037054319820128967,
-        "length": 5
-      },
-      {
-        "name": "pos_81 skip_3 feature_pos_3",
-        "strength": 0.12546823455225536,
-        "length": 5
-      },
-      {
-        "name": "pos_81 skip_3 feature_pos_2",
-        "strength": 0.0002415703909599921,
-        "length": 6
-      }
-    ],
-    "pos_82": [
-      {
-        "name": "pos_82 skip_1 feature_pos_5",
-        "strength": 0.00037054319820128967,
-        "length": 5
-      },
-      {
-        "name": "pos_82 skip_3 feature_pos_4",
-        "strength": 0.12546823455225536,
-        "length": 5
-      },
-      {
-        "name": "pos_82 skip_3 feature_pos_3",
-        "strength": 0.0002415703909599921,
-        "length": 6
-      }
-    ],
-    "pos_83": [
-      {
-        "name": "pos_83 skip_3 feature_pos_5",
-        "strength": 0.12546823455225536,
-        "length": 5
-      },
-      {
-        "name": "pos_83 skip_3 feature_pos_4",
-        "strength": 0.0002415703909599921,
-        "length": 6
-      }
-    ],
-    "pos_84": [
-      {
-        "name": "pos_84 skip_3 feature_pos_5",
-        "strength": 0.0002415703909599921,
-        "length": 6
-      }
-    ],
-    "pos_85": [
-      {
-        "name": "pos_85 skip_3 feature_pos_6",
-        "strength": 0.0002415703909599921,
-        "length": 6
-      }
-    ],
-    "pos_86": [
-      {
-        "name": "pos_86 skip_struct_2 feature_pos_1",
-        "strength": 0.002655059333508087,
-        "length": 1
-      }
-    ],
-    "pos_87": [
-      {
-        "name": "pos_87 skip_struct_2 feature_pos_1",
-        "strength": 0.052631053226321,
-        "length": 1
-      }
-    ],
-    "pos_88": [
-      {
-        "name": "pos_88 skip_struct_2 feature_pos_1",
-        "strength": 0.01859580481220169,
-        "length": 1
-      },
-      {
-        "name": "pos_88 skip_struct_4 feature_pos_1",
-        "strength": 0.002419560682028532,
-        "length": 1
-      }
-    ],
-    "pos_89": [
-      {
-        "name": "pos_89 skip_struct_2 feature_pos_1",
-        "strength": 0.1270641903685118,
-        "length": 1
-      },
-      {
-        "name": "pos_89 skip_struct_4 feature_pos_1",
-        "strength": 0.03925393894314766,
-        "length": 1
-      }
-    ],
-    "pos_90": [
-      {
-        "name": "pos_90 skip_struct_2 feature_pos_1",
-        "strength": 0.22871223907366062,
-        "length": 1
-      },
-      {
-        "name": "pos_90 skip_struct_4 feature_pos_1",
-        "strength": 0.010977711528539658,
-        "length": 1
-      }
     ]
   },
   "metadata": {
-    "total_positions": 73,
-    "sum_inclusion_strength": 56.58340198072287,
-    "sum_skipping_strength": 90.49224511781566
+    "total_positions": 69,
+    "sum_inclusion_strength": 55.94974883526921,
+    "sum_skipping_strength": 89.19045690074627
   }
 }
