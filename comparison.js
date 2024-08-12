@@ -293,6 +293,9 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
 
 
   function drawInclusionAxis(original = false) {
+    d3.selectAll(".y.axis").remove();
+    d3.selectAll(".ylabel_inclusion").remove();
+
     const lineColor = original ? inclusion_highlight_color : inclusion_color;
     const lineHighlightColor = original ? inclusion_color : inclusion_highlight_color;
 
