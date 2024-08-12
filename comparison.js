@@ -38,7 +38,6 @@ function callFunctions() {
     ])
       .then(([compData, dados, exon_s1_comp1_data, brca2_data, cfrt_data]) => {
         comp = compData;
-        console.log(comp);
 
         var svg_name = ".nucleotide-view-exon-s1-mutation"
 
@@ -140,11 +139,9 @@ function callFunctions() {
       })
     ])
       .then((data) => {
-        console.log(data)
         // need to change to the correct data
         //  the number for the nucleotides are not resizgin correctly
         for (let i = 1; i <= 9; i++) {
-          console.log(i)
           let svg_name = `#nucleotide-view-exon-s1-${i}`;
           nucleotideComparisonGrid(data[i - 1], svg_name);
         }
@@ -169,7 +166,6 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   var dataSkip = data.skipping;
 
   if (!comparison.sequence) {
-    console.log("Comparison sequence is missing:", comparison.sequence);
     callFunctions();
   }
 
@@ -683,8 +679,7 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
 
   var max_incl = d3.max(Object.values(data.inclusion));
   var max_skip = d3.max(Object.values(data.skipping));
-  console.log("Max inclusion strength:", max_incl);
-  console.log("Max skipping strength:", max_skip);
+
 
   if (svg_name === "#nucleotide-view-exon1" || svg_name === "#nucleotide-view-exon-comp") {
     var max_strength = 4.5;
@@ -797,7 +792,6 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
           .style("font-weight", "bold")
           .classed("free", false);
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
-        console.log(d3.select(this).attr("class").split(" ")[2])
         getFeaturesForPosition(position, data)
         nucleotideSort(position, data, margin, 250, 450, colors);
         nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
@@ -902,7 +896,6 @@ function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
           .style("font-weight", "bold")
           .classed("free", false);
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
-        console.log(d3.select(this).attr("class").split(" ")[2])
         getFeaturesForPosition(position, data)
         nucleotideSort(position, data, margin, 250, 450, colors);
         nucleotideZoom(data, sequence, structs, position, margin, 250, 450, max_strength, colors);
@@ -1050,8 +1043,6 @@ function nucleotideComparisonGrid(data, svg_name, classSelected = null) {
   gxIncl.selectAll('.tick text').style("font-size", "6px");
   var max_incl = d3.max(Object.values(data.inclusion));
   var max_skip = d3.max(Object.values(data.skipping));
-  console.log("Max inclusion strength:", max_incl);
-  console.log("Max skipping strength:", max_skip);
 
   var max_strength = d3.max([max_incl, max_skip]);
 
