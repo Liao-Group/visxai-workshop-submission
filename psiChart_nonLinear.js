@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
       // Add interactivity
       dots.on("mouseover", function (event, d) {
+        console.log("dot");
           d3.select(this).attr("r", 8);
           tooltip.transition()
               .duration(200)

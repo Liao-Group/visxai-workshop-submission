@@ -166,7 +166,7 @@ hr {
     margin-left: 2px;
   }
   
-  .tooltip {
+  .author .tooltip {
     display: none;
     position: absolute;
     background-color: white;

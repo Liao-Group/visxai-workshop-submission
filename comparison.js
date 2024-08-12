@@ -1,35 +1,35 @@
 let comp = [];
-var flanking_length = 10;
-var brca2_length = 15;
-var cfrt_lentgth = 15;
+var flanking_length = 5;
+var brca2_length = 10;
+var cfrt_lentgth = 10;
 function callFunctions() {
   document.addEventListener("DOMContentLoaded", function () {
     Promise.all([
-      fetch('data/exon_s1_34c>a_strengths.json').then(response => {
+      fetch('data/exon_s1_34c>a_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_strengths.json').then(response => {
+      fetch('data/exon_s1_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp1_strengths.json').then(response => {
+      fetch('data/exon_s1_comp1_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/brca2_exon_strengths.json').then(response => {
+      fetch('data/brca2_exon_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/cftr_exon_strengths.json').then(response => {
+      fetch('data/cftr_exon_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -84,55 +84,55 @@ function callFunctions() {
   });
   document.addEventListener("DOMContentLoaded", function () {
     Promise.all([
-      fetch('data/exon_s1_comp1_strengths.json').then(response => {
+      fetch('data/exon_s1_comp1_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid2_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid2_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid3_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid3_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid4_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid4_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid5_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid5_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid6_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid6_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid7_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid7_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid8_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid8_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/exon_s1_comp_grid9_strengths.json').then(response => {
+      fetch('data/exon_s1_comp_grid9_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -160,7 +160,7 @@ function callFunctions() {
 callFunctions()
 
 function nucleotideComparison(data, comparison, svg_name, labels, classSelected = null) {
-  var exon_length = data.sequence.length - 10 * 2;
+  var exon_length = data.sequence.length - flanking_length*2 ;
   var sequence = data.sequence;
   var compSequence = comparison.sequence || [];
   var structs = data.structs;
@@ -205,12 +205,13 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   var xInclAxis = d3.axisBottom(x)
     .tickSize(2 * widthRatio)
     .tickFormat(function (d) {
-      if (((d - flanking_length) % 10 == 0)) {
-        return d - flanking_length;
+      if (((d - flanking_length*2) % 10 == 0)) {
+        return d - flanking_length*2;
       } else { return "" };
     });
 
   function comparisonSequence(isMutation = false) {
+    flanking_length = 5;
     const sequenceToChange = isMutation ? compSequence : sequence;
     const structToChange = isMutation ? compStructs : structs;
     svg_nucl.selectAll(".x.axis.nuc.ticks").remove(); // Remove the existing nucleotide letter ticks
@@ -247,7 +248,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         if (i < structs.length && i < compStructs.length && structs[i] !== compStructs[i]) {
           return "#BF40BF";
         }
-        return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
+        return (i < flanking_length || i >=  exon_length) ? line_color : nucleotide_color;
       })
       .attr("font-weight", (d, i) => (i < structs.length && i < compStructs.length && structs[i] !== compStructs[i]) ? "bold" : "normal")
 
@@ -267,7 +268,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         if (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) {
           return "#BF40BF";
         }
-        return (i < flanking_length || i >= flanking_length + exon_length) ? line_color : nucleotide_color;
+        return (i < flanking_length || i >=exon_length) ? line_color : nucleotide_color;
       })
       .attr("font-weight", (d, i) => (i < sequence.length && i < compSequence.length && sequence[i] !== compSequence[i]) ? "bold" : "normal")
   }
@@ -293,6 +294,9 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
 
 
   function drawInclusionAxis(original = false) {
+    d3.select(svg_name).selectAll(".y.axis").remove();
+    d3.select(svg_name).selectAll(".ylabel_inclusion").remove();
+
     const lineColor = original ? inclusion_highlight_color : inclusion_color;
     const lineHighlightColor = original ? inclusion_color : inclusion_highlight_color;
 
@@ -560,7 +564,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
 
 function nucleotideComparisonSingle(data, svg_name, classSelected = null) {
   if(svg_name === "#nucleotide-view-exon1" || svg_name === "#nucleotide-view-exon-comp"){ 
-    flanking_length = 10
+    flanking_length = 5
 
   }else{  
     flanking_length= 15
