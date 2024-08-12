@@ -1351,16 +1351,13 @@ function nucleotideFeatureView(parent, data, feature_name) {
  * nucleotideSort
  */
 function nucleotideSort(pos, data, margin, width, height, colors) {
-  console.log("nucleotideSort called for position:", pos);
-  console.log("Data received:", data);
-
-  var svg_sort = d3.select("svg.nucleotide-sort")
-    .attr('opacity', 1);
+  var svg_sort = d3.select("svg.nucleotide-sort").attr('opacity', 1);
   var svg_zoom = d3.select("svg.nucleotide-zoom");
-  const inclusionColor = colors[2]
-  const inclusionHighlightColor = colors[3]
-  const skippingColor = colors[0]
-  const skippingHighlightColor = colors[1]
+
+  const inclusionColor = colors[2];
+  const inclusionHighlightColor = colors[3];
+  const skippingColor = colors[0];
+  const skippingHighlightColor = colors[1];
 
   const heightRatio = height / 622;
   const widthRatio = width / 292;
@@ -1378,40 +1375,40 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
   // Data preparation
   const inclData = data.flattened_inclusion[`pos_${pos}`] || [];
   const skipData = data.flattened_skipping[`pos_${pos}`] || [];
-  console.log(inclData)
-  // const maxStrength = 6;
 
-  const fillerData = [
-    { 'name': '1', 'strength': 0, 'length': 0 }, { 'name': '2', 'strength': 0, 'length': 0 },
-    { 'name': '3', 'strength': 0, 'length': 0 }, { 'name': '4', 'strength': 0, 'length': 0 },
-    { 'name': '5', 'strength': 0, 'length': 0 }, { 'name': '6', 'strength': 0, 'length': 0 },
-    { 'name': '7', 'strength': 0, 'length': 0 }, { 'name': '8', 'strength': 0, 'length': 0 },
-    { 'name': '9', 'strength': 0, 'length': 0 }, { 'name': '0', 'strength': 0, 'length': 0 },
-  ];
-  const topInclData = inclData.sort((a, b) => b.strength - a.strength).concat(fillerData).slice(0, 10);
-  const topSkipData = skipData.sort((a, b) => b.strength - a.strength).concat(fillerData).slice(0, 10);
+  // Sort and select top elements
+  const sortedInclData = inclData.sort((a, b) => b.strength - a.strength).slice(0, 10);
+  const sortedSkipData = skipData.sort((a, b) => b.strength - a.strength).slice(0, 10);
 
-  const inclStrengths = topInclData.map(d => d.strength);
-  const skipStrengths = topSkipData.map(d => d.strength);
+  // Calculate maximum number of elements
+  const maxBars = Math.max(sortedInclData.length, sortedSkipData.length);
+
+  // Add padding bars with zero height to ensure both datasets have the same length
+  while (sortedInclData.length < maxBars) {
+    sortedInclData.push({ name: '', strength: 0, length: 0 });
+  }
+  while (sortedSkipData.length < maxBars) {
+    sortedSkipData.push({ name: '', strength: 0, length: 0 });
+  }
+
+  const inclStrengths = sortedInclData.map(d => d.strength);
+  const skipStrengths = sortedSkipData.map(d => d.strength);
   const maxStrength = Math.max(...inclStrengths, ...skipStrengths);
-
-  console.log(topInclData, topSkipData)
-
 
   // X axis setup
   const sortXIncl = d3.scaleBand()
     .range([margin.left, width - margin.right])
-    .domain(topInclData.map(d => d.name.split(' ').pop()))
+    .domain(sortedInclData.map((d, i) => i))
     .paddingInner(0.2)
     .paddingOuter(0.25);
 
   const sortXSkip = d3.scaleBand()
     .range([margin.left, width - margin.right])
-    .domain(topSkipData.map(d => d.name.split(' ').pop()))
+    .domain(sortedSkipData.map((d, i) => i))
     .padding(0.2);
 
-  const sortXInclAxis = d3.axisBottom(sortXIncl).tickSize(0);
-  const sortXSkipAxis = d3.axisTop(sortXSkip).tickSize(0);
+  const sortXInclAxis = d3.axisBottom(sortXIncl).tickSize(0).tickFormat("");
+  const sortXSkipAxis = d3.axisTop(sortXSkip).tickSize(0).tickFormat("");
 
   const sortGxIncl = svg_sort.append("g")
     .attr("class", "x axis")
@@ -1441,7 +1438,7 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
   const sortInclYLabel = svg_sort.append("text")
     .attr("class", "y label")
     .attr("text-anchor", "middle")
-    .attr("x", -(margin.top +110+ (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
+    .attr("x", -(margin.top + 110 + (height - margin.top - margin.bottom) / 4 - margin.middle / 2))
     .attr("y", margin.left - 15)
     .attr("dy", "-2.25em")
     .attr("font-size", `${12 * heightRatio}px`)
@@ -1457,68 +1454,38 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     .attr("dy", "-2.25em")
     .attr("font-size", `${12 * heightRatio}px`)
     .attr("transform", "rotate(-90)")
-    .style("fill", background_color)
-    // .text("Strength (a.u.)");
+    .style("fill", background_color);
 
   // X axis rendering
-  sortXInclAxis.tickFormat(() => "");
-  sortXSkipAxis.tickFormat(() => "");
-
-  sortGxIncl.call(sortXInclAxis)
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", "rotate(-50)");
-
-  sortGxSkip.call(sortXSkipAxis)
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", "rotate(-50)");
+  sortGxIncl.call(sortXInclAxis);
+  sortGxSkip.call(sortXSkipAxis);
 
   // Y axis rendering
-  sortInclYLabel.style("fill", "black");
-  sortSkipYLabel.style("fill", "black");
   sortGYIncl.call(d3.axisLeft(sortYIncl).ticks(5));
   sortGYSkip.call(d3.axisLeft(sortYSkip).ticks(5));
 
   // Remove previous bars
-  svg_sort.selectAll(".incl.narrow-bar")
-    .attr("y", sortYIncl(0))
-    .attr("height", 0)
-    .remove();
+  svg_sort.selectAll(".incl.narrow-bar").remove();
+  svg_sort.selectAll(".skip.narrow-bar").remove();
 
-  svg_sort.selectAll(".skip.narrow-bar")
-    .attr("y", sortYSkip(0))
-    .attr("height", 0)
-    .remove();
-
-  // Add new bars
-  // Add new bars
-  const inclBars = svg_sort.selectAll("incl-narrow-bar")
-    .data(topInclData)
+  // Add new bars for inclusion
+  const inclBars = svg_sort.selectAll(".incl-narrow-bar")
+    .data(sortedInclData)
     .enter()
     .append("rect")
     .attr("class", d => `obj incl narrow-bar ${d.name.split(" ").join("-")}`)
-    .attr("x", d => sortXIncl(d.name.split(' ').pop()))
-    .attr("y", sortYIncl(0))
+    .attr("x", (d, i) => sortXIncl(i))
+    .attr("y", d => sortYIncl(d.strength))
     .attr("width", sortXIncl.bandwidth())
-    .attr("height", 0)
+    .attr("height", d => (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - sortYIncl(d.strength))
     .attr("fill", inclusionColor)
     .attr("stroke", line_color)
     .lower();
 
-  /* Hover over Nucleotide sort view */
+  // Add hover effect for inclusion bars
   inclBars.on("mouseover", function (event, d) {
     d3.select(this).attr("fill", inclusionHighlightColor);
     const featureClass = d3.select(this).attr("class").split(" ")[3];
-    var featureName = featureClass.split("-")[1];
-    var className = featureName.split('_')[0];
-    d3.select('div.feature-legend-container')
-      .select('.background.' + featureName)
-      .style("fill", getFillColor(className));
     d3.selectAll(`.incl.wide-bar.${featureClass}`)
       .raise()
       .attr("fill", inclusionHighlightColor)
@@ -1534,31 +1501,26 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     svg_zoom.selectAll(".incl.annotate").attr("opacity", 0);
     resetHighlight();
   });
-  inclBars.attr("y", d => sortYIncl(d.strength))
-    .attr("height", d => (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - sortYIncl(d.strength));
 
-  const skipBars = svg_sort.selectAll("skip-narrow-bar")
-    .data(topSkipData)
-    .enter()
-    .append("rect")
-    .attr("class", d => `obj skip narrow-bar ${d.name.split(" ").join("-")}`)
-    .attr("x", d => sortXSkip(d.name.split(' ').pop()))
-    .attr("y", sortYSkip(0))
-    .attr("width", sortXSkip.bandwidth())
-    .attr("height", 0)
-    .attr("fill", skippingColor)
-    .attr("stroke", line_color)
-    .lower();
+  // Add new bars for skipping
+  const skipBars = svg_sort.selectAll(".skip-narrow-bar")
+  .data(sortedSkipData)
+  .enter()
+  .append("rect")
+  .attr("class", d => `obj skip narrow-bar ${d.name.split(" ").join("-")}`)
+  .attr("x", (d, i) => sortXSkip(i))
+  .attr("y", d => margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle) // Position based on strength
+  .attr("width", sortXSkip.bandwidth())
+  .attr("height", d =>  sortYSkip(d.strength) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)) // Height from base to strength
+  .attr("fill", skippingColor)
+  .attr("stroke", line_color)
+  .lower();
 
-  /* Hover over Nucleotide sort view */
+
+  // Add hover effect for skipping bars
   skipBars.on("mouseover", function (event, d) {
     d3.select(this).attr("fill", skippingHighlightColor);
     const featureClass = d3.select(this).attr("class").split(" ")[3];
-    var featureName = featureClass.split("-")[1];
-    var className = featureName.split('_')[0];
-    d3.select('div.feature-legend-container')
-      .select('.background.' + featureName)
-      .style("fill", getFillColor(className));
     d3.selectAll(`.skip.wide-bar.${featureClass}`)
       .raise()
       .attr("fill", skippingHighlightColor)
@@ -1574,12 +1536,8 @@ function nucleotideSort(pos, data, margin, width, height, colors) {
     svg_zoom.selectAll(".skip.annotate").attr("opacity", 0);
     resetHighlight();
   });
-
-  skipBars
-    .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-    .attr("height", d => sortYSkip(d.strength) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle));
-
 }
+
 /**
  * nucleotideZoom
  */
