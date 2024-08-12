@@ -321,7 +321,7 @@ function highlightLogos(listOfLogos = []) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('data/exon_s1_strengths.json')
+  fetch('data/exon_s1_strengths_clipped.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
