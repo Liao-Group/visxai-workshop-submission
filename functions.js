@@ -507,7 +507,6 @@ function hierarchicalBarChart2(parent, data) {
         .attr("x", rect_x + 2)
         .attr("y", rect_y + 14)
         .raise();
-      console.log(text.node().getComputedTextLength());
       textbox.style("opacity", 1)
         .attr("x", rect_x)
         .attr("y", rect_y)
@@ -708,15 +707,12 @@ function hierarchicalBarChart3(parentName, data) {
 }
 
 function getFeaturesForPosition(pos, data) {
-  console.log("Getting features for position:", pos);
-  console.log("Data received:", data);
+
 
   // Helper function to extract features from flattened data
   function extractFeatures(flattenedData) {
     return flattenedData.map(item => {
-      console.log(item)
       const nameParts = item.name.split(' ');
-      console.log(nameParts)
       return {
         name: nameParts[1],
         strength: item.strength,
@@ -728,12 +724,10 @@ function getFeaturesForPosition(pos, data) {
   // Get inclusion data
   const inclData = data.flattened_inclusion[`pos_${pos}`] || [];
   const inclFeatures = extractFeatures(inclData);
-  console.log("Inclusion features:", inclFeatures);
 
   // Get skipping data
   const skipData = data.flattened_skipping[`pos_${pos}`] || [];
   const skipFeatures = extractFeatures(skipData);
-  console.log("Skipping features:", skipFeatures);
 
   // Extract unique inclusion values
   const uniqueInclValues = [...new Set(inclFeatures.map(item => {
@@ -747,8 +741,6 @@ function getFeaturesForPosition(pos, data) {
     return match ? match[0] : null;
   }))].filter(Boolean);
 
-  console.log("Unique inclusion values:", uniqueInclValues);
-  console.log("Unique skipping values:", uniqueSkipValues);
 
   // Highlight logos (assuming this function exists elsewhere in your code)
   highlightLogos([...uniqueSkipValues, ...uniqueInclValues]);
@@ -787,8 +779,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
     .text("Exon View");
   var max_incl = d3.max(Object.values(data.inclusion));
   var max_skip = d3.max(Object.values(data.skipping));
-  console.log("Max inclusion strength:", max_incl);
-  console.log("Max skipping strength:", max_skip);
 
   var max_strength = d3.max([max_incl, max_skip]);
 
@@ -871,7 +861,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       gxSkip.selectAll(".tick")
         .each(function (d) {
           var tickPosition = String(d)
-          console.log(tickPosition, position)
           if (tickPosition === position) {
             d3.select(this).select("text").style("font-weight", "bold")
               .attr("font-size", `${11}px`);
@@ -999,7 +988,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
           .style("font-weight", "bold")
           .classed("free", false);
         var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
-        console.log(d3.select(this).attr("class").split(" ")[2])
         gxSkip.selectAll(".tick")
           .each(function (d) {
             d3.select(this).select("text").style("font-weight", "normal");
@@ -1007,7 +995,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         gxSkip.selectAll(".tick")
           .each(function (d) {
             var tickPosition = String(d)
-            console.log(tickPosition, position)
             if (tickPosition === position) {
               d3.select(this).select("text").style("font-weight", "bold");
             }
@@ -1125,12 +1112,10 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
         gxSkip.selectAll(".tick")
           .each(function (d) {
             var tickPosition = String(d)
-            console.log(tickPosition, position)
             if (tickPosition === position) {
               d3.select(this).select("text").style("font-weight", "bold");
             }
           });
-        console.log(d3.select(this).attr("class").split(" ")[2])
         getFeaturesForPosition(position, data)
         nucleotideSort(position, data, margin, 230, 450, colors);
         nucleotideZoom(data, sequence, structs, position, margin, 230, 450, colors);
@@ -1565,7 +1550,6 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
 
   // var skip_data = flatten_nested_json(data.flattened_skipping[pos]);
 
-  console.log(incl_data, skip_data, pos)
   const max_incl = d3.max(incl_data.map((d) => d.strength));
   const max_skip = d3.max(skip_data.map((d) => d.strength));
   const max_strength = Math.max(max_incl, max_skip);
@@ -1693,7 +1677,6 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
 
   left_border.raise().attr("opacity", 1);
   right_border.raise().attr("opacity", 1);
-  console.log(pos)
 
   // Remove previous bars
   svg_zoom.selectAll(".incl.wide-bar")

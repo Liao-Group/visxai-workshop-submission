@@ -196,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
               const t = Math.pow((d.deltaForce + 110) / 200, 1.5); // Use square for more variance
               return d3.interpolateRgb(skipping_highlight_color, inclusion_highlight_color)(t);
           }).on("click", function(event, d) {
-            console.log(d);
             updatePSIBarChart(d,'#psi-bar-chart','Difference-To-Prediction');
         });
       // Add tooltip
@@ -206,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
       // Add interactivity
       dots.on("mouseover", function (event, d) {
-        console.log("dot");
           d3.select(this).attr("r", 8);
           tooltip.transition()
               .duration(200)

@@ -189,7 +189,6 @@ function featureSelection(featureName = null, className = null, features = []) {
 
     })
     .on('mouseover', function (d) {
-      console.log("here")
 
     })
     .on('mouseout', function (d) {
@@ -279,7 +278,6 @@ function featureSelection(featureName = null, className = null, features = []) {
         }).on("click", (event, info) => {
           d3.selectAll('.background').style('fill', 'none');
           background.style("fill", colors[0]);
-          console.log(selectedFeatureBar,info.feature)
           selectedFeatureBar = info.feature
           if (Data) {
             d3.selectAll(".line incl original").remove();
@@ -309,7 +307,6 @@ function highlightLogos(listOfLogos = []) {
     .selectAll('.background')
     .style("fill", 'none');
   listOfLogos.forEach(logo => {
-    console.log(logo);
     const fillColor = getFillColor(logo);
     // const highlightColor = getHighlightColor(logo);  // Uncomment if needed
 
