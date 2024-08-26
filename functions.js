@@ -756,6 +756,7 @@ function getFeaturesForPosition(pos, data) {
  */
 
 function nucleotideView(sequence, structs, data, classSelected = null) {
+  data = data[0]
   var exon_length = sequence.length - flanking_length * 2;
   svg = d3.select("svg.nucleotide-view")
   svg.selectAll("*").remove();
@@ -1218,6 +1219,7 @@ function nucleotideFeatureView(parent, data, feature_name) {
 
   // X scale
   var sequence = parent.sequence;
+  console.log(sequence.length)
   var positions = Array.from(new Array(sequence.length), (x, i) => i + 1);
   var x = d3.scaleBand()
     .range([margin.left, width - margin.right])
@@ -1225,6 +1227,18 @@ function nucleotideFeatureView(parent, data, feature_name) {
     .padding(0);
 
   // Y Axis
+  // Function to get the position from the data
+  function getPosition(d) {
+    return parseInt(d.name.split(" ")[2].split("_")[1]);
+  }
+
+  // Function to calculate bar width
+  function getBarWidth(d) {
+    return (x(getPosition(d) + d.length) - x(getPosition(d)));
+  }
+
+  console.log(flat_data)
+
 
   if (class_name == "incl") {
     svg.selectAll("text.ylabel_skip").remove();
@@ -1252,8 +1266,8 @@ function nucleotideFeatureView(parent, data, feature_name) {
       .append("rect")
       .datum(function (d) { return d; })
       .attr("class", function (d) { return "obj bar " + d.name.slice(4); })
-      .attr("x", function (d) { return x(parseInt(d.name.split(" ")[2].split("_")[1])); })
-      .attr("width", function (d) { return x.bandwidth() * d.length; })
+      .attr("x", function (d) { return x(getPosition(d)); })
+      .attr("width", getBarWidth)
       .attr("y", function (d) { return yIncl(d.strength / d.length); })
       .attr("height", function (d) { return (margin.top + (height - margin.top - margin.bottom) / 2 - margin.middle) - yIncl(d.strength / d.length); })
       .attr("fill", inclusion_color)
@@ -1306,8 +1320,8 @@ function nucleotideFeatureView(parent, data, feature_name) {
       .append("rect")
       .datum(function (d) { return d; })
       .attr("class", function (d) { return "obj bar " + d.name.slice(4); })
-      .attr("x", function (d) { return x(parseInt(d.name.split(" ")[2].split("_")[1])); })
-      .attr("width", function (d) { return x.bandwidth() * d.length; })
+      .attr("x", function (d) { return x(getPosition(d)); })
+      .attr("width", getBarWidth)
       .attr("y", (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle))
       .attr("height", function (d) { return ySkip(d.strength / d.length) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
       .attr("fill", skipping_color)

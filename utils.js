@@ -35,6 +35,79 @@ function flatten_nested_json(data) {
 
   return result;
 }
+// Clip the sequence by removing `clipLength` nucleotides from each end
+function clipSequence(sequence, clipLength = 5) {
+  return sequence.slice(clipLength, -clipLength);
+}
+
+// Clip the struct by removing `clipLength` positions from each end
+function clipStructure(struct, clipLength = 5) {
+  return struct.slice(clipLength, -clipLength);
+}
+
+// Filter and adjust nucleotide positions
+function filterNucleotidePositions(children, clipLength, sequenceLength) {
+  return children.filter(child => {
+      if (child.children) {
+          child.children = filterNucleotidePositions(child.children, clipLength, sequenceLength);
+      }
+
+      if (child.name.startsWith('pos_')) {
+          const position = parseInt(child.name.split('_')[1]);
+          if (clipLength - 1 < position && position <= (sequenceLength - clipLength * 2)) {
+              const adjustedPosition = position - clipLength;
+              child.name = `pos_${adjustedPosition}`;
+              return true;
+          }
+          return false;
+      }
+      return true;
+  });
+}
+
+// Adjust the nucleotide activations after clipping
+function adjustedNucleotideActivations(data, sequenceLength, clipLength = 5) {
+  data.children = filterNucleotidePositions(data.children, clipLength, sequenceLength);
+  return data;
+}
+
+// Adjust the feature activations after clipping
+function adjustedFeatureActivations(activations, sequenceLength, clipLength = 5) {
+  function filterPositions(children, clipLength, sequenceLength) {
+      return children.filter(child => {
+          if (child.children) {
+              child.children = filterPositions(child.children, clipLength, sequenceLength);
+          }
+
+          if (child.name.startsWith('pos_')) {
+              const position = parseInt(child.name.split('_')[1]);
+              console.log(`Processing ${child.name} with position ${position}`); // Debugging line
+              if (clipLength - 1 < position && position <= (sequenceLength - clipLength * 2)) {
+                  const adjustedPosition = position - clipLength;
+                  child.name = `pos_${adjustedPosition}`;
+                  return true;
+              } else {
+                  console.log(`Excluding ${child.name} with position ${position}`); // Debugging line
+                  return false;
+              }
+          }
+          return true;
+      });
+  }
+
+  activations.children = filterPositions(activations.children, clipLength, sequenceLength);
+  return activations;
+}
+
+// Main function to clip the exon data
+function clipExon(data) {
+  data.feature_activations = adjustedFeatureActivations(data.feature_activations, data.sequence.length, 5);
+  data.nucleotide_activations = adjustedNucleotideActivations(data.nucleotide_activations, data.sequence.length, 5);
+  data.sequence = clipSequence(data.sequence);
+  data.structs = clipStructure(data.structs);
+  console.log(data.sequence);
+  return data;
+}
 
 function getFillColor(input) {
   if (typeof input === "number") {
@@ -318,17 +391,26 @@ function highlightLogos(listOfLogos = []) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('data/exon_s1_strengths_clipped.json')
+  Promise.all([
+      fetch('data/exon_s1_strengths_clipped.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       return response.json();
+    }),
+    fetch('data/exon_s1.json').then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
     })
-    .then(data => {
-      window.Data = data;
+  ])
+    .then(([data_clipped,data]) => {
+      window.Data = data_clipped;
+      exon_s1_data = clipExon(data);
       // Render data
-      nucleotideView(Data.sequence, Data.structs, Data);
+      nucleotideView(Data.sequence, Data.structs, [data_clipped, data]);
       featureSelection(featureSelected = null, className = null)
 
     })
@@ -336,20 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Failed to fetch or parse data:", error);
     });
 
-    fetch('data/exon_s1.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      exon_s1_data = data;
-
-    })
-    .catch(error => {
-      console.error("Failed to fetch or parse data:", error);
-    });
+    
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -390,3 +459,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+
