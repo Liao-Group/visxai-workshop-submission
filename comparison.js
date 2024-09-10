@@ -71,10 +71,10 @@ function callFunctions() {
 
         // need to change to the correct data
         //  the number for the nucleotides are not resizgin correctly
-        for (let i = 1; i <= 9; i++) {
-          let svg_name = `#nucleotide-view-exon-s1-${i}`;
-          nucleotideComparisonSingle(exon_s1_comp1_data, svg_name, labels);
-        }
+      //   for (let i = 1; i <= 9; i++) {
+      //     let svg_name = `#nucleotide-view-exon-s1-${i}`;
+      //     nucleotideComparisonSingle(exon_s1_comp1_data, svg_name, labels);
+      //   }
       })
       .catch(error => {
         console.error("Failed to fetch or parse data:", error);
