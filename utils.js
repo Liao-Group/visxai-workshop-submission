@@ -212,60 +212,67 @@ let previousClassColor = null
 function featureSelection(featureName = null, className = null, features = []) {
 
   const gridContainer = document.querySelector('.feature-legend-container');
+  if (!gridContainer) return; // Ensure the container exists
   const width = gridContainer.clientWidth;
   const height = gridContainer.clientHeight;
-  const titleDiv = document.querySelector('.feature-legend-title'); // Select the title div
-  const widthRatio = width / 491;
-  const heightRatio = height / 381;
-  titleDiv.style.fontSize = `${14 * widthRatio}px`;
+  const titleDiv = document.querySelector('.feature-legend-title');
+  
+  const BASE_WIDTH = 491;
+  const BASE_HEIGHT = 381;
+  const LEGEND_ITEM_WIDTH = 100;
+  const LEGEND_ITEM_HEIGHT = 30;
+  const LEGEND_SPACING = 130;
+  
+  const widthRatio = width / BASE_WIDTH;
+  const heightRatio = height / BASE_HEIGHT;
+  
+  if (titleDiv) {
+    titleDiv.style.fontSize = `${14 * widthRatio}px`;
+  }
 
-  const legendInfo = [{ title: `Inclusion`, name: 'incl', color: inclusion_color, highlight: inclusion_highlight_color },
-  { title: `Skipping`, name: 'skip', color: skipping_color, highlight: skipping_highlight_color }
+  const legendInfo = [
+    { title: 'Inclusion', name: 'incl', color: inclusion_color, highlight: inclusion_highlight_color },
+    { title: 'Skipping', name: 'skip', color: skipping_color, highlight: skipping_highlight_color }
   ];
 
+  // Clear the previous legend items
   d3.select('.legend').selectAll("*").remove();
+
   // Append SVG to the legend div
   const svg = d3.select('.legend')
-    .append('svg').attr('width', width)
+    .append('svg')
+    .attr('width', width);
 
-  // Initialize legend
-  const legendItemWidth = 100 * widthRatio;
-  const legendItemHeight = 30 * widthRatio;
-  const legendSpacing = 130;
-  const xOffset = ((width - widthRatio) - (2 * legendItemWidth + legendSpacing)) / 2;
+  const legendItemWidth = LEGEND_ITEM_WIDTH * widthRatio;
+  const legendItemHeight = LEGEND_ITEM_HEIGHT * widthRatio;
+  const xOffset = ((width - widthRatio) - (2 * legendItemWidth + LEGEND_SPACING)) / 2;
   const yOffset = 10;
 
+  // Create legend items
   const legend = svg.selectAll('.legendItem')
     .data(legendInfo)
     .enter()
     .append('g')
     .attr('class', 'legendItem')
-    .attr('transform', (d, i) => {
-      var x = xOffset + (legendItemWidth + legendSpacing) * i; // Adjust x position for each legend item
-      var y = yOffset;
-      return `translate(${x}, ${y})`;
-    });
+    .attr('transform', (d, i) => `translate(${xOffset + (legendItemWidth + LEGEND_SPACING) * i}, ${yOffset})`);
 
   // Create legend color rectangles
   legend.append('rect')
-    .attr('class', (d) => 'rectangle ' + d.name)
+    .attr('class', d => 'rectangle ' + d.name)
     .attr('width', legendItemWidth)
     .attr('height', legendItemHeight)
     .attr('rx', 4)
     .attr('ry', 4)
-    .style("cursor", "pointer")
-    .attr('fill', function (d) {
-      if (className !== null && className === d.name) { return d.highlight; }
-      else { return d.color; }
+    .style('cursor', 'pointer')
+    .attr('fill', d => (className !== null && className === d.name) ? d.highlight : d.color)
+    .on('click', function(event, d) {
+      // Handle the click event
     })
-    .on('click', function (event) {
-
+    .on('mouseover', function(d) {
+      // Handle mouseover event
     })
-    .on('mouseover', function (d) {
-
-    })
-    .on('mouseout', function (d) {
-
+    .on('mouseout', function(d) {
+      // Handle mouseout event
     });
 
   // Create legend labels
@@ -275,90 +282,76 @@ function featureSelection(featureName = null, className = null, features = []) {
     .attr('dy', '0.15em')
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
-    .style("cursor", "pointer")
+    .style('cursor', 'pointer')
     .style('font-size', `${13 * widthRatio}px`)
     .text(d => d.title);
 
+  // Helper function for setting image attributes
+  function setImageAttributes(svg, url) {
+    svg.select('image')
+      .attr('xlink:href', url)
+      .attr('preserveAspectRatio', 'none')
+      .attr('width', '100%')
+      .attr('height', '100%');
+  }
+
   // Function to update SVGs with new data and highlight the selected feature
-  const updateSVGs = (containerSelector, svgSelector, imagesArray, colors) => {
+    const updateSVGs = (containerSelector, svgSelector, imagesArray, colors) => {
     const svgContainer = d3.select(containerSelector)
       .selectAll(svgSelector)
       .data(imagesArray, d => d.feature);
 
     const svgEnter = svgContainer.enter()
-      .append("svg")
-      .attr("class", d => `${svgSelector.slice(1)} ${d.feature} ${d.feature.split('_')[0]}`);
+      .append('svg')
+      .attr('class', d => `${svgSelector.slice(1)} ${d.feature} ${d.feature.split('_')[0]}`);
 
-    svgEnter.append("rect").attr("class", (d) => "background " + d.feature);
-    svgEnter.append("image");
+    svgEnter.append('rect').attr('class', d => 'background ' + d.feature);
+    svgEnter.append('image');
 
     const svgMerged = svgEnter.merge(svgContainer);
 
-    svgMerged.each(function (d) {
+    svgMerged.each(function(d) {
       const svg = d3.select(this);
+      const background = svg.select('.background')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .style('fill', d.feature === featureName ? colors[0] : 'none');
 
       if (d.feature.split('_')[0] === className) {
-        svg.style("border", `2px solid ${colors[1]}`);
+        svg.style('border', `2px solid ${colors[1]}`);
       } else {
-        svg.style("border", `2px solid ${colors[0]}`).style("box-shadow", "none");
+        svg.style('border', `2px solid ${colors[0]}`).style('box-shadow', 'none');
       }
 
-      const background = svg.select(".background")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .style("fill", "none");
+      setImageAttributes(svg, d.url);
 
-      try {
-        if (d.feature === featureName) {
-          background.style("fill", colors[0])
-        }
-        else {
-          background.style("fill", "none");
-        }
-      } catch (error) {
-        background.style("fill", "none");
-      }
-
-      if (svgSelector === ".feature-long-svg") {
-        svg.select("image")
-          .attr("xlink:href", d.url)
-          .attr("preserveAspectRatio", "none")
-          .attr("width", "100%") // Use percentage width
-          .attr("height", "100%"); // Use percentage height
-      } else {
-        svg.select("image")
-          .attr("xlink:href", d.url)
-          .attr("preserveAspectRatio", "none")
-          .attr("width", "100%") // Use percentage width
-          .attr("height", "100%"); // Use percentage height
-      }
-
-      svg
-      .style("cursor", "pointer")
-      .on("mouseover", (event, data) => {
-        background.style("fill", colors[0]);
-      })
-        .on("mouseleave", (event, data) => {
-            if (selectedFeatureBar === null) {
-              d3.selectAll('.background').style('fill', 'none');
-            }else{
-              d3.selectAll('.background').style('fill', 'none');
-              d3.select('.background.' +selectedFeatureBar).style('fill', colors[0]);
-            }
-          // }
-        }).on("click", (event, info) => {
+      svg.style('cursor', 'pointer')
+        .on('mouseover', function() {
+          if (!d3.select(this).classed('highlighted')) {  // Skip if already highlighted
+            background.style('fill', colors[0]);
+          }
+        })
+        .on('mouseleave', function() {
+          if (!d3.select(this).classed('highlighted')) {  // Skip if already highlighted
+            background.style('fill', 'none');
+          } else {
+            background.style('fill', colors[0]); // Retain the highlighted state
+          }
+        })
+        .on('click', function(event, info) {
           d3.selectAll('.background').style('fill', 'none');
-          background.style("fill", colors[0]);
-          selectedFeatureBar = info.feature
-          if (Data) {
-            d3.selectAll(".line incl original").remove();
-            // d3.select("svg.nucleotide-view").select('line incl original').remove();
+          background.style('fill', colors[0]);
+          selectedFeatureBar = info.feature;
 
+          if (Data) {
+            d3.selectAll('.line.incl.original').remove();
             nucleotideFeatureView(exon_s1_data, exon_s1_data.feature_activations, d.feature);
           }
 
+          // Mark the clicked element as highlighted
+          d3.select(this).classed('highlighted', true);
         });
     });
 
@@ -366,14 +359,15 @@ function featureSelection(featureName = null, className = null, features = []) {
   };
 
   // Update SVGs for inclusion images
-  updateSVGs("div.svg-grid-inclusion", ".feature-svg", newImagesData.inclusion, [inclusion_color, inclusion_highlight_color]);
+  updateSVGs('div.svg-grid-inclusion', '.feature-svg', newImagesData.inclusion, [inclusion_color, inclusion_highlight_color]);
 
   // Update SVGs for skipping images
-  updateSVGs("div.svg-grid-skipping", ".feature-svg", newImagesData.skipping, [skipping_color, skipping_highlight_color]);
+  updateSVGs('div.svg-grid-skipping', '.feature-svg', newImagesData.skipping, [skipping_color, skipping_highlight_color]);
 
   // Update SVGs for long skipping images
-  updateSVGs("div.svg-grid-long-skipping", ".feature-long-svg", newImagesData.longSkipping, [skipping_color, skipping_highlight_color]);
+  updateSVGs('div.svg-grid-long-skipping', '.feature-long-svg', newImagesData.longSkipping, [skipping_color, skipping_highlight_color]);
 }
+
 
 function highlightLogos(listOfLogos = []) {
   d3.select('div.feature-legend-container')
@@ -410,7 +404,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.Data = data_clipped;
       exon_s1_data = clipExon(data);
       // Render data
-      nucleotideView(Data.sequence, Data.structs, [data_clipped, data]);
+      nucleotideView(Data.sequence, Data.structs, [data_clipped, exon_s1_data]);
       featureSelection(featureSelected = null, className = null)
 
     })
@@ -425,7 +419,8 @@ document.addEventListener("DOMContentLoaded", function() {
   var replayButtonNucleotideView = document.getElementById("replayButtonNucleotideView");
 
   replayButtonNucleotideView.addEventListener("click", function() {
-      nucleotideView(Data.sequence, Data.structs, Data);
+      console.log("Replaying nucleotide view");
+      nucleotideView(Data.sequence, Data.structs, [Data, exon_s1_data]);
       d3.selectAll('.background').style('fill', 'none');
       d3.selectAll('svg.nucleotide-sort')
       .attr('opacity', 0);

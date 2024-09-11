@@ -945,66 +945,66 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .style("stroke-width", "2px"); // Add px and !important if necessary
 
     // Draw the bars
-    svg_nucl.selectAll("nucleotide-incl-bar")
-      .data(Object.entries(data.inclusion))
-      .enter()
-      .append("rect")
-      .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
-      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
-      .attr("y", function (d) { return yIncl(d[1]); })
-      .attr("width", x.bandwidth() + 1)
-      .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
-      .attr("fill", barColor)
-      // .attr("stroke", inclusion_highlight_color)
-      // .style("stroke-width", "2px") // Add px and !important if necessary
-      .attr("opacity", .1)
-      .lower()
-      .on("click", function (d) {
-        d3.selectAll(".obj.incl")
-          .style("fill", inclusion_color)
-          .attr("opacity", 0.1)
-          .classed("free", true);
-        d3.selectAll(".obj.skip")
-          .style("fill", skipping_color)
-          .attr("opacity", 0.1)
+    // svg_nucl.selectAll("nucleotide-incl-bar")
+    //   .data(Object.entries(data.inclusion))
+    //   .enter()
+    //   .append("rect")
+    //   .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
+    //   .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+    //   .attr("y", function (d) { return yIncl(d[1]); })
+    //   .attr("width", x.bandwidth() + 1)
+    //   .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
+    //   .attr("fill", barColor)
+    //   // .attr("stroke", inclusion_highlight_color)
+    //   // .style("stroke-width", "2px") // Add px and !important if necessary
+    //   .attr("opacity", .1)
+    //   .lower()
+    //   .on("click", function (d) {
+    //     d3.selectAll(".obj.incl")
+    //       .style("fill", inclusion_color)
+    //       .attr("opacity", 0.1)
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.skip")
+    //       .style("fill", skipping_color)
+    //       .attr("opacity", 0.1)
 
-          .classed("free", true);
-        d3.selectAll(".obj.nt")
-          .style("font-weight", "normal")
-          .classed("free", true);
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.nt")
+    //       .style("font-weight", "normal")
+    //       .classed("free", true);
 
-        var pos = d3.select(this)
-          .attr("class")
-          .slice(9, -4);
-        d3.select(".obj.incl.free." + pos)
-          .style("fill", inclusion_highlight_color)
-          .attr("opacity", 1)
-          .classed("free", false);
-        d3.select(".obj.skip.free." + pos)
-          .style("fill", skipping_highlight_color)
-          .attr("opacity", 1)
+    //     var pos = d3.select(this)
+    //       .attr("class")
+    //       .slice(9, -4);
+    //     d3.select(".obj.incl.free." + pos)
+    //       .style("fill", inclusion_highlight_color)
+    //       .attr("opacity", 1)
+    //       .classed("free", false);
+    //     d3.select(".obj.skip.free." + pos)
+    //       .style("fill", skipping_highlight_color)
+    //       .attr("opacity", 1)
 
-          .classed("free", false);
-        d3.select(".obj.nt." + pos)
-          .style("font-weight", "bold")
-          .classed("free", false);
-        var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
-        gxSkip.selectAll(".tick")
-          .each(function (d) {
-            d3.select(this).select("text").style("font-weight", "normal");
-          });
-        gxSkip.selectAll(".tick")
-          .each(function (d) {
-            var tickPosition = String(d)
-            if (tickPosition === position) {
-              d3.select(this).select("text").style("font-weight", "bold");
-            }
-          });
+    //       .classed("free", false);
+    //     d3.select(".obj.nt." + pos)
+    //       .style("font-weight", "bold")
+    //       .classed("free", false);
+    //     var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+    //     gxSkip.selectAll(".tick")
+    //       .each(function (d) {
+    //         d3.select(this).select("text").style("font-weight", "normal");
+    //       });
+    //     gxSkip.selectAll(".tick")
+    //       .each(function (d) {
+    //         var tickPosition = String(d)
+    //         if (tickPosition === position) {
+    //           d3.select(this).select("text").style("font-weight", "bold");
+    //         }
+    //       });
 
-        getFeaturesForPosition(position, data)
-        nucleotideSort(position, data, margin, 230, 450, colors);
-        nucleotideZoom(data, sequence, structs, position, margin, 230, 450, colors);
-      });
+    //     getFeaturesForPosition(position, data)
+    //     nucleotideSort(position, data, margin, 230, 450, colors);
+    //     nucleotideZoom(data, sequence, structs, position, margin, 230, 450, colors);
+    //   });
   }
 
   const SkipAxis = (color = false) => {
@@ -1019,16 +1019,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("font-size", `${12 * heightRatio}px`)
       .attr("transform", "translate(" + margin.left + ",0)");
     gySkip.call(d3.axisLeft(ySkip).ticks(4));
-
-    // svg_nucl.append("text")
-    //   .attr("class", "ylabel_skip")
-    //   .attr("text-anchor", "middle")
-    //   .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
-    //   .attr("y", margin.left)
-    //   .attr("dy", "-2.25em")
-    //   .attr("font-size", `${12 * heightRatio}px`)
-    //   .attr("transform", "rotate(-90)")
-    //   .text("Strength (a.u.)");
 
     // Create extended data points to mark the left and right edges of each bar
     var extendedSkipData = [];
@@ -1060,67 +1050,67 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("stroke", lineHighlightColor)
       .style("stroke-width", "2px"); // Add px and !important if necessary
     // Draw the bars
-    svg_nucl.selectAll("nucleotide-skip-bar")
-      .data(Object.entries(data.skipping))
-      .enter()
-      .append("rect")
-      .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
-      .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
-      .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-      .attr("width", x.bandwidth() + 1)
-      .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
-      .attr("fill", barColor)
-      // .attr("stroke", lineHighlightColor)
-      // .style("stroke-width", "2px") // Add px and !important if necessary
-      .attr("opacity", .1) // Adjust opacity as needed
+    // svg_nucl.selectAll("nucleotide-skip-bar")
+    //   .data(Object.entries(data.skipping))
+    //   .enter()
+    //   .append("rect")
+    //   .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
+    //   .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
+    //   .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
+    //   .attr("width", x.bandwidth() + 1)
+    //   .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
+    //   .attr("fill", barColor)
+    //   // .attr("stroke", lineHighlightColor)
+    //   // .style("stroke-width", "2px") // Add px and !important if necessary
+    //   .attr("opacity", .1) // Adjust opacity as needed
 
-      .lower()
-      .on("click", function (d) {
-        d3.selectAll(".obj.incl")
-          .style("fill", inclusion_color)
-          .attr("opacity", 0.1)
-          .classed("free", true);
-        d3.selectAll(".obj.skip")
-          .style("fill", skipping_color)
-          .attr("opacity", 0.1)
+    //   .lower()
+    //   .on("click", function (d) {
+    //     d3.selectAll(".obj.incl")
+    //       .style("fill", inclusion_color)
+    //       .attr("opacity", 0.1)
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.skip")
+    //       .style("fill", skipping_color)
+    //       .attr("opacity", 0.1)
 
-          .classed("free", true);
-        d3.selectAll(".obj.nt")
-          .style("font-weight", "normal")
-          .classed("free", true);
+    //       .classed("free", true);
+    //     d3.selectAll(".obj.nt")
+    //       .style("font-weight", "normal")
+    //       .classed("free", true);
 
-        var pos = d3.select(this)
-          .attr("class")
-          .slice(9, -4);
-        d3.select(".obj.incl.free." + pos)
-          .style("fill", inclusion_highlight_color)
-          .attr("opacity", 1)
-          .classed("free", false);
-        d3.select(".obj.skip.free." + pos)
-          .style("fill", skipping_highlight_color)
-          .attr("opacity", 1)
+    //     var pos = d3.select(this)
+    //       .attr("class")
+    //       .slice(9, -4);
+    //     d3.select(".obj.incl.free." + pos)
+    //       .style("fill", inclusion_highlight_color)
+    //       .attr("opacity", 1)
+    //       .classed("free", false);
+    //     d3.select(".obj.skip.free." + pos)
+    //       .style("fill", skipping_highlight_color)
+    //       .attr("opacity", 1)
 
-          .classed("free", false);
-        d3.select(".obj.nt." + pos)
-          .style("font-weight", "bold")
-          .classed("free", false);
-        var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
+    //       .classed("free", false);
+    //     d3.select(".obj.nt." + pos)
+    //       .style("font-weight", "bold")
+    //       .classed("free", false);
+    //     var position = d3.select(this).attr("class").split(" ")[2].split('_')[1]
 
-        gxSkip.selectAll(".tick")
-          .each(function (d) {
-            d3.select(this).select("text").style("font-weight", "normal");
-          });
-        gxSkip.selectAll(".tick")
-          .each(function (d) {
-            var tickPosition = String(d)
-            if (tickPosition === position) {
-              d3.select(this).select("text").style("font-weight", "bold");
-            }
-          });
-        getFeaturesForPosition(position, data)
-        nucleotideSort(position, data, margin, 230, 450, colors);
-        nucleotideZoom(data, sequence, structs, position, margin, 230, 450, colors);
-      });
+    //     gxSkip.selectAll(".tick")
+    //       .each(function (d) {
+    //         d3.select(this).select("text").style("font-weight", "normal");
+    //       });
+    //     gxSkip.selectAll(".tick")
+    //       .each(function (d) {
+    //         var tickPosition = String(d)
+    //         if (tickPosition === position) {
+    //           d3.select(this).select("text").style("font-weight", "bold");
+    //         }
+    //       });
+    //     getFeaturesForPosition(position, data)
+    //     nucleotideSort(position, data, margin, 230, 450, colors);
+    //     nucleotideZoom(data, sequence, structs, position, margin, 230, 450, colors);
+    //   });
   };
 
   if (classSelected === "incl") {
@@ -1608,7 +1598,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`);
 
   zoom_xAxis.tickFormat((d) => structs[int_pos - 1 + d])
-  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length) ? int_pos + d - flanking_length : "");
+  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length)  ? int_pos -5  : "");
   zoom_xNuAxis.tickFormat((d) => sequence[int_pos - 1 + d]);
 
   zoom_gxIncl.call(zoom_xSkipAxis);
