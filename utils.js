@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.Data = data_clipped;
       exon_s1_data = clipExon(data);
       // Render data
-      nucleotideView(Data.sequence, Data.structs, [data_clipped, data]);
+      nucleotideView(Data.sequence, Data.structs, [data_clipped, exon_s1_data]);
       featureSelection(featureSelected = null, className = null)
 
     })
@@ -425,7 +425,8 @@ document.addEventListener("DOMContentLoaded", function() {
   var replayButtonNucleotideView = document.getElementById("replayButtonNucleotideView");
 
   replayButtonNucleotideView.addEventListener("click", function() {
-      nucleotideView(Data.sequence, Data.structs, Data);
+      console.log("Replaying nucleotide view");
+      nucleotideView(Data.sequence, Data.structs, [Data, exon_s1_data]);
       d3.selectAll('.background').style('fill', 'none');
       d3.selectAll('svg.nucleotide-sort')
       .attr('opacity', 0);
