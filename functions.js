@@ -1020,16 +1020,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("transform", "translate(" + margin.left + ",0)");
     gySkip.call(d3.axisLeft(ySkip).ticks(4));
 
-    // svg_nucl.append("text")
-    //   .attr("class", "ylabel_skip")
-    //   .attr("text-anchor", "middle")
-    //   .attr("x", -(margin.top / 2 + (height - margin.top - margin.bottom) / 4 + margin.middle / 2 + height / 2 - margin.bottom / 2))
-    //   .attr("y", margin.left)
-    //   .attr("dy", "-2.25em")
-    //   .attr("font-size", `${12 * heightRatio}px`)
-    //   .attr("transform", "rotate(-90)")
-    //   .text("Strength (a.u.)");
-
     // Create extended data points to mark the left and right edges of each bar
     var extendedSkipData = [];
     Object.entries(dataSkip).forEach(function (d, i, arr) {
@@ -1608,7 +1598,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`);
 
   zoom_xAxis.tickFormat((d) => structs[int_pos - 1 + d])
-  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length) ? int_pos + d - flanking_length : "");
+  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length)  ? int_pos -5  : "");
   zoom_xNuAxis.tickFormat((d) => sequence[int_pos - 1 + d]);
 
   zoom_gxIncl.call(zoom_xSkipAxis);
