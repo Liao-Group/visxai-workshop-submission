@@ -1598,7 +1598,7 @@ function nucleotideZoom(data, sequence, structs, pos, margin, zoom_width, height
     .attr("transform", `translate(0, ${margin.top + (height - margin.top - margin.bottom) / 2 - 5})`);
 
   zoom_xAxis.tickFormat((d) => structs[int_pos - 1 + d])
-  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0 && int_pos + d > flanking_length)  ? int_pos -5  : "");
+  zoom_xSkipAxis.tickFormat((d) => (d % 5 === 0)  ? int_pos - 5 +d  : "");
   zoom_xNuAxis.tickFormat((d) => sequence[int_pos - 1 + d]);
 
   zoom_gxIncl.call(zoom_xSkipAxis);
