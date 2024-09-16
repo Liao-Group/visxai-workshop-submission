@@ -473,87 +473,95 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       }
     }
   }
-  function createToggleButton(svg, x, y) {
+  
+  function createSliderToggle(svg, x, y) {
     let isActive = true;
-    // addLegend(isActive)
-    const button = svg.append("g")
-      .attr("cursor", "pointer")
-      .attr("transform", `translate(${x}, ${y})`);
 
-    button.append("rect")
-      .attr("width", 75)
-      .attr("height", 30)
-      .attr("rx", 5)
-      .attr("ry", 5)
-      .style("stroke", 'black')
-      .attr("fill", "white");
+    // Create the background (slider track) with less prominent rounded corners
+    const trackWidth = 160;
+    const trackHeight = 40;
+    
+    const sliderTrack = svg.append("rect")
+      .attr("x", x)
+      .attr("y", y)
+      .attr("width", trackWidth)
+      .attr("height", trackHeight)
+      .attr("rx", 7)  // Reduced rounded corners
+      .attr("ry", 7)  // Reduced rounded corners
+      .style("fill", "#f0f0f0")
+      .style("cursor", "pointer");
 
-    const buttonText = button.append("text")
-      .attr("x", 10)
-      .attr("y", 20)
-      .style('font-size', `${16 * widthRatio}px`)
+    // Create the sliding handle with less prominent rounded corners
+    const handle = svg.append("rect")
+      .attr("x", x + 4)
+      .attr("y", y + 4)
+      .attr("width", (trackWidth / 2) - 8)
+      .attr("height", trackHeight - 8)
+      .attr("rx", 5)  // Reduced rounded corners
+      .attr("ry", 5)  // Reduced rounded corners
+      .style("fill", "white")  // Removed the stroke (border)
+      .style("cursor", "pointer");
+
+    // Create the "Original" label
+    const label1 = svg.append("text")
+      .attr("x", x + (trackWidth / 4))  // Center for first half
+      .attr("y", y + (trackHeight / 1.6))  // Vertically center the text
+      .attr("text-anchor", "middle")
+      .style('font-size', '16px')
       .style('font-weight', "bold")
-      .attr("text-anchor", "center")
       .attr("fill", "black")
-      .text("Orignal");
+      .style("cursor", "pointer")
+      .text("Original");
 
-    const button2 = svg.append("g")
-      .attr("cursor", "pointer")
-      .attr("transform", `translate(${x + 80}, ${y})`);
-
-
-    button2.append("rect")
-      .attr("width", 70)
-      .attr("height", 30)
-      .attr("rx", 5)
-      .attr("ry", 5)
-      .style("stroke", 'black')
-      .attr("fill", "white");
-
-    const buttonText2 = button2.append("text")
-      .attr("x", 10)
-      .attr("y", 20)
-      .style('font-size', `${16 * widthRatio}px`)
-      .attr("text-anchor", "center")
+    // Create the "31C>A" label
+    const label2 = svg.append("text")
+      .attr("x", x + (3 * trackWidth / 4))  // Center for second half
+      .attr("y", y + (trackHeight / 1.6))
+      .attr("text-anchor", "middle")
+      .style('font-size', '16px')
+      .style('font-weight', "normal")
       .attr("fill", "black")
+      .style("cursor", "pointer")
       .text("31C>A");
 
-    button.on("click", function () {
-      isActive = true;
-      buttonText2.
-        style('fill', "black")
-        .style('font-weight', "normal")
+    // Function to toggle slider state and update graph
+    function toggleSlider() {
+        if (isActive) {
+            // Move the handle to the second position
+            handle.transition().attr("x", x + trackWidth / 2 + 5);
+            label1.style("font-weight", "normal");
+            label2.style("font-weight", "bold");
+        } else {
+            // Move the handle to the first position
+            handle.transition().attr("x", x + 5);
+            label1.style("font-weight", "bold");
+            label2.style("font-weight", "normal");
+        }
+        isActive = !isActive;
 
-      buttonText
-        .attr("x", 10)
-        .style('font-weight', "bold")
-      drawInclusionAxis(isActive);
-      drawSkipAxis(isActive);
-      comparisonSequence(!isActive)
-      // addLegend(isActive)
+        // Call functions based on isActive state
+        drawInclusionAxis(isActive);
+        drawSkipAxis(isActive);
+        comparisonSequence(!isActive);
+    }
 
+    // Add click events for both labels and slider track
+    sliderTrack.on("click", toggleSlider);
+    label1.on("click", function() {
+        if (!isActive) toggleSlider();  // Toggle only if it's not active
     });
-    button2.on("click", function () {
-      isActive = false;
-      buttonText
-        .style('fill', "black")
-        .style('font-weight', "normal")
-
-      buttonText2
-        .attr("x", 10)
-        .style('font-weight', "bold")
-
-      drawInclusionAxis(isActive);
-      drawSkipAxis(isActive);
-      comparisonSequence(!isActive)
-
-      // addLegend(isActive)
-
+    label2.on("click", function() {
+        if (isActive) toggleSlider();  // Toggle only if it's active
     });
-  }
-  drawInclusionAxis(true);
-  drawSkipAxis(true);
-  createToggleButton(svg_nucl, 70, 40);
+
+    // Ensure graph is displayed at the initial stage
+    drawInclusionAxis(isActive);
+    drawSkipAxis(isActive);
+    comparisonSequence(!isActive);
+}
+
+// Initialize the slider toggle
+createSliderToggle(svg_nucl, 70, 40);
 
   return svg_nucl;
 }
