@@ -475,7 +475,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   }
   function createToggleButton(svg, x, y) {
     let isActive = true;
-    // addLegend(isActive)
+
     const button = svg.append("g")
       .attr("cursor", "pointer")
       .attr("transform", `translate(${x}, ${y})`);
@@ -489,18 +489,17 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("fill", "white");
 
     const buttonText = button.append("text")
-      .attr("x", 10)
-      .attr("y", 20)
+      .attr("x", 75 / 2)  // Center horizontally
+      .attr("y", 20)  // Adjust vertical position
       .style('font-size', `${16 * widthRatio}px`)
       .style('font-weight', "bold")
-      .attr("text-anchor", "center")
+      .attr("text-anchor", "middle")  // Properly center the text
       .attr("fill", "black")
       .text("Orignal");
 
     const button2 = svg.append("g")
       .attr("cursor", "pointer")
       .attr("transform", `translate(${x + 80}, ${y})`);
-
 
     button2.append("rect")
       .attr("width", 70)
@@ -511,49 +510,48 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .attr("fill", "white");
 
     const buttonText2 = button2.append("text")
-      .attr("x", 10)
-      .attr("y", 20)
+      .attr("x", 70 / 2)  // Center horizontally
+      .attr("y", 20)  // Adjust vertical position
       .style('font-size', `${16 * widthRatio}px`)
-      .attr("text-anchor", "center")
+      .style('font-weight', "normal")
+      .attr("text-anchor", "middle")  // Properly center the text
       .attr("fill", "black")
       .text("31C>A");
 
     button.on("click", function () {
       isActive = true;
-      buttonText2.
-        style('fill', "black")
-        .style('font-weight', "normal")
+      buttonText2
+        .style('fill', "black")
+        .style('font-weight', "normal");
 
       buttonText
-        .attr("x", 10)
-        .style('font-weight', "bold")
+        .style('fill', "black")
+        .style('font-weight', "bold");
+
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
-      comparisonSequence(!isActive)
-      // addLegend(isActive)
-
+      comparisonSequence(!isActive);
     });
+
     button2.on("click", function () {
       isActive = false;
       buttonText
         .style('fill', "black")
-        .style('font-weight', "normal")
+        .style('font-weight', "normal");
 
       buttonText2
-        .attr("x", 10)
-        .style('font-weight', "bold")
+        .style('fill', "black")
+        .style('font-weight', "bold");
 
       drawInclusionAxis(isActive);
       drawSkipAxis(isActive);
-      comparisonSequence(!isActive)
-
-      // addLegend(isActive)
-
+      comparisonSequence(!isActive);
     });
-  }
-  drawInclusionAxis(true);
-  drawSkipAxis(true);
-  createToggleButton(svg_nucl, 70, 40);
+}
+
+drawInclusionAxis(true);
+drawSkipAxis(true);
+createToggleButton(svg_nucl, 70, 40);
 
   return svg_nucl;
 }
