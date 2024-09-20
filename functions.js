@@ -955,8 +955,6 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("width", x.bandwidth() + 1)
       .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
       .attr("fill", barColor)
-      // .attr("stroke", inclusion_highlight_color)
-      // .style("stroke-width", "2px") // Add px and !important if necessary
       .attr("opacity", .1)
       .lower()
       .on("click", function (d) {
@@ -1060,8 +1058,7 @@ function nucleotideView(sequence, structs, data, classSelected = null) {
       .attr("width", x.bandwidth() + 1)
       .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
       .attr("fill", barColor)
-      // .attr("stroke", lineHighlightColor)
-      // .style("stroke-width", "2px") // Add px and !important if necessary
+
       .attr("opacity", .1) // Adjust opacity as needed
 
       .lower()
