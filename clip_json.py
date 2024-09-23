@@ -15,7 +15,6 @@ def adjust_positions(positions, clip_length=5):
     keys_to_delete = []
     for key,value in positions.items():
         if int(key.strip('pos_')) <= clip_length or int(key.strip('pos_')) > len(sequence):
-            print(key)
             keys_to_delete.append(key)
     for key in keys_to_delete:
         positions.pop(key)
@@ -40,7 +39,6 @@ flattened_skipping_strength = adjust_positions(data['flattened_skipping'])
 psi = data['psi']
 delta_strength = data['delta_strength']
 
-print(len(sequence),len(struct))
 
 organized_data = {
     "sequence": sequence.replace('T', 'U'),
