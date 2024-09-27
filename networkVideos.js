@@ -46,9 +46,14 @@ function selectNetworkVideo(sectionId, videoId, buttonIndex) {
   const descriptionElementId = `network-description-${sectionId === 'network-section-1' ? '1' : '2'}`;
   const descriptionElement = section.querySelector(`#${descriptionElementId}`);
   descriptionElement.textContent = networkDescriptions[videoId];
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-  selectNetworkVideo('network-section-1', 'networkVideo1', 0);
-  selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0);
-});
+  // Handle the visibility of multiple pause buttons
+  ['2', '3', '4'].forEach(num => {
+    const pauseButton = document.getElementById(`pauseButton2-${num}`);
+    if (`newNetworkVideo${num}` === videoId) {
+      pauseButton.style.display = 'flex'; // Show button for selected video
+    } else {
+      pauseButton.style.display = 'none'; // Hide button for other videos
+    }
+  });
+}

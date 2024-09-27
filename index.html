@@ -221,12 +221,10 @@
                 <video id="networkVideo1" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Network_1_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
-                <div class="video-with-button">
-                  <video id="networkVideo2" muted preload="auto">
-                    <source src="resources/networkVideos/Network_2_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
-                  </video>
-                  <button id="pauseButton2" class="pause-button" onclick="togglePause('networkVideo2', this)">||</button>
-                </div>
+                <video id="networkVideo2" muted preload="auto">
+                  <source src="resources/networkVideos/Network_2_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
+                </video>
+                <button id="pauseButton2" class="pause-button hide-button" onclick="togglePause('networkVideo2', this)">||</button>
                 <video id="networkVideo3" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Network_3_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
@@ -293,12 +291,15 @@
                 <video id="newNetworkVideo2" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Local_Network_Feature.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
+                <button id="pauseButton2-2" class="pause-button hide-button" onclick="togglePause('newNetworkVideo2', this)">||</button>
                 <video id="newNetworkVideo3" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Local_Network_Add.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
+                <button id="pauseButton2-3" class="pause-button hide-button" onclick="togglePause('newNetworkVideo3', this)">||</button>
                 <video id="newNetworkVideo4" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Local_Network_Subt.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
+                <button id="pauseButton2-4" class="pause-button hide-button" onclick="togglePause('newNetworkVideo4', this)">||</button>
                 <video id="newNetworkVideo5" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Local_Network_PSI.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
@@ -306,7 +307,7 @@
               <p id="network-description-2">The network considers the input exon's sequence and structure.</p>
             </section>
           </div>
-        </div>     
+        </div>
 
         <p>
           We further introduce an interactive exon view that plots the strength contributions along the length of the exon. 

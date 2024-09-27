@@ -151,6 +151,10 @@ body {
   background-color: #5a6268;
 }
 
+.hide-button {
+  display: none;
+}
+
 /* Adding styles for the new container layout */
 .container {
   display: flex;
