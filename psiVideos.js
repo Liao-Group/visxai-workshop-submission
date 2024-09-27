@@ -79,3 +79,18 @@ function showVideo3() {
   document.getElementById('myVideo3').style.display = 'block';
   document.getElementById('myVideo3').play();
 }
+
+function togglePause(videoId, button) {
+  var video = document.getElementById(videoId);
+  if (video) {
+    if (video.paused) {
+      video.play();
+      button.innerHTML = '||';  // Change the icon back to pause when playing
+    } else {
+      video.pause();
+      button.innerHTML = '▶';  // Change the icon to play when paused
+    }
+  } else {
+    console.log("Video not found for ID: " + videoId);
+  }
+}

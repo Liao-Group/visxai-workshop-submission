@@ -27,6 +27,7 @@
   <script src="utils.js"></script>
   <script src="psiChart_nonLinear.js"></script>
   <script src="comparison.js"></script>
+  <script src="networkVideos.js"></script>
 
 
   <header>
@@ -220,9 +221,12 @@
                 <video id="networkVideo1" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Network_1_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
-                <video id="networkVideo2" autoplay muted preload="auto">
-                  <source src="resources/networkVideos/Network_2_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
-                </video>
+                <div class="video-with-button">
+                  <video id="networkVideo2" muted preload="auto">
+                    <source src="resources/networkVideos/Network_2_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
+                  </video>
+                  <button id="pauseButton2" class="pause-button" onclick="togglePause('networkVideo2', this)">||</button>
+                </div>
                 <video id="networkVideo3" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Network_3_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
@@ -232,6 +236,7 @@
                 <video id="networkVideo5" autoplay muted preload="auto">
                   <source src="resources/networkVideos/Network_5_Updated.m4v" type="video/mp4"> Your browser does not support the video tag.
                 </video>
+                
               </div>
               <p id="network-description-1">The network uses two inputs for each exon - the 70-nucleotide sequence and a predicted secondary structure. </p>
             </section>
@@ -301,9 +306,7 @@
               <p id="network-description-2">The network considers the input exon's sequence and structure.</p>
             </section>
           </div>
-        </div>
-
-        <script src="networkVideos.js"></script>
+        </div>     
 
         <p>
           We further introduce an interactive exon view that plots the strength contributions along the length of the exon. 
