@@ -19,6 +19,14 @@ const networkDescriptions = {
 function selectNetworkVideo(sectionId, videoId, buttonIndex) {
   const section = document.querySelector(`#${sectionId}`);
   const videos = section.querySelectorAll('video');
+  const buttons = section.querySelectorAll('.network-styled-button');
+  const selector = section.querySelector('.selector');
+  const pauseButtons = section.querySelectorAll('.pause-button');
+
+  // Hide all pause buttons initially
+  pauseButtons.forEach(button => button.classList.add('hide-button'));
+
+  // Update video displays and playback
   videos.forEach(video => {
     video.style.display = video.id === videoId ? 'block' : 'none';
     if (video.id === videoId) {
@@ -29,31 +37,32 @@ function selectNetworkVideo(sectionId, videoId, buttonIndex) {
     }
   });
 
-  selectedNetworkVideoId[sectionId] = videoId;
-
-  const buttons = section.querySelectorAll('.network-styled-button');
-  buttons.forEach((button, index) => {
-    button.classList.toggle('selected', index === buttonIndex);
-  });
-
-  const selector = section.querySelector('.selector');
-  const buttonWidth = buttons[0].offsetWidth;
+  // Update the selector position
+  const buttonWidth = buttons[buttonIndex].offsetWidth;
   const buttonLeft = buttons[buttonIndex].offsetLeft;
   const leftOffset = buttonLeft + (buttonWidth / 2) - (selector.offsetWidth / 2);
   selector.style.left = `${leftOffset}px`;
 
-  // Update the description text
-  const descriptionElementId = `network-description-${sectionId === 'network-section-1' ? '1' : '2'}`;
-  const descriptionElement = section.querySelector(`#${descriptionElementId}`);
-  descriptionElement.textContent = networkDescriptions[videoId];
+  // Update button styles
+  buttons.forEach((button, index) => button.classList.toggle('selected', index === buttonIndex));
 
-  // Handle the visibility of multiple pause buttons
-  ['2', '3', '4'].forEach(num => {
-    const pauseButton = document.getElementById(`pauseButton2-${num}`);
-    if (`newNetworkVideo${num}` === videoId) {
-      pauseButton.style.display = 'flex'; // Show button for selected video
-    } else {
-      pauseButton.style.display = 'none'; // Hide button for other videos
-    }
-  });
+  // Manage pause button visibility for specific videos
+  if (sectionId === 'network-section-1' && videoId === 'networkVideo2') {
+    document.getElementById('pauseButton1-2').classList.remove('hide-button');
+  }
+  if (sectionId === 'network-section-2' && videoId === 'newNetworkVideo2') {
+    document.getElementById('pauseButton2-2').classList.remove('hide-button');
+  }
+
+  // Update description and track the current video
+  selectedNetworkVideoId[sectionId] = videoId;
+  const descriptionElementId = `network-description-${sectionId.endsWith('1') ? '1' : '2'}`;
+  const descriptionElement = document.getElementById(descriptionElementId);
+  descriptionElement.textContent = networkDescriptions[videoId];
 }
+
+// Initialize on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  selectNetworkVideo('network-section-1', 'networkVideo1', 0);
+  selectNetworkVideo('network-section-2', 'newNetworkVideo1', 0);
+});
