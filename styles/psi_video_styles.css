@@ -49,14 +49,14 @@ body {
 }
 
 .video-section-container .styled-button.one { border-color: #024d82; }
-.video-section-container .styled-button.two { border-color: #01ab8e; }
+.video-section-container .styled-button.two { border-color: #C59DF0; }
 .video-section-container .styled-button.three { border-color: #f47200; }
 
 .video-section-container .styled-button.one:hover,
 .video-section-container .styled-button.one:focus { background-color: #024d82; color: white; }
 
 .video-section-container .styled-button.two:hover,
-.video-section-container .styled-button.two:focus { background-color: #01ab8e; color: white; }
+.video-section-container .styled-button.two:focus { background-color: #C59DF0; color: white; }
 
 .video-section-container .styled-button.three:hover,
 .video-section-container .styled-button.three:focus { background-color: #f47200; color: white; }

@@ -35,7 +35,7 @@ function updateInfoContainer(infoId, className) {
 
 function getButtonColor(button) {
   if (button.classList.contains('one')) return '#024d82';
-  if (button.classList.contains('two')) return '#01ab8e';
+  if (button.classList.contains('two')) return '#C59DF0';
   if (button.classList.contains('three')) return '#f47200';
 }
 
