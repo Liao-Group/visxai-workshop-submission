@@ -431,6 +431,41 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+  var newVideo = document.getElementById("myNewVideo");
+  var playButtonNew = document.getElementById("playButtonNew");
+
+  // Function to handle play button click
+  playButtonNew.addEventListener("click", function() {
+    if (newVideo.paused) {
+      newVideo.play();  // Start playing the video
+      playButtonNew.style.display = 'none';  // Hide the button once video starts
+    } else if (newVideo.ended) {
+      newVideo.currentTime = 0; // Reset the video to the start
+      newVideo.play();  // Replay the video
+      playButtonNew.style.display = 'none'; // Hide the replay button once video restarts
+    }
+  });
+
+  // Show the play button again if the video is paused before finishing
+  newVideo.addEventListener('pause', function() {
+    if (newVideo.currentTime > 0 && !newVideo.ended) {
+      playButtonNew.style.display = 'block';
+      playButtonNew.innerHTML = '<i class="fas fa-play"></i>'; // Set to play icon (▶)
+    }
+  });
+
+  // Hide the play button when the video starts playing from controls
+  newVideo.addEventListener('play', function() {
+    playButtonNew.style.display = 'none';
+  });
+
+  // When the video ends, show the replay button
+  newVideo.addEventListener('ended', function() {
+    playButtonNew.style.display = 'block'; // Show the button after video ends
+    playButtonNew.innerHTML = '<i class="fas fa-redo"></i>'; // Change icon to replay (↻)
+  });
+});
 
 // Author details
 document.addEventListener('DOMContentLoaded', () => {

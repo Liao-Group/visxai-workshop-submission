@@ -211,18 +211,24 @@
           by aggregating the one-hot encoded data. The frequency of a nucleotide at a given position in a feature is visualized 
           as a heat map - where darker red indicates higher frequencies, whereas lighter colors represent lower frequencies. 
         </p>
-        
+        <div class="encoding-video-container">
+            <video id="myNewVideo" width="600" muted>
+                <source src="resources/Encodings_2.m4v" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="playButtonNew">&#9658;</button> <!-- Play button for the new video (Play Icon: &#9658;) -->
+        </div>
         <p>
           These heat maps can be further visualized as sequence logos, where the height of each nucleotide corresponds to its 
           frequency at a given position.
         </p>
-        <img src="resources/Hot_Encoding.png" alt="Description of the image" width="240">
+        <img src="resources/Encoding-Logo.png" alt="Description of the image" height="180">
         <p>
           By examining sequence logos from the learned representations, the model's many features can <br><br> 
           By creating sequence logos from the learned representations, researchers can interpret the model’s decisions and understand 
           the biological significance of specific nucleotide patterns.
         </p>
-        <img src="resources/Hot_Encoding.png" alt="Description of the image" width="240">
+        <img src="resources/Feature Legend.001.jpeg" alt="Description of the image" width="360">
         
         <h3><b>Globally interpretable model architecture</b></h3>
         <div class="ps-container">
