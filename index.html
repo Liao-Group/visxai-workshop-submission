@@ -196,53 +196,68 @@
         
         <h2><b> Visualizing network interpretability</b></h2>
         
-        <h3><b>Learned Features</b></h3>
+        <h3><b>Learning splicing features</b></h3>
         <p>
-        The neural network was trained using fully labeled data, where each exon input corresponds to a specific PSI output. 
-        The network extracts data from the exon through one-hot encoding, where each nucleotide is converted into a binary 
-        vector where only nucleotide is "hot" (1) and others are "cold" (0).  One-hot encoding represents sequence information 
-        into a matrix, where each position corresponds to a nucleotide.
-        </p>
-        <div class="image-container">
-          <img src="resources/Long_Hot_Encoding.png" alt="Long Image Description">
-        </div>
-        <p>
-          During training, the network identifies specific one-hot encoded features in exons that lead to inclusion or skipping 
-          by aggregating the one-hot encoded data. The frequency of a nucleotide at a given position in a feature is visualized 
-          as a heat map - where darker red indicates higher frequencies, whereas lighter colors represent lower frequencies. 
+          The neural network was trained using fully-labeled data, where each exon input corresponds 
+          to a specific PSI output. The network extracts information from the exon through one-hot 
+          encoding. In one-hot encoding, sequence and structure information is converted into a binary vector. <br><br>
+          For example, a nucleotide can be encoded as "hot" (1). The "hot" signal indicates whether the nucleotide is 
+          A, C, G, or U. A matrix is used to represent a string of several nucleotides, where the nucleotide at each 
+          position is hot-encoded.
         </p>
         <div class="encoding-video-container">
-            <video id="myNewVideo" width="600" muted>
-                <source src="resources/Encodings_2.m4v" type="video/mp4">
+            <video id="videoA" muted autoplay>
+                <source src="resources/Encoding_1.m4v" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <button id="playButtonNew">&#9658;</button> <!-- Play button for the new video (Play Icon: &#9658;) -->
+            <button id="replayButtonA"><i class="fas fa-redo"></i></button>
         </div>
         <p>
-          These heat maps can be further visualized as sequence logos, where the height of each nucleotide corresponds to its 
-          frequency at a given position.
+          One-hot encoding can also be used to represent RNA structural data. The "hot" signal can indicate 
+          whether a position is unpaired (dot) or paired (parenthesis). 
         </p>
-        <img src="resources/Encoding-Logo.png" alt="Description of the image" height="180">
-        <p>
-          By examining sequence logos from the learned representations, the model's many features can <br><br> 
-          By creating sequence logos from the learned representations, researchers can interpret the model’s decisions and understand 
-          the biological significance of specific nucleotide patterns.
-        </p>
-        <img src="resources/Feature Legend.001.jpeg" alt="Description of the image" width="360">
-        
-        <h3><b>Globally interpretable model architecture</b></h3>
-        <div class="ps-container">
-            <div class="ps">
-                <span class="inline-image">
-                    <img src="resources/Cursors.002.jpeg" alt="Description of image">
-                </span>
-                Click on each step to learn more about the network logic.
-            </div>
+        <div class="encoding-image-container">
+            <img src="resources/Encoding_Long.001 copy.jpeg" alt="Description of the image" height="120px">
         </div>
+      
+        <p>
+          During training, the network identifies features that lead to inclusion or skipping by aggregating 
+          the one-hot encoded data. The frequency of a nucleotide or structure at a given position in a 
+          matrix is visualized as a heat map - where darker red indicates higher frequencies, and lighter 
+          colors represent lower frequencies. 
+        </p>
+        <div class="encoding-video-container videoB-container">
+          <video id="videoB" muted autoplay>
+              <source src="resources/Encoding_2.m4v" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <button id="replayButtonB"><i class="fas fa-redo"></i></button>
+      </div>
+        <p>
+          These heat maps can be visualized as sequence logos, where the height of each nucleotide 
+          reflects its frequency at a specific position. In this example, the C nucleotides are 
+          prominently favored at specific positions, whereas other nucleotides are less preferred. 
+          Logo maps are commonly used in molecular biology to summarize conserved sequence and structure patterns.
+        </p>
+        <div class="encoding-video-container videoC-container">
+          <video id="videoC" muted autoplay>
+              <source src="resources/Encoding_3.m4v" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <button id="replayButtonC"><i class="fas fa-redo"></i></button>
+      </div>
+        <p>
+          After training, the network identified 20 total features that dictate splicing outcomes: 
+          9 features contribute to exon inclusion, while 11 features contribute to exon skipping.
+        </p>
+        <div class="encoding-image-container">
+          <img src="resources/Encoding_4.001.jpeg" alt="Description of the image" height="300px">
+      </div>
         
         <!-- Network Video Section -->
+        <h3><b>Examining how features inform splicing predictions</b></h3>
         <div class="network-video-wrapper">
-          <div class="network-video-section-container" id="network-section-1">
+        <div class="network-video-section-container" id="network-section-1">
             <section id="network-video-section-1">
               <div class="network-buttons">
                 <div class="selector"></div>
@@ -294,7 +309,7 @@
         <div id="psi-bar-chart" class="psi-bar-chart"></div>
       </div>
 
-        <h3><b>Local interpretability of predictions</b></h3>
+        <h3><b>Examining predictions for specific inputs</b></h3>
         <p>
           Using this framework, we can also examine the local interpretability of the network on an individual exon.
         </p>
@@ -371,7 +386,7 @@
           <div class="bottom">
             <div class="feature-legend-container">
               <div class="feature-legend-grids">
-                <div class="feature-legend-title">Feature Legend</div>
+                <!-- <div class="feature-legend-title">Feature Legend</div> -->
                 <div class="legend"></div>
                 <div class="feature-grids-wrapper">
                   <div class="svg-grid-inclusion"></div>

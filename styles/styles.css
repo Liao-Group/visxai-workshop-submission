@@ -226,3 +226,10 @@ hr {
     width: auto;            /* Automatically adjust the width to maintain aspect ratio */
     display: block;         /* Remove any extra space below the image */
 }
+
+.container {
+    display: flex; /* Use flexbox to align items horizontally */
+    justify-content: center; /* Center items inside the container */
+    align-items: center; /* Vertically center all items in the container */
+    margin: 20px 0; /* Optional: add space above and below the container */
+  }

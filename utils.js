@@ -416,6 +416,22 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
+  var replayButtons = [
+      { button: document.getElementById("replayButtonA"), video: document.getElementById("videoA") },
+      { button: document.getElementById("replayButtonB"), video: document.getElementById("videoB") },
+      { button: document.getElementById("replayButtonC"), video: document.getElementById("videoC") }
+  ];
+
+  replayButtons.forEach(function(replayButton) {
+      replayButton.button.addEventListener("click", function() {
+          console.log("Replaying video");
+          replayButton.video.currentTime = 0;
+          replayButton.video.play();
+      });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
   var replayButtonNucleotideView = document.getElementById("replayButtonNucleotideView");
 
   replayButtonNucleotideView.addEventListener("click", function() {

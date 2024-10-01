@@ -199,16 +199,40 @@ body {
   display: none;
 }
 
+/* General container styling */
 .encoding-video-container {
-  max-width: 480px; /* Limit the video width */
-  margin: 20px 0; /* Add some margin for spacing */
-  display: flex; /* Use flexbox to align the video and button horizontally */
-  align-items: center; /* Vertically center the button relative to the video */
+  display: flex; /* Flexbox for horizontal alignment of video and button */
+  align-items: center; /* Vertically align the button relative to the video */
+  justify-content: center; /* Horizontally center the entire container */
+  margin: 20px 0; /* Add spacing between containers */
+  width: 100%; /* Ensure the container takes full width */
 }
 
+/* Centering the video within the container */
 .encoding-video-container video {
-  width: 100%; /* Make sure the video takes the full width of the container */
-  height: auto; /* Maintain aspect ratio */
+  display: block; /* Ensures video respects its container */
+  margin-right: 10px; /* Space between video and button */
+}
+
+/* Specific styling for videoA */
+#videoA {
+  height: 180px; /* Override width for videoA */
+}
+
+.encoding-video-container.videoB-container {
+  max-width: none; /* Remove the restriction for videoA container */
+}
+
+#videoB {
+  height: 180px; /* Override width for videoA */
+}
+
+.encoding-video-container.videoC-container {
+  max-width: none; /* Remove the restriction for videoA container */
+}
+
+#videoC {
+  height: 160px; /* Override width for videoA */
 }
 
 /* Play/Replay button styling - same size as previous replay buttons */
@@ -232,4 +256,32 @@ body {
 
 #playButtonNew:hover {
   background-color: #5a6268;
+}
+
+#replayButtonA, #replayButtonB, #replayButtonC {
+  width: 30px;
+  height: 30px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0;
+  line-height: 30px;
+  flex-shrink: 0;
+}
+
+#replayButtonA:hover, #replayButtonB:hover, #replayButtonC:hover {
+  background-color: #5a6268;
+}
+
+.encoding-image-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the image */
+  align-items: center; /* Vertically center the image */
+  margin: 20px 0; /* Add spacing above and below the image */
 }
