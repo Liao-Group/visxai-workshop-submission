@@ -8,6 +8,10 @@ const line_color = "#6b6b6b";
 const strength_difference_color = "#dad7cd";
 const nucleotide_color = "black";
 
+const veryLightBlue = "#E3EAF9";
+const veryLightRed = "#F9E3E3";
+const veryStrongBlue = "#a1bfff";
+const veryStrongRed = "#f79897";
 // // org colors
 const inclusion_color = "#c5d6fb";
 const inclusion_highlight_color = "#669aff";

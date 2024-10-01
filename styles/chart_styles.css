@@ -162,12 +162,16 @@
   height: 500px;
 
 }
-.nucleotide-view-exon-brca2,
-.nucleotide-view-exon-brca2 svg {
-  width: 100%;
-  height: 500px;
-
+.nucleotide-view-exon-brca2 {
+  width: 200%; /* This will extend the container width */
+  overflow-x: scroll; /* Optional: Add this to allow horizontal scrolling if the content is too wide */
 }
+
+.nucleotide-view-exon-brca2 svg {
+  width: 200%;
+  height: 500px;
+}
+
 .nucleotide-view-exon-cfrt,
 .nucleotide-view-exon-cfrt svg {
   width: 100%;
