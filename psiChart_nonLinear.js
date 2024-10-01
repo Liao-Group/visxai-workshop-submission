@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
           tooltip.transition()
               .duration(200)
               .style("opacity", .9);
-          tooltip.html(`Δ Strength: ${d.deltaForce}<br/>Psi: ${d.psi.toFixed(6)}`)
+          tooltip.html(`Δ Strength: ${d.deltaForce}<br/>PSI: ${d.psi.toFixed(6)}`)
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY - 28) + "px");
       })

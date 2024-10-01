@@ -2,15 +2,15 @@ import json
 from collections import defaultdict
 
 
-def clip_sequence(sequence, clip_length=5):
+def clip_sequence(sequence, clip_length=3):
     """Clip the sequence by removing `clip_length` nucleotides from each end."""
     return sequence[clip_length:-clip_length]
 
-def clip_structure(struct, clip_length=5):
+def clip_structure(struct, clip_length=3):
     """Clip the struct by removing `clip_length` positions from each end."""
     return struct[clip_length:-clip_length]
 
-def adjust_positions(positions, clip_length=5):
+def adjust_positions(positions, clip_length=3):
     """Adjust the position names after clipping."""
     keys_to_delete = []
     for key,value in positions.items():
@@ -21,7 +21,7 @@ def adjust_positions(positions, clip_length=5):
        
     return positions
 
-filename = 'data/exon_s1_comp_grid9_strengths'
+filename = 'data/BRCA2_539T>C_strengths'
 # Load and parse the JSON data
 with open(filename+'.json', 'r') as file:
     data = json.load(file)
