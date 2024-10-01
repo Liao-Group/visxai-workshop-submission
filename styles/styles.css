@@ -214,3 +214,15 @@ hr {
     justify-content: center;
     text-align: center;
   }
+
+  .image-container {
+    max-width: 100%;        /* Ensure the container fits within the article */
+    overflow-x: auto;       /* Allow horizontal scrolling for the image */
+    margin: 0 auto;         /* Center the container if needed */
+}
+
+.image-container img {
+    height: 180px;          /* Set the desired height */
+    width: auto;            /* Automatically adjust the width to maintain aspect ratio */
+    display: block;         /* Remove any extra space below the image */
+}
