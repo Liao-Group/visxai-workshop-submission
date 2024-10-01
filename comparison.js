@@ -23,20 +23,38 @@ function callFunctions() {
         }
         return response.json();
       }),
-      fetch('data/brca2_exon_strengths_clipped.json').then(response => {
+      fetch('data/BRCA2_og_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       }),
-      fetch('data/cftr_exon_strengths_clipped.json').then(response => {
+      fetch('data/BRCA2_620C>T_strengths_clipped.json').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }),
+      fetch('data/BRCA2_559G>A_strengths_clipped.json').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }),
+      fetch('data/BRCA2_551T>C_strengths_clipped.json').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }),
+      fetch('data/BRCA2_539T>C_strengths_clipped.json').then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
     ])
-      .then(([compData, dados, exon_s1_comp1_data, brca2_data, cfrt_data]) => {
+      .then(([compData, dados, exon_s1_comp1_data, brca2_original, brca2_620C_T,brca2_559G_A,brca2_551T_C,brca2_539T_C]) => {
         comp = compData;
 
         var svg_name = ".nucleotide-view-exon-s1-mutation"
@@ -45,7 +63,7 @@ function callFunctions() {
           'skip': ["S1 Exon Skipping", "S1 Exon Mutation Skipping"],
           'incl': ["S1 Exon Inclusion", "S1 Exon Mutation Inclusion"]
         }
-        nucleotideComparison(dados, comp, svg_name, labels);
+        nucleotideComparison(dados, comp, svg_name,mutation_name='31C>A', labels);
         // var svg_name = ".nucleotide-view-exon-s1"
 
         // nucleotideComparisonSingle(dados, comparison = null, svg_name)
@@ -61,13 +79,17 @@ function callFunctions() {
         nucleotideComparisonSingle(exon_s1_comp1_data, svg_name, labels);
         updatePSIBarChart({ psi: 0.15040773153305054, deltaForce: -13.908240915963916 }, '#psi-bar-chart-s1-comparison', ' Difference-to-Prediction');
 
-        var svg_name = "#nucleotide-view-exon-brca2"
-        nucleotideComparisonSingle(brca2_data, svg_name, labels);
-        updatePSIBarChart({ psi: brca2_data.psi, deltaForce: brca2_data.delta_strength }, '#psi-bar-chart-exon-brca2', 'Difference-to-Prediction');
+        var svg_name = ".nucleotide-view-exon-brca2"
+        nucleotideComparison(brca2_original, brca2_620C_T, svg_name,mutation_name="620C>T", labels);
+        // remove the numbering. 
+        // 2 panels 
+        // change the coloring of the bars for normal and the  .1 opacity for the one in the back
+        // use the 620C>T and 551T>C
 
-        var svg_name = "#nucleotide-view-exon-cfrt"
-        nucleotideComparisonSingle(cfrt_data, svg_name, labels);
-        updatePSIBarChart({ psi: cfrt_data.psi, deltaForce: cfrt_data.delta_strength }, '#psi-bar-chart-exon-cfrt', 'Difference-to-Prediction');
+        var svg_name = ".nucleotide-view-exon-brca2-3"
+        nucleotideComparison(brca2_original, brca2_551T_C, svg_name,mutation_name='551T>C', labels);
+
+
 
       })
       .catch(error => {
@@ -150,7 +172,7 @@ function callFunctions() {
 
 callFunctions()
 
-function nucleotideComparison(data, comparison, svg_name, labels, classSelected = null) {
+function nucleotideComparison(data, comparison, svg_name, mutation_name = '31C>A', classSelected = null) {
   var exon_length = data.sequence.length - flanking_length*2 ;
   var sequence = data.sequence;
   var compSequence = comparison.sequence || [];
@@ -281,14 +303,14 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
   var ySkip = d3.scaleLinear()
     .domain([0, max_skip])
     .range([margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle, height - margin.bottom]);
-
-
+  var veryLightBlue = "#E3EAF9";
+  var veryLightRed = "#F9E3E3";
   function drawInclusionAxis(original = false) {
     d3.select(svg_name).selectAll(".y.axis").remove();
     d3.select(svg_name).selectAll(".ylabel_inclusion").remove();
 
-    const lineColor = original ? inclusion_highlight_color : inclusion_color;
-    const lineHighlightColor = original ? inclusion_color : inclusion_highlight_color;
+    const lineColor = original ? inclusion_color : veryLightBlue;
+    const lineHighlightColor = original ? veryLightBlue : inclusion_color;
 
     var gyIncl = svg_nucl.append("g")
       .attr("class", "y axis")
@@ -328,10 +350,10 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
           .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
           .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
           .attr("y", function (d) { return yIncl(d[1]); })
-          .attr("width", x.bandwidth()+1)
+          .attr("width", x.bandwidth()*1.25)
           .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
           .attr("fill", lineHighlightColor)
-        
+
       }
       svg_nucl.append("path")
         .datum(Object.entries(dataIncl))
@@ -347,7 +369,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
         .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
         .attr("y", function (d) { return yIncl(d[1]); })
-        .attr("width", x.bandwidth()+1)
+        .attr("width", x.bandwidth()*1.25)
         .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
         .attr("fill", lineColor)
 
@@ -366,10 +388,11 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
         .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
         .attr("y", function (d) { return yIncl(d[1]); })
-        .attr("width", x.bandwidth()+1)
+        .attr("width", x.bandwidth()*1.25)
         .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
         .attr("fill", lineColor)
-      if (compIncl) {
+
+        if (compIncl) {
         svg_nucl.append("path")
           .datum(Object.entries(compIncl))
           .attr("class", "line incl comparison")
@@ -384,17 +407,18 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
           .attr("class", function (d) { return "obj incl pos_" + d[0].slice(4); })
           .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
           .attr("y", function (d) { return yIncl(d[1]); })
-          .attr("width", x.bandwidth()+1)
+          .attr("width", x.bandwidth()*1.25)
           .attr("height", function (d) { return Math.abs(yIncl(0) - yIncl(d[1])); })
           .attr("fill", lineHighlightColor)
+
       }
     }
 
   }
 
   function drawSkipAxis(original = false) {
-    const lineColor = original ? skipping_highlight_color : skipping_color;
-    const lineHighlightColor = original ? skipping_color : skipping_highlight_color;
+    const lineColor = original ? skipping_color :veryLightRed ;
+    const lineHighlightColor = original ? veryLightRed : skipping_color;
 
     var gySkip = svg_nucl.append("g")
       .attr("class", "y axis")
@@ -459,7 +483,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
           .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
           .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
           .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-          .attr("width", x.bandwidth()+1)
+          .attr("width", x.bandwidth()*1.25)
           .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
           .attr("fill", lineHighlightColor)
       }
@@ -477,7 +501,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
         .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
         .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-        .attr("width", x.bandwidth()+1)
+        .attr("width", x.bandwidth()*1.25)
         .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
         .attr("fill", lineColor)
 
@@ -498,7 +522,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
         .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
         .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
         .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-        .attr("width", x.bandwidth()+1)
+        .attr("width", x.bandwidth()*1.25)
         .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
         .attr("fill", lineColor)
 
@@ -517,9 +541,10 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
           .attr("class", function (d) { return "obj skip pos_" + d[0].slice(4); })
           .attr("x", function (d) { return x(parseInt(d[0].slice(4))); })
           .attr("y", margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle)
-          .attr("width", x.bandwidth()+1)
+          .attr("width", x.bandwidth()*1.25)
           .attr("height", function (d) { return ySkip(d[1]) - (margin.top + (height - margin.top - margin.bottom) / 2 + margin.middle); })
           .attr("fill", lineHighlightColor)
+
       }
     }
   }
@@ -572,7 +597,7 @@ function nucleotideComparison(data, comparison, svg_name, labels, classSelected 
       .style('font-weight', "normal")
       .attr("fill", "black")
       .style("cursor", "pointer")
-      .text("31C>A");
+      .text(mutation_name);
 
     // Function to toggle slider state and update graph
     function toggleSlider() {
