@@ -229,8 +229,10 @@ hr {
 }
 
 .container {
+    position: relative; /* Set relative positioning to allow absolute positioning inside */
     display: flex; /* Use flexbox to align items horizontally */
-    justify-content: center; /* Center items inside the container */
+    justify-content: center; /* Center the image and icon inside the container */
     align-items: center; /* Vertically center all items in the container */
     margin: 20px 0; /* Optional: add space above and below the container */
-  }
+    width: 100%; /* Full width for absolute positioning */
+}

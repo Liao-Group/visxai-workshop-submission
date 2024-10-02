@@ -105,9 +105,12 @@ body {
   border-radius: 10px;
 }
 
-/* replay button */
-#replayButton, #replayButton2, #replayButton3, #replayButtonNucleotideView {
-  margin-left: 10px;
+/* Replay button on the right side (excluding replayButtonNucleotideView) */
+#replayButton, #replayButton2, #replayButton3 {
+  position: absolute; /* Position button relative to the container */
+  right: 20px; /* Push button to the right edge */
+  top: 50%; /* Vertically align the button */
+  transform: translateY(-50%); /* Center the button vertically */
   width: 30px;
   height: 30px;
   background-color: #6c757d;
@@ -124,6 +127,26 @@ body {
   flex-shrink: 0;
 }
 
+/* Keep replayButtonNucleotideView in its original position */
+#replayButtonNucleotideView {
+  margin-left: 10px; /* Add margin to the left */
+  width: 30px;
+  height: 30px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0;
+  line-height: 30px;
+  flex-shrink: 0;
+}
+
+/* Hover effect for all buttons */
 #replayButton:hover, #replayButton2:hover, #replayButton3:hover, #replayButtonNucleotideView:hover {
   background-color: #5a6268;
 }
@@ -201,17 +224,17 @@ body {
 
 /* General container styling */
 .encoding-video-container {
-  display: flex; /* Flexbox for horizontal alignment of video and button */
-  align-items: center; /* Vertically align the button relative to the video */
-  justify-content: center; /* Horizontally center the entire container */
-  margin: 20px 0; /* Add spacing between containers */
-  width: 100%; /* Ensure the container takes full width */
+  position: relative; /* Needed to position the button relative to the container */
+  display: flex; /* Keep video and button aligned horizontally */
+  align-items: center;
+  justify-content: center; /* Center video in the container */
+  width: 100%; /* Take full width */
+  margin: 20px 0; /* Space between containers */
 }
 
-/* Centering the video within the container */
 .encoding-video-container video {
-  display: block; /* Ensures video respects its container */
-  margin-right: 10px; /* Space between video and button */
+  display: block;
+  margin: 0 auto;
 }
 
 /* Specific styling for videoA */
@@ -259,6 +282,10 @@ body {
 }
 
 #replayButtonA, #replayButtonB, #replayButtonC {
+  position: absolute;
+  right: 20px; /* Push the button to the right edge with some spacing */
+  top: 50%; /* Vertically align the button */
+  transform: translateY(-50%); /* Center the button vertically */
   width: 30px;
   height: 30px;
   background-color: #6c757d;
