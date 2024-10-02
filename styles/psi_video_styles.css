@@ -247,7 +247,7 @@ body {
 }
 
 #videoB {
-  width: 840px; /* Override width for videoA */
+  width: 600px; /* Override width for videoA */
 }
 
 .encoding-video-container.videoC-container {

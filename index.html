@@ -92,10 +92,10 @@
           In exon inclusion, all introns are removed and all exons are joined together in the final transcript.
         </p>
         <div class="container">
-          <img id="previewImage" src="resources/RNA_Splicing.001.jpeg" alt="Preview Image">
+          <img id="previewImage" src="resources/RNA Splicing 2.001.jpeg" alt="Preview Image">
           <i class="fas fa-arrow-right"></i>
           <video id="myVideo" autoplay muted>
-            <source src="resources/RNA_Splicing_Inclu.m4v" type="video/mp4">
+            <source src="resources/Splicing_Incl.m4v" type="video/mp4">
             Your browser does not support the video tag.
           </video>
           <button id="replayButton"><i class="fas fa-redo"></i></button>
@@ -106,10 +106,10 @@
           Conversely, in exon skipping, an internal exon is removed and excluded from the final product.
         </p>
         <div class="container">
-          <img id="previewImage" src="resources/RNA_Splicing.001.jpeg" alt="Preview Image">
+          <img id="previewImage" src="resources/RNA Splicing 2.001.jpeg" alt="Preview Image">
           <i class="fas fa-arrow-right"></i>
           <video id="myVideo2" width="480" height="270" autoplay muted>
-            <source src="resources/RNA_Splicing_Skip.m4v" type="video/mp4">
+            <source src="resources/Splicing_Skip.m4v" type="video/mp4">
             Your browser does not support the video tag.
           </video>
           <button id="replayButton2"><i class="fas fa-redo"></i></button>
@@ -198,12 +198,12 @@
         
         <h3><b>Learning splicing features</b></h3>
         <p>
-          The neural network was trained using fully-labeled data, where each exon input corresponds 
-          to a specific PSI output. The network extracts information from the exon through one-hot 
-          encoding. In one-hot encoding, sequence and structure information is converted into a binary vector. <br><br>
-          For example, a nucleotide can be encoded as "hot" (1). The "hot" signal indicates whether the nucleotide is 
-          A, C, G, or U. A matrix is used to represent a string of several nucleotides, where the nucleotide at each 
-          position is hot-encoded.
+          The neural network was trained using fully-labeled data, where each exon input corresponds to a specific 
+          PSI output. The network extracts information from the exon through one-hot encoding. In one-hot encoding, 
+          sequence and structure information is converted into a binary vector. <br><br>
+          For example, a nucleotide can be encoded as "hot" (1). The "hot" signal indicates whether the nucleotide 
+          is A, C, G, or U. A matrix is used to represent a string of several nucleotides, where the nucleotide at 
+          each position is hot-encoded.
         </p>
         <div class="encoding-video-container">
             <video id="videoA" muted autoplay>
@@ -217,14 +217,14 @@
           whether a position is unpaired (dot) or paired (parenthesis). 
         </p>
         <div class="encoding-image-container">
-            <img src="resources/Encoding_Long.jpeg" alt="Description of the image" height="180px">
+            <img src="resources/Encoding_Long.001 2.jpeg" alt="Description of the image" height="150px">
         </div>
       
         <p>
-          During training, the network identifies features that lead to inclusion or skipping by aggregating 
-          the one-hot encoded data. The frequency of a nucleotide or structure at a given position in a 
-          matrix is visualized as a heat map - where darker red indicates higher frequencies, and lighter 
-          colors represent lower frequencies. 
+          During training, the network identifies features that lead to inclusion or skipping by 
+          aggregating the one-hot encoded data. The frequency of a nucleotide or structure at a 
+          given position in a matrix is visualized as a heat map - where darker red indicates 
+          higher frequencies, and lighter colors represent lower frequencies.
         </p>
         <div class="encoding-video-container videoB-container">
           <video id="videoB" muted autoplay>
@@ -237,7 +237,8 @@
           These heat maps can be visualized as sequence logos, where the height of each nucleotide 
           reflects its frequency at a specific position. In this example, the C nucleotides are 
           prominently favored at specific positions, whereas other nucleotides are less preferred. 
-          Logo maps are commonly used in molecular biology to summarize conserved sequence and structure patterns.
+          Logo maps are commonly used in molecular biology to summarize conserved sequence and 
+          structure patterns.
         </p>
         <div class="encoding-video-container videoC-container">
           <video id="videoC" muted autoplay>

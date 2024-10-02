@@ -7,8 +7,10 @@
   width: 100%; /* Ensures the width fits the parent container */
   max-width: 100%; /* Ensures the width does not exceed 100% */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  height: 710px; /* Set a fixed height for the wrapper */
-  overflow: hidden; /* Hides overflow content */
+  /* Remove fixed height and let the wrapper grow with content */
+  min-height: 710px; /* Optional: ensures a minimum height if needed */
+  height: auto; /* Let it grow dynamically */
+  overflow: visible; /* Ensure all content is visible */
 }
 
 /* Network Video Section Styles */
@@ -89,4 +91,5 @@
   margin-top: 20px;
   margin-left: 20px; /* Adds a left margin for better alignment */
   padding: 0; /* Removes padding */
+  overflow: visible; /* Ensure the text is fully visible */
 }
