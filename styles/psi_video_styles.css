@@ -239,7 +239,7 @@ body {
 
 /* Specific styling for videoA */
 #videoA {
-  height: 180px; /* Override width for videoA */
+  height: 240px; /* Override width for videoA */
 }
 
 .encoding-video-container.videoB-container {
@@ -247,7 +247,7 @@ body {
 }
 
 #videoB {
-  height: 180px; /* Override width for videoA */
+  width: 840px; /* Override width for videoA */
 }
 
 .encoding-video-container.videoC-container {
@@ -255,7 +255,7 @@ body {
 }
 
 #videoC {
-  height: 160px; /* Override width for videoA */
+  height: 360px; /* Override width for videoA */
 }
 
 /* Play/Replay button styling - same size as previous replay buttons */
